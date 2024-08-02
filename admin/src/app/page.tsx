@@ -1,5 +1,5 @@
 export default function Home() {
   return (
-    <>Admin Panel</>
+    <div>Admin Panel</div>
   );
 }
