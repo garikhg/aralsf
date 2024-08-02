@@ -1,4 +1,7 @@
+import React from "react";
+// @ts-ignore
 import type { Metadata } from "next";
+// @ts-ignore
 import { Inter } from "next/font/google";
 import "./globals.css";
 
