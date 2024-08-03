@@ -1,4 +1,9 @@
+import React from "react";
 
 export default function Home() {
-  return (<div>Frontend</div>);
+    return (
+        <main className="container" role="main">
+            Frontpage
+        </main>
+    );
 }
