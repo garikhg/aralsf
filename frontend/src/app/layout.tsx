@@ -1,10 +1,10 @@
 import React from "react";
 import type {Metadata} from "next";
-import {Inter} from "next/font/google";
 import "./globals.css";
 import {Header} from "@/_components";
+import {fontInter, fontMerriweather} from "@/config/fonts";
+import {cn} from "@/lib/utils";
 
-const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html lang="en" suppressHydrationWarning={true}>
-        <body className={inter.className}>
+        <body className={cn(fontInter.className, fontMerriweather.variable)}>
         <Header/>
 
         {children}

@@ -1,4 +1,4 @@
-// @ts-ignore
+/** @type {import('tailwindcss').Config} */
 import type {Config} from "tailwindcss";
 
 const config: Config = {
@@ -19,6 +19,10 @@ const config: Config = {
             },
         },
         extend: {
+            fontFamily: {
+                sans: ['var(--font-inter)', 'sans-serif'],
+                heading: ['var(--font-heading)', 'sans-serif'],
+            },
             colors: {
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
@@ -44,6 +48,10 @@ const config: Config = {
                 accent: {
                     DEFAULT: "hsl(var(--accent))",
                     foreground: "hsl(var(--accent-foreground))",
+                },
+                yellow: {
+                    DEFAULT: "hsl(var(--yellow))",
+                    foreground: "hsl(var(--yellow-foreground))",
                 },
                 popover: {
                     DEFAULT: "hsl(var(--popover))",
