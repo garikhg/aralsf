@@ -1,1 +1,1 @@
-import React from 'react';const ContactUs = () => {    return (        <main className="container">            Contact Us Page        </main>    );};export default ContactUs;
+import React from 'react';const ContactUs = () => {    return (        <main className="container py-24">            Contact Us Page        </main>    );};export default ContactUs;

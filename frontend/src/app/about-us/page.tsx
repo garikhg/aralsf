@@ -1,1 +1,1 @@
-import React from 'react';const AboutUs = () => {    return (        <main className="container">            About Us Page        </main>    );};export default AboutUs;
+import React from 'react';const AboutUs = () => {    return (        <main className="container py-24">            About Us Page        </main>    );};export default AboutUs;

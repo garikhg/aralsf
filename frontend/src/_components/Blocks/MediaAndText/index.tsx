@@ -1,0 +1,1 @@
+import React from 'react';const BlockMediaAndText = () => {    return (        <div>            Block Media and Text        </div>    );};export default BlockMediaAndText;
