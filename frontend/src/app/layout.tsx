@@ -14,7 +14,10 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html lang="en" suppressHydrationWarning={true}>
-        <body className={cn(fontInter.className, fontMerriweather.variable)}>
+        <body className={cn(
+            "min-h-screen bg-background antialiased",
+            fontInter.className, fontMerriweather.variable
+        )}>
         <Header/>
 
         {children}
