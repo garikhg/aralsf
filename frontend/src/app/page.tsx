@@ -8,7 +8,7 @@ export default function Home() {
                 <Cover/>
             </section>
 
-            <section className="bg-white py-16">
+            <section className="bg-white pt-16 pb-6">
                 <PartnersCarousel/>
             </section>
         </main>
