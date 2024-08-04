@@ -1,1 +1,1 @@
-export {Header} from "./Header";export {Footer} from "./Footer";export {HeroSlider} from "./Slider";export {SocialLinks} from "./SocialLinks";// Blocksexport {Cover} from "./Blocks/Cover";// export { Brand } from "./Brand";
+export {Header} from "./Header";export {Footer} from "./Footer";export {HeroSlider} from "./Slider";export {SearchForm} from "./SearchForm";export {SocialLinks} from "./SocialLinks";// Blocksexport {Cover} from "./Blocks/Cover";// export { Brand } from "./Brand";
