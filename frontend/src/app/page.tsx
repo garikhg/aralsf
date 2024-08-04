@@ -1,11 +1,11 @@
 import React from "react";
-import {BlockCover, HeroSlider} from "@/_components";
+import {Cover, HeroSlider} from "@/_components";
 
 export default function Home() {
     return (
         <main role="main">
             <section className="">
-                <BlockCover/>
+                <Cover/>
             </section>
         </main>
     );

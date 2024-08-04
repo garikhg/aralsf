@@ -1,7 +1,7 @@
 import React from "react";
 import type {Metadata} from "next";
 import "./globals.css";
-import {Header} from "@/_components";
+import {Footer, Header} from "@/_components";
 import {fontInter, fontMerriweather} from "@/config/fonts";
 import {cn} from "@/lib/utils";
 
@@ -14,17 +14,10 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html lang="en" suppressHydrationWarning={true}>
-        <body className={cn(
-            "min-h-screen bg-background antialiased",
-            fontInter.className, fontMerriweather.variable
-        )}>
+        <body className={cn(fontInter.className, fontMerriweather.variable)}>
         <Header/>
-
         {children}
-
-        <footer>
-            <div className="container">Footer</div>
-        </footer>
+        <Footer/>
         </body>
         </html>
     );

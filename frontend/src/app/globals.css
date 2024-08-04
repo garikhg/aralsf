@@ -67,6 +67,6 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply min-h-screen leading-7 flex flex-col bg-background antialiased;
     }
 }
