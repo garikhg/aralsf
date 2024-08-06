@@ -1,15 +1,15 @@
 import React from "react";
-import {Cover, PartnersCarousel} from "@/_components";
+import {Cover, HeroSlider, PartnersCarousel} from "@/_components";
 import Image from "next/image";
-import {Button} from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Home() {
     return (
         <main role="main">
-            <section>
-                <Cover/>
-            </section>
+
+            <HeroSlider/>
+
+            <Cover/>
 
             <section className="bg-primary text-primary-foreground flex flex-col justify-center relative h-[82vh]">
                 <div className="container">
@@ -55,9 +55,8 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="bg-white pt-16 pb-6">
-                <PartnersCarousel/>
-            </section>
+            <PartnersCarousel/>
+
         </main>
     );
 }
