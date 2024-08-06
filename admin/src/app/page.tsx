@@ -1,5 +1,7 @@
 export default function Home() {
-  return (
-    <div>Admin Panel</div>
-  );
+    return (
+        <div>
+            Admin Panel
+        </div>
+    );
 }
