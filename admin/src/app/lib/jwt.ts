@@ -1,1 +1,0 @@
-import jwt from "jsonwebtoken";export const signToken = ({_id, username}: { _id: string; username: string }) => {    return jwt.sign({_id: _id, username: username}, process.env.JWT_SECRET as string, {expiresIn: "1d"});}export const verifyToken = (token: string) => {    return jwt.verify(token, process.env.JWT_SECRET as string);}
