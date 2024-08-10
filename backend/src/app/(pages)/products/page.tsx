@@ -1,0 +1,1 @@
+import React from 'react';import PageLayout from "@/_components/PageLayout";const Products = () => {    return (        <PageLayout>            Products        </PageLayout>    );};export default Products;
