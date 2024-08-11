@@ -1,1 +1,0 @@
-import React from 'react';import Link from "next/link";const AuthError = () => {    return (        <div>            <h1>Authentication Error</h1>            <p>There was an error with your login. <Link href="/login">Please try again</Link>.</p>        </div>    );};export default AuthError;
