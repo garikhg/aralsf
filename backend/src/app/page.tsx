@@ -5,13 +5,17 @@ import {signIn, useSession} from "next-auth/react";
 import {ReactHTMLElement} from "react";
 
 export default function Home() {
-    const {data: session, status, update} = useSession();
+    const {data: session} = useSession();
 
-    console.log(session)
+    console.log( session )
+    console.log( session?.user?.email )
     return (
         <div>
             <form action={async (formData: ReactHTMLElement<any>) => {
-                await signIn( "credentials", {formData} )
+                await signIn( "credentials", {
+                    formData,
+                    redirect: false
+                } )
             }}
             >
                 <label>
