@@ -15,7 +15,7 @@ export default function Home() {
                 <div className="container">
                     <div className="grid grid-cols-2 gap-6">
                         <div className="py-16 pr-16 space-y-12">
-                            <h2 className="font-heading text-4xl mb-6">
+                            <h2 className="text-4xl font-semibold mb-6">
                                 Elevate Your Selection with Our Premium Beers
                             </h2>
                             <div className="space-y-4 text-lg font-light leading-7">
