@@ -1,33 +1,29 @@
 "use client";
 
-import React, {useEffect} from 'react';
-import {signOut, useSession} from "next-auth/react";
-import {useRouter} from "next/navigation";
-import {router} from "next/client";
+
+import {signIn, useSession} from "next-auth/react";
+import {ReactHTMLElement} from "react";
 
 export default function Home() {
-    const {data: session, status} = useSession();
-    const router = useRouter();
+    const {data: session, status, update} = useSession();
 
-
-    // useEffect(() => {
-    //     if (status === 'loading') return;
-    //     if (!session) {
-    //         router.push('/login');
-    //     }
-    // }, [session, status, router]);
-    //
-    // if (status === 'loading') {
-    //     return <p>Loading...</p>;
-    // }
-    //
-    // if (!session) {
-    //     return null;
-    // }
-
+    console.log(session)
     return (
         <div>
-            Login Page
+            <form action={async (formData: ReactHTMLElement<any>) => {
+                await signIn( "credentials", {formData} )
+            }}
+            >
+                <label>
+                    Email
+                    <input name="email" type="email"/>
+                </label>
+                <label>
+                    Password
+                    <input name="password" type="password"/>
+                </label>
+                <button onClick={() => signIn()}>Sign In</button>
+            </form>
         </div>
     );
 }
