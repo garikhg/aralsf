@@ -1,15 +1,30 @@
+"use client";
+
 import React from "react";
 import {Cover, HeroSlider, PartnersCarousel} from "@/_components";
 import Image from "next/image";
 import Link from "next/link";
+import {gql, useQuery} from "@apollo/client";
+import {WordPressBlocksViewer} from "@/components/blocks/WordPressBlocksViewer";
+
+
 
 export default function Home() {
+    const {loading, error, data} = useQuery( GET_HOMEPAGE );
+
+    if (error) return <p>{error.message}</p>
+    if (loading) return <p>Loading...</p>
+    const {editorBlocks} = data?.page ?? '';
+
     return (
         <main role="main">
 
             <HeroSlider/>
 
             <Cover/>
+
+            <WordPressBlocksViewer blocks={editorBlocks}/>
+
 
             <section className="bg-primary text-primary-foreground flex flex-col justify-center relative h-[82vh]">
                 <div className="container">
@@ -60,3 +75,23 @@ export default function Home() {
         </main>
     );
 }
+
+const GET_HOMEPAGE = gql`
+    query GetHomepageQuery {
+        page(id: "homepage", idType: URI) {
+            title
+            editorBlocks(flat: false) {
+                __typename
+                renderedHtml
+                innerBlocks {
+                    apiVersion
+                    blockEditorCategoryName
+                    clientId
+                    name
+                    parentClientId
+                    renderedHtml
+                }
+            }
+        }
+    }
+`

@@ -1,0 +1,1 @@
+import React from 'react';interface BlockProps {    data?: {}}const Block:React.FC<BlockProps> = ({data}) => {    console.log(data)    return (        <div>        </div>    );};export default Block;
