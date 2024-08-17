@@ -12,7 +12,19 @@ export default async function SingleCategory() {
           <Filters />
 
           <div className="col-span-3">
-            Single Category
+            <div className="flex justify-between items-center border-b border-black pb-4 mb-6">
+              <p>Showing all 12 results</p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <div>Product 1</div>
+              <div>Product 2</div>
+              <div>Product 3</div>
+              <div>Product 4</div>
+              <div>Product 5</div>
+              <div>Product 6</div>
+            </div>
+
           </div>
         </div>
       </main>

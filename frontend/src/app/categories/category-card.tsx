@@ -11,7 +11,6 @@ export interface CategoryCardProps {
   imageWidth?: number;
 }
 
-
 const CategoryCard: React.FC<CategoryCardProps> = (
   {
     name = '',
