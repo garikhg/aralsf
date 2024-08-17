@@ -17,7 +17,6 @@ const BlockMediaText = () => {
                 clean, crisp notes of premium lagers to the bold, hoppy flavors of IPAs, and the rich, complex profiles
                 of stouts and sours, we offer a diverse selection to enhance your inventory.
               </p>
-
               <p>
                 Whether you’re seeking timeless classics or innovative seasonal brews,
                 our portfolio caters to all tastes and preferences. Elevate your offerings with our expertly selected
