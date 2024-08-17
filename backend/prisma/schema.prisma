@@ -14,56 +14,23 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model Post {
-  id        String  @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+enum Role {
+  USER
+  ADMIN
 }
 
 model User {
-  id       String    @id @default(cuid())
-  name     String?
-  username String?
-  email    String?   @unique
-  password String?
-  image    String?
-  posts    Post[]
-  Roles    Roles[]
-  Session  Session[]
+  id            String  @id @default(cuid())
+  user_login    String?
+  user_pass     String?
+  user_nicename String?
+  user_email    String? @unique
+  user_image    String?
+  display_name  String?
+  role          Role    @default(USER)
 
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
 
   @@map(name: "users")
 }
-
-model Roles {
-  id     Int    @id @default(autoincrement())
-  name   String @unique
-  users  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  expires      DateTime
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// model VerificationToken {
-//   id         Int      @id @default(autoincrement())
-//   identifier String
-//   token      String   @unique
-//   expires    DateTime
-//
-//   @@unique([identifier, token])
-//   @@map("verificationtokens")
-// }
