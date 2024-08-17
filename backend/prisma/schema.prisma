@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  url       = env("POSTGRES_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -29,8 +29,46 @@ model User {
   display_name  String?
   role          Role    @default(USER)
 
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime  @updatedAt @map(name: "updated_at")
+  Post      Post[]
+  Product   Product[]
+
+  @@map(name: "users")
+}
+
+model Post {
+  id        String  @id @default(cuid())
+  title     String
+  content   String
+  published Boolean @default(false)
+
+  // Foreign key to User
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
 
-  @@map(name: "users")
+  @@map(name: "posts")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  sku         String   @unique
+  alco        Float? // Alcohol percentage, nullable if not applicable
+  perCase     String? // Number of bottles per case
+  bottleSize  String? // Example: "750ml"
+  image       String?
+  description String?  @db.Text
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationship with User
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "products")
 }
