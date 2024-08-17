@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { PageHeader, PartnersCarousel } from '@/_components';
-import CategoryCard from '@/app/categories/category-card';
+import { PageHeader } from '@/_components';
+import { CategoryCard } from '@/app/categories/category-card';
 import { BrandPartnersCarousel } from '@/components/BrandPartners/BrandPartnersCarousel';
 
 

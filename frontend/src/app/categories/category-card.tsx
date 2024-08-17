@@ -46,4 +46,6 @@ const CategoryCard: React.FC<CategoryCardProps> = (
   );
 };
 
-export default CategoryCard;
+CategoryCard.displayName = 'CategoryCard';
+
+export { CategoryCard };
