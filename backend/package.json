@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "prisma:build": "prisma generate && next build",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
