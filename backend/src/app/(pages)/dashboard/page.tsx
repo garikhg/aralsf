@@ -1,1 +1,1 @@
-import React from 'react';import PageLayout from "@/_components/PageLayout";const Dashboard = () => {    return (        <PageLayout>            Dashboard        </PageLayout>    );};export default Dashboard;
+import React from 'react';import AdminLayout from "@/_components/AdminLayout";const Dashboard = () => {    return (        <AdminLayout>            Dashboard        </AdminLayout>    );};export default Dashboard;
