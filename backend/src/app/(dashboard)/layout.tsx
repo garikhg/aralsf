@@ -19,7 +19,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return <p>Please Login Your Dashboard</p>;
   }
 
-
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <DesktopNav />
