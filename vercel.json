@@ -2,7 +2,7 @@
   "rewrites": [
     {"source": "/backend/", "destination": "https://admin-app.vercel.com/"},
     {"source": "/backend/:match*", "destination": "https://admin-app.vercel.com/:match*"},
-    {"source": "/", "destination": "https://aralsf.vercel.app/"},
-    {"source": "/:match*", "destination": "https://aralsf.vercel.app/:match*"}
+    {"source": "/frontend", "destination": "https://aralsf.vercel.app/"},
+    {"source": "/frontend/:match*", "destination": "https://aralsf.vercel.app/:match*"}
   ]
 }
