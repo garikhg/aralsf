@@ -20,7 +20,6 @@ export async function GET() {
   }
 }
 
-
 export async function POST(req: NextRequest) {
   try {
     const { title, slug, content, authorId } = await req.json() as PostDataProps; // Parsing the JSON body
