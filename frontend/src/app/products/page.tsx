@@ -1,1 +1,0 @@
-import React from 'react';const Products = () => {    return (        <main className="container py-24">            Products Page        </main>    );};export default Products;
