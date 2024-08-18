@@ -9,8 +9,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger
 } from '@components/ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
-import { Badge } from '@components/ui/badge';
+import { ChevronDown} from 'lucide-react';
+import Content from '@/app/(dashboard)/admin/content/content';
 
 
 interface ContentTableProps {
@@ -71,31 +71,17 @@ const ContentTable: React.FC<ContentTableProps> = ({ posts, offset, totalPosts }
             </TableRow>
           </TableHeader>
           <TableBody>
-            {posts.length > 0 ? posts.map( (content: any) => {
-              return (
-                <TableRow key={content?.id}>
-                  <TableCell>
-                    {content?.title || 'Not content title'}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className="capitalize">
-                      {content.published ? 'Published' : 'Unpublished'}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>{content?.createdAt?.toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button aria-haspopup="true" size="icon" variant="ghost">
-                          <span>Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              );
-            } ) : (
-              <p className="text-gray-700">Not content</p>
+            {posts.length > 0 ? posts.map( (content: any) => (
+              <Content
+                key={content.id}
+                content={content}
+              />
+            ) ) : (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center">
+                  <p className="text-gray-700">Not content</p>
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>
