@@ -8,6 +8,7 @@ interface PostDataProps {
   authorId: number;
 }
 
+// Get to all posts
 export async function GET() {
   try {
     const posts = await prisma.post.findMany( {
@@ -20,6 +21,7 @@ export async function GET() {
   }
 }
 
+// Create a new post
 export async function POST(req: NextRequest) {
   try {
     const { title, slug, content, authorId } = await req.json() as PostDataProps; // Parsing the JSON body
