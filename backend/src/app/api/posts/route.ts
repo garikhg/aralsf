@@ -7,8 +7,9 @@ export async function GET() {
       where: { published: true },
       orderBy: { createdAt: 'desc' }
     } );
-    return NextResponse.json( posts );
+    return NextResponse.json( posts, {status: 200} );
   } catch (erorr) {
     return NextResponse.json( { error: 'Failed to fetch posts' }, { status: 500 } );
   }
 }
+
