@@ -20,11 +20,11 @@ enum Role {
 }
 
 model User {
-  id            String  @id @default(cuid())
+  id            Int     @id @unique @default(autoincrement())
   user_login    String?
   user_pass     String?
   user_nicename String?
-  user_email    String? @unique
+  user_email    String  @unique
   user_image    String?
   display_name  String?
   role          Role    @default(USER)
@@ -38,14 +38,15 @@ model User {
 }
 
 model Post {
-  id        String  @id @default(cuid())
+  id        Int     @id @unique @default(autoincrement())
   title     String
+  slug      String  @unique
   content   String
   published Boolean @default(false)
 
   // Foreign key to User
-  authorId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
@@ -54,8 +55,9 @@ model Post {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int      @id @unique @default(autoincrement())
   name        String
+  slug        String   @unique
   sku         String   @unique
   alco        Float?
   perCase     String?
@@ -67,8 +69,8 @@ model Product {
   updatedAt   DateTime @updatedAt
 
   // Relationship with User
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map(name: "products")
 }
