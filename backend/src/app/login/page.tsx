@@ -1,6 +1,7 @@
-import React, from 'react';
+import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/card';
 import { Button, Input, Label } from '@components/ui';
+// import { signIn } from 'next-auth/react';
 import { signIn } from '@lib/auth';
 
 const LoginPage = () => {
@@ -39,6 +40,14 @@ const LoginPage = () => {
           <CardDescription className="text-sm">Please enter your credentials</CardDescription>
         </CardHeader>
         <CardContent>
+          <form
+            action={async () => {
+              'use server';
+              await signIn( "github");
+            }}
+          >
+            <button type="submit">Signin with GitHub</button>
+          </form>
           <form action={async (formData) => {
             'use server';
             await signIn( 'credentials',

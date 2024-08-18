@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {"source": "/backend/", "destination": "https://admin-app.vercel.com/"},
+    {"source": "/backend/:match*", "destination": "https://admin-app.vercel.com/:match*"},
+    {"source": "/", "destination": "https://your-app.vercel.com/"},
+    {"source": "/:match*", "destination": "https://your-app.vercel.com/:match*"}
+  ]
+}
