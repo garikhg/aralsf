@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getToken } from '@auth/core/jwt';
+// import { getToken } from '@auth/core/jwt';
 // import { getSession } from 'next-auth/react';
 import prisma from '@lib/prisma';
 
@@ -19,15 +19,15 @@ export async function handle(req: NextApiRequest, res: NextApiResponse) {
   }
 
   // Token Protection
-  const token = getToken( { req } );
+  // const token = getToken( { req } );
 
   // Session Protection
   // const session = await getSession({ req });
 
   // Verify session exists
-  if (!token) {
-    return res.status( 401 ).json( { error: 'You must be logged in to create posts.' } );
-  }
+  // if (!token) {
+  //   return res.status( 401 ).json( { error: 'You must be logged in to create posts.' } );
+  // }
 
   try {
     const { title, slug, content, authorId } = req.body as PostDataProps;
