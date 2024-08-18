@@ -1,21 +1,24 @@
 import React from 'react';
 import prisma from '@lib/prisma';
+import ContentHeader from '@/app/(dashboard)/admin/content/content-header';
+import ContentTable from '@/app/(dashboard)/admin/content/content-table';
 
 export default async function Content() {
-  const posts = await prisma.post.findMany( {
+  const postsData = await prisma.post.findMany( {
     where: { published: true },
     orderBy: { createdAt: 'desc' }
   } );
 
-  console.log( posts );
+  const posts = postsData ? postsData : [];
+
   return (
     <div>
-      {posts.length && posts.map( (post) => (
-        <div key={post?.id}>
-          {post?.title}
-          {/*{post?.content && <div dangerouslySetInnerHTML={{ __html: post.content }} />}*/}
-        </div>
-      ) )}
+      <ContentHeader posts={posts} />
+      <ContentTable
+        posts={posts}
+        offset={6}
+        totalPosts={posts.length || 0}
+      />
     </div>
   );
 };

@@ -5,19 +5,19 @@ import Link from 'next/link';
 import { Box, LayoutDashboard, NotepadTextDashed, Settings, Users, Image } from 'lucide-react';
 import { cn } from '@lib/utils';
 import { usePathname } from 'next/navigation';
+import DashFooter from '@components/dash-footer';
+import DashHeader from '@components/dash-header';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <DesktopNav />
-      <div className="flex flex-col sm:gap-4 sm:py-4 pl-56">
-        <header
-          className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-          <h1>Dashboard</h1>
-        </header>
-        <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/60" role="main">
+      <div className="flex flex-col sm:gap-4 sm:py-4 pl-56 sm:pb-0 min-h-screen">
+        <DashHeader />
+        <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:pb-6 md:gap-4 bg-muted/60" role="main">
           {children}
         </main>
+        <DashFooter />
       </div>
     </div>
   );
