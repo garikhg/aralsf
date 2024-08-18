@@ -4,11 +4,22 @@ import React from 'react';
 import Link from 'next/link';
 import { Box, LayoutDashboard, NotepadTextDashed, Settings, Users, Image } from 'lucide-react';
 import { cn } from '@lib/utils';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import DashFooter from '@components/dash-footer';
 import DashHeader from '@components/dash-header';
+import { useSession } from 'next-auth/react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+
+  const { data: session } = useSession();
+  const routing = useRouter();
+  console.log( session?.user?.email );
+  if (session?.user?.email !== 'garik.28h@gmail.com') {
+    // routing.push( '/login' );
+    return <p>Please Login Your Dashboard</p>;
+  }
+
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <DesktopNav />
