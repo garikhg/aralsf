@@ -1,1 +1,0 @@
-import React from 'react';import PageLayout from "@/_components/PageLayout";const Settings = () => {    return (        <PageLayout>            Settings        </PageLayout>    );};export default Settings;
