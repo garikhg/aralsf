@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       data: { title, slug, content, authorId, published: false }
     } );
 
-    return NextResponse.json( newPost );
+    return NextResponse.json( newPost, { status: 200 } );
   } catch (error) {
     return NextResponse.json( { error: 'Failed to create post' }, { status: 500 } );
   }
