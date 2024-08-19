@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 
 import { PageHeader } from '@/components/page-header';
@@ -33,12 +32,6 @@ const products = [
 ];
 
 export default async function SingleCategory() {
-  const res = await fetch( 'http://localhost:3001/api/products', {
-    cache: 'no-store' // Optional: to always fetch the latest data
-  } );
-  const posts = await res.json();
-
-  console.log( posts );
 
   return (
     <div>
