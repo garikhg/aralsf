@@ -3,8 +3,6 @@ import type { Metadata } from 'next';
 import { Footer, Header } from '@/_components';
 import { fontInter, fontMerriweather } from '@/config/fonts';
 import { cn } from '@/lib/utils';
-import { ApolloProvider } from '@apollo/client';
-import client from '@/lib/apolloClient';
 import './globals.css';
 
 
@@ -15,10 +13,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en">
     <body className={cn( fontInter.className, fontMerriweather.variable )}>
     <Header />
-    <ApolloProvider client={client}>{children}</ApolloProvider>
+    {children}
     <Footer />
     </body>
     </html>
