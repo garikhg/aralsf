@@ -1,18 +1,21 @@
-'use client'
-import { signIn } from "next-auth/react";
+'use client';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState( '' );
+  const [password, setPassword] = useState( '' );
+  // const { data: session, status } = useSession();
+
+  // console.log( session );
 
   const handleSubmit = async () => {
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn( 'credentials', {
         redirect: false,
         email,
-        password,
-      });
+        password
+      } );
 
       if (result?.error) {
         // Handle error
@@ -20,14 +23,20 @@ const SignIn = () => {
         // Handle success
       }
     } catch (error) {
-      console.error("Failed to sign in:", error);
+      console.error( 'Failed to sign in:', error );
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* Form fields */}
-    </form>
+    <div>
+      <button onClick={() => signOut()}>
+        Sign Out
+      </button>
+      <button onClick={() => signIn()}>Sign in</button>
+      <form onSubmit={handleSubmit}>
+        {/* Form fields */}
+      </form>
+    </div>
   );
 };
 export default SignIn;
