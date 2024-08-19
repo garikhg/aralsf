@@ -4,10 +4,10 @@ import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 let apolloClient: ApolloClient<any> | undefined;
 
 function createApolloClient() {
-  return new ApolloClient( {
-    link: new HttpLink( { uri: process.env.NEXT_PUBLIC_WORDPRESS_URL } ),
-    cache: new InMemoryCache()
-  } );
+  return new ApolloClient({
+    link: new HttpLink({ uri: process.env.NEXT_PUBLIC_WORDPRESS_URL }),
+    cache: new InMemoryCache(),
+  });
 }
 
 export function initializeApollo(initialState: any = {}) {
@@ -15,7 +15,7 @@ export function initializeApollo(initialState: any = {}) {
 
   // Hydrate the Apollo client state if initial state is provided
   if (initialState) {
-    _apolloClient.cache.restore( initialState );
+    _apolloClient.cache.restore(initialState);
   }
 
   if (typeof window === 'undefined') {
@@ -29,6 +29,6 @@ export function initializeApollo(initialState: any = {}) {
 }
 
 export function useApollo(initialState: any = {}) {
-  const store = useMemo( () => initializeApollo( initialState ), [initialState] );
+  const store = useMemo(() => initializeApollo(initialState), [initialState]);
   return store;
 }

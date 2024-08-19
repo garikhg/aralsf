@@ -3,34 +3,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export interface CategoryCardProps {
-  name?: string;
-  image?: string;
-  description?: string;
-  href?: string;
-  imageHeight?: number;
-  imageWidth?: number;
+  props?: any;
+  data?: any;
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = (
-  {
-    name = '',
-    image = '',
-    description = '',
-    href = '#',
-    imageWidth = 436,
-    imageHeight = 470
-  }
-) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ data, ...props }) => {
+  const { name, description, uri: href } = data ?? '';
+  const { sourceUrl, altText } = data?.acfProductCategoriesOptions?.acfThumbnail?.node ?? '';
+
+  console.log(data)
   return (
     <div className="relative overflow-hidden rounded-lg">
-      {image &&
+      {sourceUrl &&
         <div className="relative z-0">
           <span className="absolute w-full h-full top-0 left-0 bg-gradient-to-t from-black/60 to-black/10 z-[5]"></span>
           <Image
-            src={image}
-            alt={name}
-            height={imageHeight}
-            width={imageWidth}
+            src={sourceUrl ?? ''}
+            alt={!altText ? name : altText}
+            height={436}
+            width={470}
             priority
             className="max-w-full z-0"
           />
