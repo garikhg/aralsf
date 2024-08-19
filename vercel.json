@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {"source": "/backend/", "destination": "https://aralsf-backend.vercel.app/"},
-    {"source": "/backend/:match*", "destination": "https://aralsf-backend.vercel.app/:match*"},
-    {"source": "/", "destination": "https://aralsf-gaty.vercel.app/"},
-    {"source": "/:match*", "destination": "https://aralsf-gaty.vercel.app/:match*"}
-  ]
-}
