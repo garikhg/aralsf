@@ -107,9 +107,7 @@ const Categories: React.FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  // const categories = data?.acfProductCats?.nodes.filter( category => category.slug !== 'uncategory' ) ?? '';
   const categories = data?.acfProductCats?.nodes ?? [];
-  console.log( categories );
 
   return (
     <div>
