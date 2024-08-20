@@ -11,7 +11,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ data, ...props }) => {
   const { name, description, uri: href } = data ?? '';
   const { sourceUrl, altText } = data?.acfProductCategoriesOptions?.acfThumbnail?.node ?? '';
 
-  console.log(data)
   return (
     <div className="relative overflow-hidden rounded-lg">
       {sourceUrl &&
