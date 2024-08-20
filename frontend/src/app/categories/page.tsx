@@ -6,7 +6,6 @@ import { CategoryCard } from '@/app/categories/category-card';
 import { BrandPartnersCarousel } from '@/components/BrandPartners/BrandPartnersCarousel';
 import { gql, useQuery } from '@apollo/client';
 
-
 const GET_CATEGORIES_QUERY = gql`
     query GetProductCategories($exclude1: [ID] = "12") {
         acfProductCats(where: {exclude: $exclude1}) {
