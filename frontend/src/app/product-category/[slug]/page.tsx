@@ -7,6 +7,34 @@ import ProductsFilters from '@/components/products/products-filters';
 import ProductCard from '@/components/products/product-card';
 import { gql, useQuery } from '@apollo/client';
 
+const products = [
+  {
+    id: 1,
+    title: 'Alazani Valley Red Semi-Sweet Wine',
+    sku: 'DSC3948',
+    alco: '4.5%',
+    vol: '750ml',
+    imageSrc: '/images/demo/products/alazani-valley-r-DSC3948.jpg'
+  },
+  {
+    id: 2,
+    title: 'Khvantchkara Red Semi-Sweet Wine',
+    sku: 'DSC3944',
+    alco: '4.5%',
+    vol: '750ml',
+    imageSrc: '/images/demo/products/khvantchkara-DSC3944.jpg'
+  },
+  {
+    id: 3,
+    title: 'Kindzmarauli Red Semi-Sweet Wine',
+    sku: 'DSC3944',
+    alco: '4.5%',
+    vol: '750ml',
+    imageSrc: '/images/demo/products/kindzmarauli-DSC3950.jpg'
+  }
+];
+
+
 const GET_CATEGORY_BY_SLUG = gql`
     query GetCategoryBySlug($idType: AcfProductCatIdType = SLUG, $id1: ID!) {
         acfProductCat(idType: $idType, id: $id1) {
