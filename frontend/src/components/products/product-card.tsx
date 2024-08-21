@@ -8,6 +8,7 @@ interface ProductCardProps {
   vol?: string;
   perCase?: string;
   imageSrc?: string;
+  data?: any;
 }
 
 const ProductCard: React.FC<ProductCardProps> = (
@@ -18,20 +19,29 @@ const ProductCard: React.FC<ProductCardProps> = (
     vol,
     perCase,
     imageSrc,
+    data
   }
 ) => {
+
+  const { sourceUrl } = data?.featuredImage?.node || '';
+  console.log( sourceUrl );
+
+
   return (
     <div className="relative w-full overflow-hidden rounded-lg">
-      <div className="bg-white">
-        <Image
-          src={imageSrc ?? ''}
-          alt={title ?? ''}
-          width={720}
-          height={1080}
-          priority
-          className="w-full max-w-full h-auto"
-        />
-      </div>
+      {sourceUrl && (
+        <div className="bg-white">
+          <Image
+            src={sourceUrl}
+            alt={title || ''}
+            width={720}
+            height={1080}
+            priority
+            className="w-full max-w-full h-auto"
+          />
+        </div>
+      )}
+
       <div className="py-4 bg-[#F2F2F2]">
         {title && (
           <h3 className="scroll-m-20 text-lg text-center font-semibold tracking-tight border-b border-black/10 pb-4 px-4">
