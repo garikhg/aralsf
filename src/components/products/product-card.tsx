@@ -1,31 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 
-interface ProductCardProps {
-  title?: string;
-  sku?: string;
-  alco?: string;
-  vol?: string;
-  perCase?: string;
-  imageSrc?: string;
-  data?: any;
-}
-
-const ProductCard: React.FC<ProductCardProps> = (
-  {
-    title,
-    sku,
-    alco,
-    vol,
-    perCase,
-    imageSrc,
-    data
-  }
-) => {
-
+const ProductCard = ({ data }: { data: any }) => {
   const { sourceUrl } = data?.featuredImage?.node || '';
-  console.log( sourceUrl );
-
+  const { sku, country, grapeType, manufacturer, brand, color, type, alcoholVolume } = data?.acfProductOptions || '';
 
   return (
     <div className="relative w-full overflow-hidden rounded-lg">
@@ -33,7 +11,7 @@ const ProductCard: React.FC<ProductCardProps> = (
         <div className="bg-white">
           <Image
             src={sourceUrl}
-            alt={title || ''}
+            alt={data?.title || ''}
             width={720}
             height={1080}
             priority
@@ -43,20 +21,21 @@ const ProductCard: React.FC<ProductCardProps> = (
       )}
 
       <div className="py-4 bg-[#F2F2F2]">
-        {title && (
-          <h3 className="scroll-m-20 text-lg text-center font-semibold tracking-tight border-b border-black/10 pb-4 px-4">
-            {title}
+        {data?.title && (
+          <h3 className="scroll-m-20 min-h-16 text-md leading-6 text-center tracking-tight border-b border-black/10 pb-4 px-4">
+            {data?.title}
           </h3>
         )}
-        <div className="p-4 text-center">
+        <div className="p-4 text-center text-sm leading-7">
           {sku && <p>SKU - {sku}</p>}
-          {alco && <p>Alcohol Contain - {alco}</p>}
-          {vol && <p>Bottle Size - {vol}</p>}
-          {perCase && <p>Bottles per case - {perCase}</p>}
+          {country && <p>Country - {country}</p>}
+          {brand && <p>Brand - {brand}</p>}
+          {alcoholVolume && <p>Alc. Vol. - {alcoholVolume}</p>}
         </div>
       </div>
     </div>
   );
 };
+
 
 export default ProductCard;

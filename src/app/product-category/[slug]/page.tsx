@@ -40,6 +40,16 @@ const GET_CATEGORY_BY_SLUG = gql`
                             sourceUrl
                         }
                     }
+                    acfProductOptions {
+                        brand
+                        country
+                        manufacturer
+                        sku
+                        color
+                        grapeType
+                        type
+                        alcoholVolume
+                    }
                 }
             }
         }
@@ -80,7 +90,7 @@ const ProductCategory: React.FC = ({}) => {
 
   console.log( getProducts );
   return (
-    <div>
+    <div className="min-h-screen">
       <PageHeader
         title={category?.name || 'Category'}
         description={category?.description || ''}

@@ -49,6 +49,7 @@ const Categories: React.FC = () => {
         title="Categories"
         description=""
       />
+
       <main role="main">
         <div className="container py-24">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
