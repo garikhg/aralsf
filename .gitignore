@@ -35,42 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# API
-# Node.js specific files
-api/node_modules/
-api/npm-debug.log*
-api/yarn-debug.log*
-api/yarn-error.log*
-
-# Logs
-lapi/ogs/
-api/*.log
-api/log/
-
-# Environment variables
-api/.env
-
-# Directory for local tools
-api/.vscode/
-.idea/
-
-# Build directories
-api/dist/
-api/build/
-
-# Coverage directory used by tools like istanbul
-api/coverage/
-
-# Optional npm cache directory
-api/.npm/
-
-# Optional eslint cache
-api/.eslintcache
-
-# Output of 'npm pack'
-api/*.tgz
-
-# Yarn Integrity file
-api/.yarn-i
-
 # Other files and Directories
+/.env

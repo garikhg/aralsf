@@ -47,8 +47,7 @@ const GET_CATEGORY_BY_SLUG = gql`
 `;
 
 
-
-const ProductCategory: React.FC= ({}) => {
+const ProductCategory: React.FC = ({}) => {
   const { slug } = useParams();
   const [category, setCategory] = useState<any>( null );
   const [heroBanner, setHeroBanner] = useState<any>( null );
@@ -90,6 +89,9 @@ const ProductCategory: React.FC= ({}) => {
 
       <main className="py-24" role="main">
         <div className="container grid grid-cols-4 gap-x-16">
+          <aside className="col-span-1">
+            <ProductsFilters />
+          </aside>
 
           <div className="col-span-3">
             <div className="flex justify-between items-center border-b border-black pb-4 mb-6">
@@ -98,8 +100,6 @@ const ProductCategory: React.FC= ({}) => {
               </div>
               <div></div>
             </div>
-
-            <ProductsFilters />
 
             <div className="grid grid-cols-3 gap-4">
               {getProducts && getProducts.map( (product: any) => (
