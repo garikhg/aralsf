@@ -58,6 +58,18 @@ const GET_CATEGORY_BY_SLUG = gql`
                     }
                 }
             }
+            products {
+                nodes {
+                    slug
+                    status
+                    title
+                    featuredImage {
+                        node {
+                            sourceUrl
+                        }
+                    }
+                }
+            }
         }
     }
 `;
@@ -87,6 +99,7 @@ const SingleCategory: React.FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
+  console.log(data)
   return (
     <div>
       <PageHeader
