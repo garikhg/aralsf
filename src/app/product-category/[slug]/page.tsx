@@ -9,6 +9,158 @@ import ProductsFilters from '@/components/products/products-filters';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
+interface Product {
+  slug: string;
+  status: boolean;
+  title: string;
+  acfProductCategoriesOptions?: {
+    acfThumbnail: {
+      node: {
+        sourceUrl: string;
+        altText: string;
+        slug: string;
+      };
+    };
+    acfHeroBanner: {
+      node: {
+        altText: string;
+        sourceUrl: string;
+      };
+    };
+  };
+}
+
+interface PageInfo {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  endCursor: string;
+}
+
+interface ProductsData {
+  nodes: Product[];
+  pageInfo: PageInfo;
+}
+
+interface CategoryProps {
+  name: string;
+  description?: string;
+  products: ProductsData;
+}
+
+const ProductCategory: React.FC = () => {
+  const { slug } = useParams();
+  const [category, setCategory] = useState<CategoryProps | null>( null );
+  const [heroBanner, setHeroBanner] = useState<{ sourceUrl: string; alertText?: string } | null>( null );
+  const [isLoadingMore, setIsLoadingMore] = useState( false );
+
+  const { data, loading, error, fetchMore } = useQuery( GET_CATEGORY_BY_SLUG, {
+    variables: { id1: slug, idType: 'SLUG' },
+    skip: !slug
+  } );
+
+  useEffect( () => {
+    if (data?.acfProductCat) {
+      setCategory( data?.acfProductCat );
+
+      if (data?.acfProductCat?.acfProductCategoriesOptions?.acfHeroBanner?.node) {
+        setHeroBanner( data?.acfProductCat?.acfProductCategoriesOptions?.acfHeroBanner?.node );
+      }
+    }
+
+  }, [data] );
+
+  if (loading) {
+    return <Skeleton count={15} />;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const getProductsResults = (products: Product[]) => {
+    return products && <p>Showing all {products.length} results</p>;
+  };
+
+  const getProducts = data?.acfProductCat?.products;
+
+  const loadMoreProducts = async () => {
+    if (data?.acfProductCat?.products?.pageInfo?.hasNextPage) {
+      setIsLoadingMore( true );
+
+      try {
+        await fetchMore( {
+          variables: {
+            productsLast: data?.acfProductCat?.products?.pageInfo?.endCursor
+          },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            if (!fetchMoreResult) return prev;
+            return {
+              acfProductCat: {
+                ...prev.acfProductCat,
+                products: {
+                  ...prev.acfProductCat.products,
+                  nodes: [
+                    ...prev.acfProductCat.products.nodes,
+                    ...fetchMoreResult.acfProductCat.products.nodes
+                  ],
+                  pageInfo: fetchMoreResult.acfProductCat.products.pageInfo
+                }
+              }
+            };
+          }
+        } );
+
+      } catch (erorr) {
+        console.error( 'Error fetching more products:', erorr );
+      } finally {
+        setIsLoadingMore( false );
+      }
+    }
+  };
+
+  return (
+    <div className="relative min-h-screen flex flex-col">
+      <PageHeader
+        title={category?.name || ''}
+        description={category?.description || ''}
+        backgroundImage={heroBanner?.sourceUrl || ''}
+      />
+
+      <main className="py-24" role="main">
+        <div className="container grid grid-cols-4 gap-x-16">
+          <aside className="col-span-1">
+            <ProductsFilters />
+          </aside>
+
+          <div className="col-span-3">
+            <div className="flex justify-between items-center border-b border-black pb-4 mb-6">
+              <div>
+                {getProductsResults( category?.products.nodes )}
+              </div>
+              <div></div>
+            </div>
+
+            <div
+              className="grid grid-cols-3 gap-4 relative">
+              {getProducts?.nodes && getProducts.nodes.map( (product: any, index: number) => (
+                <div key={product.slug || index} className="relative">
+                  {isLoadingMore && <Skeleton className="w-[318px] h-[477px] absolute top-0 left-0 z-10" />}
+                  <ProductCard data={product} />
+                </div>
+              ) )}
+            </div>
+            {getProducts?.pageInfo?.hasNextPage && (
+              <Button onClick={loadMoreProducts} disabled={isLoadingMore}>
+                Load More
+              </Button>
+            )}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
 
 const GET_CATEGORY_BY_SLUG = gql`
     ${productDetailsFragment}
@@ -52,115 +204,4 @@ const GET_CATEGORY_BY_SLUG = gql`
         }
     }
 `;
-
-const ProductCategory: React.FC = ({}) => {
-  const { slug } = useParams();
-  const [category, setCategory] = useState<any>( null );
-  const [heroBanner, setHeroBanner] = useState<any>( null );
-  const [isLoadingMore, setisLoadingMore] = useState( false );
-
-  const { data, loading, error, fetchMore } = useQuery( GET_CATEGORY_BY_SLUG, {
-    variables: { id1: slug, idType: 'SLUG' },
-    skip: !slug
-  } );
-
-  useEffect( () => {
-    if (data?.acfProductCat) {
-      setCategory( data?.acfProductCat );
-
-      if (data?.acfProductCat?.acfProductCategoriesOptions?.acfHeroBanner?.node) {
-        setHeroBanner( data?.acfProductCat?.acfProductCategoriesOptions?.acfHeroBanner?.node );
-      }
-    }
-
-  }, [data] );
-
-  if (loading) {
-    return null;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const getProducts = data?.acfProductCat?.products;
-
-  const loadMoreProducts = async () => {
-    if (data?.acfProductCat?.products?.pageInfo?.hasNextPage) {
-      setisLoadingMore( true );
-
-      try {
-        await fetchMore( {
-          variables: {
-            productsLast: data?.acfProductCat?.products?.pageInfo?.endCursor
-          },
-          updateQuery: (prev, { fetchMoreResult }) => {
-            if (!fetchMoreResult) return prev;
-            return {
-              acfProductCat: {
-                ...prev.acfProductCat,
-                products: {
-                  ...prev.acfProductCat.products,
-                  nodes: [
-                    ...prev.acfProductCat.products.nodes,
-                    ...fetchMoreResult.acfProductCat.products.nodes
-                  ],
-                  pageInfo: fetchMoreResult.acfProductCat.products.pageInfo
-                }
-              }
-            };
-          }
-        } );
-
-      } catch (erorr) {
-        console.error( 'Error fetching more products:', erorr );
-      } finally {
-        setisLoadingMore( false );
-      }
-    }
-  };
-
-  return (
-    <div className="min-h-screen">
-      <PageHeader
-        title={category?.name || ''}
-        description={category?.description || ''}
-        backgroundImage={heroBanner?.sourceUrl || ''}
-      />
-
-      <main className="py-24" role="main">
-        <div className="container grid grid-cols-4 gap-x-16">
-          <aside className="col-span-1">
-            <ProductsFilters />
-          </aside>
-
-          <div className="col-span-3">
-            <div className="flex justify-between items-center border-b border-black pb-4 mb-6">
-              <div>
-                <p>Showing all 12 results</p>
-              </div>
-              <div></div>
-            </div>
-
-            <div
-              className="grid grid-cols-3 gap-4 relative">
-              {getProducts?.nodes && getProducts.nodes.map( (product: any, index: number) => (
-                <div key={product.slug || index} className="relative">
-                  {isLoadingMore && <Skeleton className="w-[318px] h-[477px] absolute top-0 left-0 z-10" />}
-                  <ProductCard data={product} />
-                </div>
-              ) )}
-            </div>
-            {getProducts?.pageInfo?.hasNextPage && (
-              <Button onClick={loadMoreProducts} disabled={isLoadingMore}>
-                Load More
-              </Button>
-            )}
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-};
-
 export default ProductCategory;
