@@ -3,14 +3,55 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
-import ProductCard from '@/components/products/product-card';
+import ProductCard, { productDetailsFragment } from '@/components/products/product-card';
 import { gql, useQuery } from '@apollo/client';
 import ProductsFilters from '@/components/products/products-filters';
-import { GET_CATEGORY_BY_SLUG } from '@/lib/queries';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
+
+const GET_CATEGORY_BY_SLUG = gql`
+    ${productDetailsFragment}
+    query GetCategoryBySlug(
+        $idType: AcfProductCatIdType = SLUG,
+        $id1: ID!
+        $productsFirst: Int = 6
+        $productsLast: String
+    ) {
+        acfProductCat(idType: $idType, id: $id1) {
+            id
+            name
+            slug
+            description
+            termTaxonomyId
+            acfProductCategoriesOptions {
+                acfThumbnail {
+                    node {
+                        sourceUrl
+                        altText
+                        slug
+                    }
+                }
+                acfHeroBanner {
+                    node {
+                        altText
+                        sourceUrl
+                    }
+                }
+            }
+            products(first: $productsFirst, after: $productsLast) {
+                nodes {
+                    ...ProductDetails
+                }
+                pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                    endCursor
+                }
+            }
+        }
+    }
+`;
 
 const ProductCategory: React.FC = ({}) => {
   const { slug } = useParams();
@@ -121,4 +162,5 @@ const ProductCategory: React.FC = ({}) => {
     </div>
   );
 };
+
 export default ProductCategory;
