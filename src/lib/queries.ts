@@ -1,7 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const GET_CATEGORY_BY_SLUG = gql`
-    query GetCategoryBySlug($idType: AcfProductCatIdType = SLUG, $id1: ID!) {
+    query GetCategoryBySlug(
+        $idType: AcfProductCatIdType = SLUG, 
+        $id1: ID!
+        $productsFirst: Int = 6
+        $productsLast: String
+    ) {
         acfProductCat(idType: $idType, id: $id1) {
             id
             name
@@ -23,7 +28,7 @@ export const GET_CATEGORY_BY_SLUG = gql`
                     }
                 }
             }
-            products {
+            products(first: $productsFirst, after: $productsLast) {
                 nodes {
                     slug
                     status
@@ -43,6 +48,11 @@ export const GET_CATEGORY_BY_SLUG = gql`
                         type
                         alcoholVolume
                     }
+                }
+                pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                    endCursor
                 }
             }
         }

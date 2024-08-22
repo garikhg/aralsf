@@ -7,6 +7,7 @@ const ProductCard = ({ data }: { data: any }) => {
 
   return (
     <div className="relative w-full overflow-hidden rounded-lg">
+
       {sourceUrl && (
         <div className="bg-white">
           <Image
