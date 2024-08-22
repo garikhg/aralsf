@@ -123,7 +123,7 @@ const ProductCategory: React.FC = ({}) => {
   return (
     <div className="min-h-screen">
       <PageHeader
-        title={category?.name || 'Category'}
+        title={category?.name || ''}
         description={category?.description || ''}
         backgroundImage={heroBanner?.sourceUrl || ''}
       />
