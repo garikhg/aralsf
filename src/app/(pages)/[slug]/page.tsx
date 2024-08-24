@@ -2,6 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { gql, useQuery } from '@apollo/client';
+import { PageHeader } from '@/components/layouts/page-header';
 
 export default function Pages() {
   const { slug } = useParams<{ slug: string }>();
@@ -17,13 +18,18 @@ export default function Pages() {
     return <p>An erorr</p>;
   }
 
-  console.log( data?.pageBy );
-  const { title, content } = data?.pageBy || [];
+  const { title, content, featuredImage } = data?.pageBy || [];
 
   return (
     <div>
-      {title && <h1>{data?.title}</h1>}
-      {content && <div dangerouslySetInnerHTML={{ __html: content || '' }} />}
+      <PageHeader
+        title={title}
+        backgroundImage={featuredImage?.node?.sourceUrl || ''}
+      />
+
+      <main role="main">
+        {content && <div dangerouslySetInnerHTML={{ __html: content || '' }} />}
+      </main>
     </div>
   );
 }
@@ -33,6 +39,11 @@ const RequestPageBySlug = gql`
         pageBy(uri: $uri) {
             title
             content
+            featuredImage {
+                node {
+                    sourceUrl
+                }
+            }
         }
     }
 `;
