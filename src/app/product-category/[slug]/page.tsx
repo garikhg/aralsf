@@ -8,8 +8,7 @@ import { gql, useQuery } from '@apollo/client';
 import ProductsFilters from '@/components/products/products-filters';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { LoaderCircle, Image } from 'lucide-react';
-import { LoadingProductCategory } from '@/components/utils/loading';
+import { LoaderCircle } from 'lucide-react';
 import ProductSkeleton from '@/components/products/product-skeleton';
 
 interface Product {
@@ -98,10 +97,6 @@ const ProductCategory: React.FC = () => {
     }
 
   }, [data] );
-
-  // if (loading) {
-  //   return <LoadingProductCategory />;
-  // }
 
   if (error) {
     return <div>Error: {error.message}</div>;
