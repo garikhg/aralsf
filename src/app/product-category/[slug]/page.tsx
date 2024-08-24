@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { PageHeader } from '@/components/page-header';
-import ProductCard, { productDetailsFragment } from '@/components/products/product-card';
+import { PageHeader } from '@/components/layouts/page-header';
 import { gql, useQuery } from '@apollo/client';
-import ProductsFilters from '@/components/products/products-filters';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { LoaderCircle } from 'lucide-react';
+
 import ProductSkeleton from '@/components/products/product-skeleton';
+import ProductsFilters from '@/components/products/products-filters';
+import ProductCard, { productDetailsFragment } from '@/components/products/product-card';
 
 interface Product {
   slug: string;
@@ -154,9 +154,8 @@ const ProductCategory: React.FC = () => {
           <div className="col-span-3">
             <div className="grid grid-cols-3 gap-4 relative">
               {products?.nodes ? products.nodes.map( (product: any, index: number) => (
-                <div key={product.slug || index} className="relative">
+                <div key={product.id} className="relative">
                   <ProductCard data={product} />
-                  {isLoadingMore && <Skeleton className="w-[318px] h-[477px] absolute top-0 left-0 z-10" />}
                 </div>
               ) ) : [...Array( 6 )].map( (_, index) => (
                 <ProductSkeleton key={index} />
