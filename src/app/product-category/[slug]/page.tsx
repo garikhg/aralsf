@@ -8,24 +8,26 @@ import { gql, useQuery } from '@apollo/client';
 import ProductsFilters from '@/components/products/products-filters';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { LoaderCircle } from 'lucide-react';
+import { LoaderCircle, Image } from 'lucide-react';
+import { LoadingProductCategory } from '@/components/utils/loading';
+import ProductSkeleton from '@/components/products/product-skeleton';
 
 interface Product {
   slug: string;
   status: boolean;
   title: string;
   acfProductCategoriesOptions?: {
-    acfThumbnail: {
-      node: {
-        sourceUrl: string;
-        altText: string;
-        slug: string;
+    acfThumbnail?: {
+      node?: {
+        sourceUrl?: string;
+        altText?: string;
+        slug?: string;
       };
     };
-    acfHeroBanner: {
-      node: {
-        altText: string;
-        sourceUrl: string;
+    acfHeroBanner?: {
+      node?: {
+        altText?: string;
+        sourceUrl?: string;
       };
     };
   };
@@ -63,12 +65,16 @@ const itemVariants = {
 
 const ProductCategory: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
+  const [products, setProducts] = useState<any | null>( null );
   const [category, setCategory] = useState<CategoryProps | null>( null );
   const [heroBanner, setHeroBanner] = useState<{ sourceUrl: string; alertText?: string } | null>( null );
   const [isLoadingMore, setIsLoadingMore] = useState( false );
 
-  const { data, loading, error, fetchMore } = useQuery( GET_CATEGORY_BY_SLUG, {
-    variables: { id1: slug, idType: 'SLUG' },
+  const { data, error, fetchMore } = useQuery( GET_CATEGORY_BY_SLUG, {
+    variables: {
+      id1: slug,
+      idType: 'SLUG'
+    },
     skip: !slug
   } );
 
@@ -83,21 +89,23 @@ const ProductCategory: React.FC = () => {
       setCategory( data?.acfProductCat );
 
       if (data?.acfProductCat?.acfProductCategoriesOptions?.acfHeroBanner?.node) {
-        setHeroBanner( data?.acfProductCat?.acfProductCategoriesOptions?.acfHeroBanner?.node );
+        setHeroBanner( data.acfProductCat.acfProductCategoriesOptions.acfHeroBanner.node );
       }
+    }
+
+    if (data?.acfProductCat?.products) {
+      setProducts( data.acfProductCat.products );
     }
 
   }, [data] );
 
-  if (loading) {
-    return <Skeleton count={15} />;
-  }
+  // if (loading) {
+  //   return <LoadingProductCategory />;
+  // }
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  const getProducts = data?.acfProductCat?.products;
 
   const loadMoreProducts = async () => {
     if (data?.acfProductCat?.products?.pageInfo?.hasNextPage) {
@@ -149,26 +157,17 @@ const ProductCategory: React.FC = () => {
           </aside>
 
           <div className="col-span-3">
-            <div className="flex justify-between items-center border-b border-black pb-4 mb-6">
-              <div>
-                <p>Showing all {getProducts?.nodes.length || 0} results</p>
-              </div>
-              <div></div>
-            </div>
-
-            <div
-              className="grid grid-cols-3 gap-4 relative">
-              {getProducts?.nodes && getProducts.nodes.map( (product: any, index: number) => (
-                <div
-                  key={product.slug || index}
-                  className="relative"
-                >
+            <div className="grid grid-cols-3 gap-4 relative">
+              {products?.nodes ? products.nodes.map( (product: any, index: number) => (
+                <div key={product.slug || index} className="relative">
                   <ProductCard data={product} />
                   {isLoadingMore && <Skeleton className="w-[318px] h-[477px] absolute top-0 left-0 z-10" />}
                 </div>
+              ) ) : [...Array( 6 )].map( (_, index) => (
+                <ProductSkeleton key={index} />
               ) )}
             </div>
-            {getProducts?.pageInfo?.hasNextPage && (
+            {products?.pageInfo?.hasNextPage && (
               <div className="flex justify-center items-center mt-6">
                 <Button
                   onClick={loadMoreProducts}
@@ -176,7 +175,7 @@ const ProductCategory: React.FC = () => {
                   variant="ghost"
                   className="flex gap-2 tsxt-xs uppercase"
                 >
-                  {isLoadingMore && <LoaderCircle className="animate-spin w-4 h-4" /> }
+                  {isLoadingMore && <LoaderCircle className="animate-spin w-4 h-4" />}
                   <span>Load More...</span>
                 </Button>
               </div>
@@ -187,7 +186,6 @@ const ProductCategory: React.FC = () => {
     </div>
   );
 };
-
 
 const GET_CATEGORY_BY_SLUG = gql`
     ${productDetailsFragment}
