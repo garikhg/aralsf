@@ -1,34 +1,25 @@
 import { useMemo } from 'react';
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-let apolloClient: ApolloClient<any> | undefined;
+export const useApollo = () => {
+  return useMemo(() => {
+    const httpLink = new HttpLink({
+      uri: process.env.NEXT_PUBLIC_WORDPRESS_URL,
+    });
 
-function createApolloClient() {
-  return new ApolloClient({
-    link: new HttpLink({ uri: process.env.NEXT_PUBLIC_WORDPRESS_URL }),
-    cache: new InMemoryCache(),
-  });
-}
+    const authLink = setContext((_, { headers }) => {
+      return {
+        headers: {
+          ...headers,
+          // Add authorization header or other headers if needed
+        },
+      };
+    });
 
-export function initializeApollo(initialState: any = {}) {
-  const _apolloClient = apolloClient ?? createApolloClient();
-
-  // Hydrate the Apollo client state if initial state is provided
-  if (initialState) {
-    _apolloClient.cache.restore(initialState);
-  }
-
-  if (typeof window === 'undefined') {
-    return _apolloClient; // SSG and SSR
-  }
-  if (!apolloClient) {
-    apolloClient = _apolloClient; // Create the Apollo Client once in the client
-  }
-
-  return apolloClient;
-}
-
-export function useApollo(initialState: any = {}) {
-  const store = useMemo(() => initializeApollo(initialState), [initialState]);
-  return store;
-}
+    return new ApolloClient({
+      link: ApolloLink.from([authLink, httpLink]),
+      cache: new InMemoryCache(),
+    });
+  }, []);
+};
