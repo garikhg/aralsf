@@ -1,1 +1,0 @@
-import {Inter, Merriweather} from "next/font/google";export const fontInter = Inter({    subsets: ["latin"],    variable: '--font-inter'});export const fontMerriweather = Merriweather({    subsets: ["latin"],    weight: ['300', '400', '700', '900'],    variable: '--font-heading'});

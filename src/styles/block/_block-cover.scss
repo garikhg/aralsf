@@ -1,0 +1,13 @@
+.wp-block-cover {
+  &.alignfull {
+    padding: 0;
+  }
+
+  .wp-block-column {
+    @apply space-y-6 text-lg font-light;
+  }
+}
+
+.is-layout-constrained {
+  @apply container;
+}
