@@ -2,7 +2,8 @@
 const nextConfig = {
   images: {
     domains: [
-      'aralsf.local'
+      'aralsf.local',
+      'aralsf-backend.code-craft.am'
     ]
   }
 };
