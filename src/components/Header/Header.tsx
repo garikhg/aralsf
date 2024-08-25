@@ -11,7 +11,6 @@ const Header: React.FC<HeaderProps> = ({ menuItems }) => {
   const controls = useAnimation();
   const [lastScrollY, setLastScrollY] = useState( 0 );
 
-
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -43,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ menuItems }) => {
         animate={controls}
         initial={{ opacity: 1, y: 0 }}
         exit={{ opacity: 1, y: 0 }}
-        className="bg-primary py-4 sticky top-0 z-50 duration-200"
+        className="h-20 flex items-center bg-primary sticky top-0 z-50 duration-200"
       >
         <div className="container flex justify-between items-center">
           <div className="flex items-center mr-auto">
