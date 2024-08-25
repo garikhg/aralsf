@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({ menuItems }) => {
           <div className="flex items-center mr-auto">
             <Link href="/"><BrandLogo /></Link>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center">
             <NavigationMenu menuItems={menuItems} />
             <SearchForm />
           </div>
