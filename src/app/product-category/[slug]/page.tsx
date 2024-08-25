@@ -187,9 +187,9 @@ const GET_CATEGORY_BY_SLUG = gql`
         $idType: AcfProductCatIdType = SLUG,
         $id1: ID!
         $productsFirst: Int = 6
-        $productsLast: String
+        $productsLast: String,
     ) {
-        acfProductCat(idType: $idType, id: $id1) {
+        acfProductCat( idType: $idType, id: $id1) {
             id
             name
             slug
@@ -210,7 +210,11 @@ const GET_CATEGORY_BY_SLUG = gql`
                     }
                 }
             }
-            products(first: $productsFirst, after: $productsLast) {
+            products(
+                first: $productsFirst,
+                after: $productsLast,
+                where: {status: PUBLISH, orderby: {field: MENU_ORDER, order: ASC}}
+            ) {
                 nodes {
                     ...ProductDetails
                 }

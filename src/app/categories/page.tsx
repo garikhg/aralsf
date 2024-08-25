@@ -36,7 +36,7 @@ const Categories = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {categories && categories.map( (category: any) => (
               <CategoryCard
-                key={category.id}
+                key={category.slug}
                 data={category}
               />
             ) )}
@@ -51,14 +51,12 @@ const Categories = () => {
 
 const GET_CATEGORIES_QUERY = gql`
     query GetProductCategories($exclude1: [ID] = "12") {
-        acfProductCats(where: {exclude: $exclude1}) {
+        acfProductCats(where: {exclude: $exclude1, order: ASC, orderby: TERM_ORDER}) {
             nodes {
-                id
-                uri
                 name
+                uri
                 slug
                 description
-                termTaxonomyId
                 acfProductCategoriesOptions {
                     acfThumbnail {
                         node {
