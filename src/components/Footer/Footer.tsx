@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="relative bg-primary text-primary-foreground mt-auto">
       <div className="container p-4 py-10 lg:p-8 lg:py-16">
-        <div className="w-full grid grid-cols-4 gap-6 lg:gap-10">
+        <div className="w-full grid grid-cols-4 gap-6 lg:gap-12">
 
           <div className="hidden lg:block col-span-1 mb-6 md:mb-0 space-y-4 lg:space-y-6">
             <Link href="/" className="flex items-center">
@@ -23,8 +23,8 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="col-span-4 lg:col-span-3 flex flex-col md:flex-row lg:justify-end gap-6 lg:gap-0 md:-mx-6 lg:-mx-10">
-            <div className="flex flex-col items-start w-full max-w-3/12 lg:w-auto lg:items-end border-b md:border-none border-primary-foreground/20 pb-6 md:pb-0 md:px-6 lg:px-10">
+          <div className="col-span-4 lg:col-span-3 flex flex-col md:flex-row lg:justify-end gap-6 lg:gap-0 md:-mx-6 lg:-mx-12">
+            <div className="flex flex-col items-start w-full max-w-3/12 lg:w-auto lg:items-end border-b md:border-none border-primary-foreground/20 pb-6 md:pb-0 md:px-6 lg:px-12">
               <div className="space-y-5">
                 <h5 className="font-semibold text-md">
                   Information
@@ -57,7 +57,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="flex flex-col items-start w-full max-w-3/12 lg:w-auto lg:items-end border-b md:border-b-0 md:border-l border-primary-foreground/20 pb-6 md:pb-0 md:px-6 lg:px-10">
+            <div className="flex flex-col items-start w-full max-w-3/12 lg:w-auto lg:items-end border-b md:border-b-0 md:border-l border-primary-foreground/20 pb-6 md:pb-0 md:px-6 lg:px-12">
               <div className="space-y-5">
                 <h5 className="font-semibold text-md">
                   Head Office
@@ -68,7 +68,7 @@ const Footer = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col items-start w-full max-w-3/12 lg:w-auto lg:items-end border-b md:border-b-0 md:border-l border-primary-foreground/20 pb-6 md:pb-0 md:px-6 lg:px-10">
+            <div className="flex flex-col items-start w-full max-w-3/12 lg:w-auto lg:items-end border-b md:border-b-0 md:border-l border-primary-foreground/20 pb-6 md:pb-0 md:px-6 lg:px-12">
               <div className="space-y-5">
                 <h5 className="w-full block font-semibold text-md">
                   Contact Us
@@ -98,7 +98,7 @@ const Footer = () => {
         <div className="sm:flex sm:items-center sm:justify-between">
           <div className="space-y-1">
             <p className="text-sm sm:text-center sm:flex sm:items-center sm:gap-3 dark:text-primary-foreground">
-              © 2001 – 2024
+              ©2001 – 2024
               <span className="block h-3 border-r border-primary-foreground"></span>
               ARAL Inc. All rights reserved.
             </p>
