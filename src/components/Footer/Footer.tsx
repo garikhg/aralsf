@@ -3,6 +3,7 @@ import Link from 'next/link';
 import DeveloperLogo from '@/components/DeveloperLogo';
 import { BrandLogo, SocialLinks } from '@/components';
 import { settings } from '@/config/settings';
+import { Row } from '@/components/ui/row';
 
 const Footer = () => {
   return (
