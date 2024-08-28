@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { MenuToggle } from '@/components/NavbarMenu/MobileMenu';
 
 interface MenuItem {
   id: string;
@@ -35,12 +36,11 @@ const NavigationMenu: React.FC<NavigationMenuProps> & {
 ) => {
 
   const pathname = usePathname();
-  console.log( menuItems );
-  console.log( pathname );
 
   const renderChildItems = (items: any) => {
     if (!items || items?.childItems?.nodes.length === 0) return false;
     const { childItems } = items;
+
 
     return (
       <ul
@@ -64,13 +64,18 @@ const NavigationMenu: React.FC<NavigationMenuProps> & {
     );
   };
 
+  const handlerMenuToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log( event );
+  };
+
   return (
     <nav
       role="navigation"
       aria-label="Primary Navigation Menu"
-      className={cn( '', className )}
+      className={cn( 'flex items-center', className )}
     >
-      <ul className="flex">
+      <MenuToggle onClick={handlerMenuToggle} />
+      <ul className="hidden lg:flex">
         {menuItems && menuItems.map( (menuItem: any) => (
           <li key={menuItem.id}
               className="group relative text-white text-sm uppercase flex items-center after:border-r after:h-4 last:after:hidden"

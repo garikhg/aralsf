@@ -10,31 +10,41 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ menuItems }) => {
   const controls = useAnimation();
   const [lastScrollY, setLastScrollY] = useState( 0 );
+  const breakpointLg = 1024;
 
-  useEffect(() => {
+  useEffect( () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        controls.set({
-          y: '-100%',
-          opacity: 0,
-        });
+      if (window.innerWidth >= breakpointLg) {
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+          controls.set( {
+            y: '-100%',
+            opacity: 0
+          } );
+        } else {
+          controls.set( {
+            y: 0,
+            opacity: 1
+          } );
+        }
+
       } else {
-        controls.set({
+        controls.set( {
           y: 0,
-          opacity: 1,
-        });
+          opacity: 1
+        } );
       }
 
-      setLastScrollY(currentScrollY);
+      setLastScrollY( currentScrollY );
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener( 'scroll', handleScroll );
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener( 'scroll', handleScroll );
     };
-  }, [lastScrollY, controls]);
+
+  }, [lastScrollY, controls] );
 
   return (
     <AnimatePresence>
@@ -42,11 +52,11 @@ const Header: React.FC<HeaderProps> = ({ menuItems }) => {
         animate={controls}
         initial={{ opacity: 1, y: 0 }}
         exit={{ opacity: 1, y: 0 }}
-        className="h-20 flex items-center bg-primary sticky top-0 z-50 duration-200"
+        className="h-16 lg:h-20 flex items-center bg-primary sticky top-0 z-50 duration-200"
       >
         <div className="container flex justify-between items-center">
           <div className="flex items-center mr-auto">
-            <Link href="/"><BrandLogo /></Link>
+            <Link href="/"><BrandLogo className="w-20 lg:h-24 h-auto" /></Link>
           </div>
           <div className="flex items-center">
             <NavigationMenu menuItems={menuItems} />

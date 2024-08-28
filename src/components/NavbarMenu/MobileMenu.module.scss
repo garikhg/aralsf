@@ -1,0 +1,13 @@
+.component {
+  @apply relative w-10 h-14 text-white space-x-5;
+}
+
+.componentBox {
+  @apply relative h-6 w-10 inline-block;
+}
+
+.componentInner {
+  @apply h-px w-10 bg-white;
+  @apply before:h-px before:w-10 before:block before:absolute before:-top-2.5 before:bg-white;
+  @apply after:w-9/12 after:block after:h-0.5 after:absolute after:-bottom-2.5 after:bg-white;
+}
