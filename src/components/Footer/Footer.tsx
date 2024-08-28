@@ -1,8 +1,7 @@
 import React from 'react';
-import { SocialLinks } from '@/_components';
 import Link from 'next/link';
 import DeveloperLogo from '@/components/DeveloperLogo';
-import { BrandLogo } from '@/components';
+import { BrandLogo, SocialLinks } from '@/components';
 import { settings } from '@/config/settings';
 
 const Footer = () => {
