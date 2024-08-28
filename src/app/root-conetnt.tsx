@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { Footer } from '@/_components';
-import { Header, NavigationMenu, SEOHead } from '@/components';
+import { Header, NavigationMenu, SEOHead, Footer } from '@/components';
 import { BlogInfoFragment } from '@/fragments/GlobalSettings';
 import { settings } from '@/config/settings';
 
