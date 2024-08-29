@@ -27,7 +27,6 @@ const Footer = () => {
 
           <div className="w-full lg:w-3/4 px-4">
             <div className="flex flex-wrap lg:justify-end -mx-4 lg:-mx-8 xl:-mx-12">
-
               <div className="w-full md:w-1/3 lg:w-auto px-4 lg:px-8 xl:px-12 mb-4 md:mb-0">
                 <div className="h-full border-b md:border-b-0 border-primary-foreground/20 pb-4 md:pb-0 lg:pl-8 xl:pl-12">
                   <h5 className="font-semibold text-md mb-1">
@@ -95,11 +94,8 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
-
             </div>
-
           </div>
-
         </div>
         <hr className="my-4 border-primary-foreground/20 sm:mx-auto dark:border-primary-foreground/20 lg:my-10" />
         <div className="sm:flex sm:items-center sm:justify-between mt-4">
@@ -119,10 +115,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-
       </div>
-
-
       <div className="hidden container p-4 py-10 lg:p-8 lg:py-16">
         <div className="w-full grid grid-cols-4 gap-6 lg:gap-12">
 
