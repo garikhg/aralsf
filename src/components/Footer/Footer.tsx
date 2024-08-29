@@ -97,25 +97,38 @@ const Footer = () => {
             </div>
           </div>
         </div>
+
         <hr className="my-4 border-primary-foreground/20 sm:mx-auto dark:border-primary-foreground/20 lg:my-10" />
-        <div className="sm:flex sm:items-center sm:justify-between mt-4">
-          <div className="space-y-1">
-            <p className="text-sm sm:text-center sm:flex sm:items-center sm:gap-3 dark:text-primary-foreground">
-              ©2001 – 2024
-              <span className="block h-3 border-r border-primary-foreground"></span>
-              ARAL Inc. All rights reserved.
-            </p>
-            <a
-              href="https://code-craft.am/"
-              target="_blank"
-              className="text-sm font-semibold flex items-center gap-x-1 w-fit"
-            >
-              <DeveloperLogo width={16} height={16} className="text-[#a8cf45]" />
-              <span>by CodeCraft</span>
-            </a>
+
+        <div className="flex flex-wrap -mx-4">
+          <div className="w-full md:w-1/2 px-4">
+            <div className="space-y-1">
+              <p className="text-sm sm:text-center sm:flex sm:items-center sm:gap-3 dark:text-primary-foreground">
+                ©2001 – 2024
+                <span className="block h-3 border-r border-primary-foreground"></span>
+                ARAL Inc. All rights reserved.
+              </p>
+              <a
+                href="https://code-craft.am/"
+                target="_blank"
+                className="text-sm font-semibold flex items-center gap-x-1 w-fit"
+              >
+                <DeveloperLogo width={16} height={16} className="text-[#a8cf45]" />
+                <span>by CodeCraft</span>
+              </a>
+            </div>
           </div>
+          <div className="w-full md:w-1/2 flex px-4">
+            <div className="ml-auto">
+              <Link href="/privacy-policy" className="text-sm">Privacy Policy</Link>
+            </div>
+          </div>
+
         </div>
+
       </div>
+
+
       <div className="hidden container p-4 py-10 lg:p-8 lg:py-16">
         <div className="w-full grid grid-cols-4 gap-6 lg:gap-12">
 
@@ -207,23 +220,32 @@ const Footer = () => {
 
         <hr className="my-6 border-primary-foreground/20 sm:mx-auto dark:border-primary-foreground/20 lg:my-10" />
 
-        <div className="sm:flex sm:items-center sm:justify-between">
-          <div className="space-y-1">
-            <p className="text-sm sm:text-center sm:flex sm:items-center sm:gap-3 dark:text-primary-foreground">
-              ©2001 – 2024
-              <span className="block h-3 border-r border-primary-foreground"></span>
-              ARAL Inc. All rights reserved.
-            </p>
-            <a
-              href="https://code-craft.am/"
-              target="_blank"
-              className="text-sm font-semibold flex items-center gap-x-1 w-fit"
-            >
-              <DeveloperLogo width={16} height={16} className="text-[#a8cf45]" />
-              <span>by CodeCraft</span>
-            </a>
+        <div className="flex flex-wrap -mx-4">
+          <div className="w-full md:w-1/2 px-4">
+            <div className="space-y-1">
+              <p className="text-sm sm:text-center sm:flex sm:items-center sm:gap-3 dark:text-primary-foreground">
+                ©2001 – 2024
+                <span className="block h-3 border-r border-primary-foreground"></span>
+                ARAL Inc. All rights reserved.
+              </p>
+              <a
+                href="https://code-craft.am/"
+                target="_blank"
+                className="text-sm font-semibold flex items-center gap-x-1 w-fit"
+              >
+                <DeveloperLogo width={16} height={16} className="text-[#a8cf45]" />
+                <span>by CodeCraft</span>
+              </a>
+            </div>
           </div>
+          <div className="w-full md:w-1/2 px-4">
+            <div>
+              <Link href="/privacy-policy">Privacy Policy</Link>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </footer>
 
