@@ -40,7 +40,7 @@ const BlockMediaText = () => {
         </div>
       </div>
 
-      <div className="relative w-full lg:w-1/2 lg:absolute top-0 right-0 bottom-0">
+      <div className="relative w-full sm:w-4/5 lg:w-1/2 lg:absolute top-0 right-0 bottom-0">
         <div className="absolute top-0 left-0 w-full h-full">
           <span className="lg:hidden bg-gradient-to-tr from-black/80 to-transparent w-full h-full absolute top-0 left-0"></span>
           <figure className="w-full h-full">
