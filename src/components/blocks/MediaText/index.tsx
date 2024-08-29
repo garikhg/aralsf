@@ -50,7 +50,7 @@ const BlockMediaText = () => {
 
         <div className="relative w-full bottom-0 left-0 lg:hidden z-20">
           <div className="container">
-            <div className="w:full sm:w-3/5 py-10 pt-52">
+            <div className="w:full sm:w-3/5 py-10 pt-60 sm:pt-80">
               <h2 className="text-3xl font-semibold mb-3">
                 Elevate Your Selection with Our Premium Beers
               </h2>
