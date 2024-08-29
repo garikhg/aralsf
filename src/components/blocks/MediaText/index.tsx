@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const BlockMediaText = () => {
   return (
-    <section className="bg-primary text-primary-foreground flex flex-col justify-center relative h-[82vh]">
+    <section className="bg-primary text-primary-foreground flex flex-col justify-center relative h-[82vh] overflow-hidden">
       <div className="container">
         <div className="grid grid-cols-2 gap-6">
           <div className="py-16 pr-16 space-y-12">
