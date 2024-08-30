@@ -101,9 +101,10 @@ const Footer = () => {
         <hr className="my-4 border-primary-foreground/20 sm:mx-auto dark:border-primary-foreground/20 lg:my-10" />
 
         <div className="flex flex-wrap -mx-4">
+
           <div className="w-full md:w-1/2 px-4">
-            <div className="space-y-1">
-              <p className="text-sm sm:text-center sm:flex sm:items-center sm:gap-3 dark:text-primary-foreground">
+            <div className="flex flex-col items-center md:items-start space-y-1 text-center mb-3 md:mb-0">
+              <p className="text-sm text-center md:text-left flex items-center gap-2">
                 ©2001 – 2024
                 <span className="block h-3 border-r border-primary-foreground"></span>
                 ARAL Inc. All rights reserved.
@@ -118,8 +119,9 @@ const Footer = () => {
               </a>
             </div>
           </div>
+
           <div className="w-full md:w-1/2 flex px-4">
-            <div className="ml-auto">
+            <div className="mx-auto md:ml-auto md:mr-0">
               <Link href="/privacy-policy" className="text-sm">Privacy Policy</Link>
             </div>
           </div>
