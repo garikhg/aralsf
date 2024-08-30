@@ -35,7 +35,15 @@ const Footer = () => {
                   <ul className="list-none flex flex-col gap-y-2 mt-4">
                     <li>
                       <Link
-                        href="/products"
+                        href="/categories"
+                        className="font-medium text-primary-foreground/80 hover:text-primary-foreground transition-all duration-150"
+                      >
+                        Categories
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/product-category/wines"
                         className="font-medium text-primary-foreground/80 hover:text-primary-foreground transition-all duration-150"
                       >
                         Products
