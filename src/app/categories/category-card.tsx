@@ -22,7 +22,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ data, ...props }) => {
             height={436}
             width={470}
             priority
-            className="max-w-full z-0"
+            className="w-full h-full blank object-cover max-w-full z-0"
           />
         </div>
       }
