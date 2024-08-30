@@ -1,5 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
+import NextLink from 'next/link';
+import { TextLink } from '@/components/ui/text-link';
 
 const BlockMediaText = () => {
   return (
@@ -16,16 +17,16 @@ const BlockMediaText = () => {
               <div className="space-y-4 text-lg font-light leading-7">
                 <p>
                   Explore our extensive selection of beers, from crisp lagers
-                  and hoppy IPAs to rich stouts and refreshing ales.
+                  and happy IPAs to rich stouts and refreshing ales.
                 </p>
               </div>
               <div className="mt-4 md:mt-6 sm:mt-8">
-                <Link
+                <TextLink
                   href="/product-category/beer"
-                  className="text-md text-primary-foreground hover:underline p-0"
+                  className="text-sm text-primary-foreground after:bg-primary-foreground"
                 >
                   Browse Our Beers
-                </Link>
+                </TextLink>
               </div>
             </div>
 
@@ -61,12 +62,12 @@ const BlockMediaText = () => {
                 </p>
               </div>
               <div className="mt-4">
-                <Link
+                <NextLink
                   href="/product-category/beer"
                   className="text-md text-primary-foreground hover:underline p-0"
                 >
                   Browse Our Beers
-                </Link>
+                </NextLink>
               </div>
             </div>
 
