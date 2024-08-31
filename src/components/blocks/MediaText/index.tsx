@@ -23,7 +23,7 @@ const BlockMediaText = () => {
               <div className="mt-4 md:mt-6 sm:mt-8">
                 <TextLink
                   href="/product-category/beer"
-                  className="text-sm text-primary-foreground after:bg-primary-foreground"
+                  className="text-sm text-yellow hover:text-primary-foreground hover:after:bg-yellow after:bg-primary-foreground"
                 >
                   Browse Our Beers
                 </TextLink>
@@ -68,6 +68,7 @@ const BlockMediaText = () => {
                 >
                   Browse Our Beers
                 </NextLink>
+
               </div>
             </div>
 

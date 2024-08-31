@@ -6,7 +6,6 @@ interface TextLinkProps {
   href: string;
   className?: string;
   children: React.ReactNode;
-  color?: string;
 }
 
 const TextLink: React.FC<TextLinkProps> = (
@@ -14,7 +13,6 @@ const TextLink: React.FC<TextLinkProps> = (
     href,
     children,
     className,
-    color
   }
 ) => {
   return (
