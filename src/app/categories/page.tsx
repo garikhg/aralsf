@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-// import { PageHeader } from '@/_components';
 import { CategoryCard } from '@/app/categories/category-card';
 import { BrandPartnersCarousel } from '@/components/BrandPartners/BrandPartnersCarousel';
 import { gql, useQuery } from '@apollo/client';
