@@ -1,3 +1,4 @@
+// https://chatgpt.com/c/b13f1d5f-e2d8-4ab4-8d20-925292fccaf9
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -8,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { LoaderCircle } from 'lucide-react';
 
 import ProductSkeleton from '@/components/products/product-skeleton';
-import ProductsFilters from '@/components/products/products-filters';
 import ProductCard, { productDetailsFragment } from '@/components/products/product-card';
 
 interface Product {
@@ -49,20 +49,57 @@ interface CategoryProps {
   products: ProductsData;
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 260,
-      damping: 20
+const GET_CATEGORY_BY_SLUG = gql`
+    ${productDetailsFragment}
+    query GetCategoryBySlug(
+        $idType: AcfProductCatIdType = SLUG,
+        $id1: ID!
+        $productsFirst: Int = 6
+        $productsLast: String,
+    ) {
+        acfProductCat( idType: $idType, id: $id1) {
+            id
+            name
+            slug
+            description
+            termTaxonomyId
+            acfProductCategoriesOptions {
+                acfThumbnail {
+                    node {
+                        sourceUrl
+                        altText
+                        slug
+                    }
+                }
+                acfHeroBanner {
+                    node {
+                        altText
+                        sourceUrl
+                    }
+                }
+            }
+            products(
+                first: $productsFirst,
+                after: $productsLast,
+                where: {
+                    status: PUBLISH,
+                    orderby: {field: MENU_ORDER, order: ASC},
+                }
+            ) {
+                nodes {
+                    ...ProductDetails
+                }
+                pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                    endCursor
+                }
+            }
+        }
     }
-  }
-};
+`;
 
-const ProductCategory: React.FC = () => {
+const Products: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [products, setProducts] = useState<any | null>( null );
   const [category, setCategory] = useState<CategoryProps | null>( null );
@@ -70,10 +107,7 @@ const ProductCategory: React.FC = () => {
   const [isLoadingMore, setIsLoadingMore] = useState( false );
 
   const { data, error, fetchMore } = useQuery( GET_CATEGORY_BY_SLUG, {
-    variables: {
-      id1: slug,
-      idType: 'SLUG'
-    },
+    variables: { id1: slug, idType: 'SLUG' },
     skip: !slug
   } );
 
@@ -137,6 +171,7 @@ const ProductCategory: React.FC = () => {
     }
   };
 
+
   return (
     <div className="relative min-h-screen flex flex-col">
       <PageHeader
@@ -148,17 +183,19 @@ const ProductCategory: React.FC = () => {
       <main className="py-24" role="main">
         <div className="container grid grid-cols-4 gap-x-16">
           <aside className="col-span-1">
-            <ProductsFilters />
+            Product Filters
           </aside>
 
           <div className="col-span-3">
             <div className="grid grid-cols-3 gap-4 relative">
-              {products?.nodes ? products.nodes.map( (product: any, index: number) => (
-                <div key={product.id} className="relative">
+              {products?.nodes ? products.nodes.map( (product: any) => (
+                <div key={product.slug} className="relative">
                   <ProductCard data={product} />
                 </div>
               ) ) : [...Array( 6 )].map( (_, index) => (
-                <ProductSkeleton key={index} />
+                <div key={index}>
+                  <ProductSkeleton />
+                </div>
               ) )}
             </div>
             {products?.pageInfo?.hasNextPage && (
@@ -181,50 +218,12 @@ const ProductCategory: React.FC = () => {
   );
 };
 
-const GET_CATEGORY_BY_SLUG = gql`
-    ${productDetailsFragment}
-    query GetCategoryBySlug(
-        $idType: AcfProductCatIdType = SLUG,
-        $id1: ID!
-        $productsFirst: Int = 6
-        $productsLast: String,
-    ) {
-        acfProductCat( idType: $idType, id: $id1) {
-            id
-            name
-            slug
-            description
-            termTaxonomyId
-            acfProductCategoriesOptions {
-                acfThumbnail {
-                    node {
-                        sourceUrl
-                        altText
-                        slug
-                    }
-                }
-                acfHeroBanner {
-                    node {
-                        altText
-                        sourceUrl
-                    }
-                }
-            }
-            products(
-                first: $productsFirst,
-                after: $productsLast,
-                where: {status: PUBLISH, orderby: {field: MENU_ORDER, order: ASC}}
-            ) {
-                nodes {
-                    ...ProductDetails
-                }
-                pageInfo {
-                    hasNextPage
-                    hasPreviousPage
-                    endCursor
-                }
-            }
-        }
-    }
-`;
+const ProductCategory: React.FC = () => {
+
+  return (
+    <Products />
+  );
+};
+
+
 export default ProductCategory;
