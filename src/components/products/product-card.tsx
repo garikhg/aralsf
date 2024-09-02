@@ -57,6 +57,10 @@ export const productDetailsFragment = gql`
             grapeType
             type
             alcoholVolume
+            acfProductAttribute {
+                acfProductAttributeName
+                acfProductAttributeValue
+            }
         }
     }
 `;
