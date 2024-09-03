@@ -101,7 +101,6 @@ const GET_CATEGORY_BY_SLUG = gql`
     }
 `;
 
-
 const COUNTRY_FILTERS = [
   { name: 'Armenia', value: 'armenia' },
   { name: 'Georgia', value: 'georgia' },
@@ -112,6 +111,19 @@ const COUNTRY_FILTERS = [
   { name: 'Bulgaria', value: 'bulgaria' },
   { name: 'Poland', value: 'poland' }
 ] as const;
+
+interface ProductAttribute {
+  acfProductAttributeName: string;
+  acfProductAttributeValue: string;
+}
+
+interface ProductOption {
+  acfProductAttribute: ProductAttribute;
+}
+
+interface ProductOptionProps {
+  acfProductOptions: ProductOption;
+}
 
 const Products: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -126,7 +138,7 @@ const Products: React.FC = () => {
 
   const [category, setCategory] = useState<CategoryProps | null>( null );
   const [products, setProducts] = useState( [] );
-  const [pageInfo, setPageInfo] = useState<>( {} );
+  const [pageInfo, setPageInfo] = useState( {} );
 
   const [filters, setFilters] = useState( {} );
   const [filteredProducts, setFilteredProducts] = useState( [] );
@@ -167,12 +179,13 @@ const Products: React.FC = () => {
   }, [slug] );
 
 
-  const initializeFilters = (products: any) => {
+  const initializeFilters = (products: ProductOptionProps[]) => {
     if (!products) {
       return false;
     }
 
-    let newFilters = {};
+    let newFilters: Record<string, string[]> = {};
+
     products.forEach( (product: any) => {
       Array.isArray( product.acfProductOptions.acfProductAttribute )
       && product.acfProductOptions.acfProductAttribute.forEach( (attr: any) => {
@@ -204,6 +217,7 @@ const Products: React.FC = () => {
     setFilteredProducts( filtered );
   };
 
+  console.log( filters );
   console.log( filteredProducts );
   const handleFilterChange = (filterKey: string, value: string, isChecked: boolean) => {
     setFilters( prevFilters => {
@@ -221,8 +235,6 @@ const Products: React.FC = () => {
   };
 
   // console.log( filteredProducts );
-
-
 
 
   if (error) {
