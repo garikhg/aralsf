@@ -220,7 +220,7 @@ const Products: React.FC = () => {
   console.log( filters );
   console.log( filteredProducts );
   const handleFilterChange = (filterKey: string, value: string, isChecked: boolean) => {
-    setFilters( prevFilters => {
+    setFilters( (prevFilters: any) => {
       const existingValues = Array.isArray( prevFilters[filterKey] ) ? prevFilters[filterKey] : [];
 
       const updateValues = isChecked
