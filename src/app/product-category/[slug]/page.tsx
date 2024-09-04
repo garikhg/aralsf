@@ -1,5 +1,3 @@
-// https://chatgpt.com/c/04126d3d-fac7-41a4-a406-fa10bf7e354b
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -11,7 +9,6 @@ import { LoaderCircle } from 'lucide-react';
 
 import ProductSkeleton from '@/components/products/product-skeleton';
 import ProductCard, { productDetailsFragment } from '@/components/products/product-card';
-import { Label } from '@/components/ui/label';
 
 interface Product {
   slug: string;
@@ -112,22 +109,9 @@ const COUNTRY_FILTERS = [
   { name: 'Poland', value: 'poland' }
 ] as const;
 
-interface ProductAttribute {
-  acfProductAttributeName: string;
-  acfProductAttributeValue: string;
-}
-
-interface ProductOption {
-  acfProductAttribute: ProductAttribute;
-}
-
-interface ProductOptionProps {
-  acfProductOptions: ProductOption;
-}
-
 const Products: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { data, loading, error, fetchMore } = useQuery( GET_CATEGORY_BY_SLUG, {
+  const { data, error, fetchMore } = useQuery( GET_CATEGORY_BY_SLUG, {
     variables: { id1: slug, idType: 'SLUG' },
     skip: !slug
   } );
@@ -138,10 +122,7 @@ const Products: React.FC = () => {
 
   const [category, setCategory] = useState<CategoryProps | null>( null );
   const [products, setProducts] = useState( [] );
-  const [pageInfo, setPageInfo] = useState( {} );
-
-  const [filters, setFilters] = useState( {} );
-  const [filteredProducts, setFilteredProducts] = useState( [] );
+  const [pageInfo, setPageInfo] = useState<any>( {} );
 
   useEffect( () => {
     if (data) {
@@ -152,10 +133,9 @@ const Products: React.FC = () => {
       if (data.acfProductCat.products) {
         const products = data.acfProductCat.products.nodes ?? [];
         const pageInfo = data.acfProductCat.products.pageInfo ?? {};
+        // const category = data.acfProductCat.acfProductCategoriesOptions.acfHeroBanner.node ?? '';
 
         setProducts( products );
-        initializeFilters( products );
-        setFilteredProducts( products );
         setPageInfo( pageInfo );
       }
 
@@ -165,77 +145,11 @@ const Products: React.FC = () => {
     }
   }, [data] );
 
-
-  useEffect( () => {
-    if (!loading && data) {
-      applyFilters();
-    }
-  }, [filters] );
-
   useEffect( () => {
     setIsLoadingMore( false );
     setCategory( null );
     setHeroBanner( null );
   }, [slug] );
-
-
-  const initializeFilters = (products: ProductOptionProps[]) => {
-    if (!products) {
-      return false;
-    }
-
-    let newFilters: Record<string, string[]> = {};
-
-    products.forEach( (product: any) => {
-      Array.isArray( product.acfProductOptions.acfProductAttribute )
-      && product.acfProductOptions.acfProductAttribute.forEach( (attr: any) => {
-        if (!newFilters[attr.acfProductAttributeName]) {
-          newFilters[attr.acfProductAttributeName] = [];
-        }
-        if (!newFilters[attr.acfProductAttributeName].includes( attr.acfProductAttributeValue )) {
-          newFilters[attr.acfProductAttributeName].push( attr.acfProductAttributeValue );
-        }
-      } );
-    } );
-
-    setFilters( newFilters );
-  };
-
-  const applyFilters = () => {
-    const filtered = products.filter( (product: any) => {
-      return Object.entries( filters ).every( ([key, values]) => {
-        if (values.length === 0) return true;
-        const attributes = product.acfProductOptions.acfProductAttribute || [];
-        return Array.isArray( attributes ) && attributes.some( (attr: any) => {
-          //const attrKey = attr.acfProductAttributeName.toLowerCase().replace( /\s+/g, '' );
-          const attrKey = attr.acfProductAttributeName;
-          return key === attrKey && values.includes( attr.acfProductAttributeValue );
-        } );
-      } );
-    } );
-
-    setFilteredProducts( filtered );
-  };
-
-  console.log( filters );
-  console.log( filteredProducts );
-  const handleFilterChange = (filterKey: string, value: string, isChecked: boolean) => {
-    setFilters( (prevFilters: any) => {
-      const existingValues = Array.isArray( prevFilters[filterKey] ) ? prevFilters[filterKey] : [];
-
-      const updateValues = isChecked
-        ? [...existingValues, value]
-        : existingValues.filter( (v: string) => v !== value );
-
-      return {
-        ...prevFilters,
-        [filterKey]: updateValues
-      };
-    } );
-  };
-
-  // console.log( filteredProducts );
-
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -289,21 +203,8 @@ const Products: React.FC = () => {
           <aside className="col-span-1">
             <div>
               <h5>Filter By Country</h5>
-              {COUNTRY_FILTERS && COUNTRY_FILTERS.map( (filter) => (
-                <div key={filter.value}>
-                  <input id={filter.value}
-                         type="checkbox"
-                         name="country"
-                    // checked={filters.country.includes( category )}
-                         onChange={
-                           (e) =>
-                             handleFilterChange( 'country', filter.value, e.target.checked )
-                         }
-                  />
-                  <Label htmlFor={filter.value}>{filter.name}</Label>
-                </div>
-              ) )}
             </div>
+
           </aside>
 
           <div className="col-span-3">
