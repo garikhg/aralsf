@@ -117,7 +117,7 @@ const Products: React.FC = () => {
   } );
 
 
-  const [heroBanner, setHeroBanner] = useState<{ sourceUrl: string; alertText?: string } | null>( null );
+  const [heroBanner, setHeroBanner] = useState<any>( null );
   const [isLoadingMore, setIsLoadingMore] = useState( false );
 
   const [category, setCategory] = useState<CategoryProps | null>( null );
@@ -139,7 +139,7 @@ const Products: React.FC = () => {
         setPageInfo( pageInfo );
       }
 
-      if (data.acfProductCat.acfProductCategoriesOptions.acfHeroBanner.node) {
+      if (data.acfProductCat.acfProductCategoriesOptions.acfHeroBanner) {
         setHeroBanner( data.acfProductCat.acfProductCategoriesOptions.acfHeroBanner.node );
       }
     }
