@@ -43,6 +43,7 @@ const Products: React.FC = () => {
     skip: !slug
   } );
 
+
   const [isLoadingMore, setIsLoadingMore] = useState( false );
 
   // const [products, setProducts] = useState( [] );
@@ -59,14 +60,6 @@ const Products: React.FC = () => {
   } );
 
 
-  // Category Details
-  const category = data?.acfProductCat || '';
-  let heroBanner = category?.acfProductCategoriesOptions?.acfHeroBanner?.node || '';
-  const heroBannerSrc = heroBanner ? heroBanner.sourceUrl : '';
-
-  // Products
-  const products = data?.acfProductCat?.products?.nodes || [];
-
   useEffect( () => {
     if (data) {
       if (data?.acfProductCat?.products) {
@@ -82,9 +75,19 @@ const Products: React.FC = () => {
     setIsLoadingMore( false );
   }, [slug] );
 
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  // Category Details
+  const category = data?.acfProductCat || '';
+  let heroBanner = category?.acfProductCategoriesOptions?.acfHeroBanner?.node || '';
+  const heroBannerSrc = heroBanner ? heroBanner.sourceUrl : '';
+
+  // Products
+  const products = data?.acfProductCat?.products?.nodes || [];
+
 
   const handleFilterChange = (filterKey: string, event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
