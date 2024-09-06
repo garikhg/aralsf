@@ -23,9 +23,7 @@ const Categories = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  console.log(data)
-
+  
   return (
     <div>
       <PageHeader title="Categories" />
