@@ -1,104 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { PageHeader } from '@/components/layouts/page-header';
 import { gql, useQuery } from '@apollo/client';
 import { Button } from '@/components/ui/button';
 import { LoaderCircle } from 'lucide-react';
 
-import ProductSkeleton from '@/components/products/product-skeleton';
-import ProductCard, { productDetailsFragment } from '@/components/products/product-card';
+import ProductSkeleton from '@/components/Products/product-skeleton';
+import ProductCard from '@/components/Products/product-card';
+import { Label } from '@/components/ui/label';
+import { getCategoryBySlugQuery } from '@/queries/getCategoryBySlug';
 
-interface Product {
-  slug: string;
-  status: boolean;
-  title: string;
-  acfProductCategoriesOptions?: {
-    acfThumbnail?: {
-      node?: {
-        sourceUrl?: string;
-        altText?: string;
-        slug?: string;
-      };
-    };
-    acfHeroBanner?: {
-      node?: {
-        altText?: string;
-        sourceUrl?: string;
-      };
-    };
-  };
-}
-
-interface PageInfo {
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  endCursor: string;
-}
-
-interface ProductsData {
-  nodes: Product[];
-  pageInfo: PageInfo;
-}
-
-interface CategoryProps {
-  name: string;
-  description?: string;
-  products: ProductsData;
-}
-
-const GET_CATEGORY_BY_SLUG = gql`
-    ${productDetailsFragment}
-    query GetCategoryBySlug(
-        $idType: AcfProductCatIdType = SLUG,
-        $id1: ID!
-        $productsFirst: Int = 6
-        $productsLast: String,
-    ) {
-        acfProductCat( idType: $idType, id: $id1) {
-            id
-            name
-            slug
-            description
-            termTaxonomyId
-            acfProductCategoriesOptions {
-                acfThumbnail {
-                    node {
-                        sourceUrl
-                        altText
-                        slug
-                    }
-                }
-                acfHeroBanner {
-                    node {
-                        altText
-                        sourceUrl
-                    }
-                }
-            }
-            products(
-                first: $productsFirst,
-                after: $productsLast,
-                where: {
-                    status: PUBLISH,
-                    orderby: {field: MENU_ORDER, order: ASC},
-                }
-            ) {
-                nodes {
-                    ...ProductDetails
-                }
-                pageInfo {
-                    hasNextPage
-                    hasPreviousPage
-                    endCursor
-                }
-            }
-        }
-    }
-`;
-
-const COUNTRY_FILTERS = [
+const countriesFilter = [
   { name: 'Armenia', value: 'armenia' },
   { name: 'Georgia', value: 'georgia' },
   { name: 'Romania', value: 'romania' },
@@ -107,53 +21,112 @@ const COUNTRY_FILTERS = [
   { name: 'Uzbekistan', value: 'uzbekistan' },
   { name: 'Bulgaria', value: 'bulgaria' },
   { name: 'Poland', value: 'poland' }
-] as const;
+];
+
+const colorFilter = [
+  { name: 'White', value: 'white' },
+  { name: 'Red', value: 'red' }
+];
+
+interface FiltersProps {
+  country: string[];
+  bottleSize: number[];
+  bottleType: string[];
+  color: string[];
+}
+
 
 const Products: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { data, error, fetchMore } = useQuery( GET_CATEGORY_BY_SLUG, {
+  const { data, error, fetchMore } = useQuery( getCategoryBySlugQuery, {
     variables: { id1: slug, idType: 'SLUG' },
     skip: !slug
   } );
 
-
-  const [heroBanner, setHeroBanner] = useState<any>( null );
   const [isLoadingMore, setIsLoadingMore] = useState( false );
 
-  const [category, setCategory] = useState<CategoryProps | null>( null );
   const [products, setProducts] = useState( [] );
   const [pageInfo, setPageInfo] = useState<any>( {} );
 
+  const [filteredProducts, setFilteredProducts] = useState<any>( [] );
+  const [selectedColors, setSelectedColors] = useState<any>( [] );
+
+  const [filters, setFilters] = useState<any>( {
+    country: [],
+    bottleSize: [],
+    bottleType: [],
+    color: []
+  } );
+
+  const category = data?.acfProductCat || '';
+  let heroBanner = category?.acfProductCategoriesOptions?.acfHeroBanner?.node ?? '';
+  const heroBannerSrc = heroBanner ? heroBanner.sourceUrl : '';
+  const heroBannerAlt = heroBanner ? heroBanner.altText : '';
+
+  console.log( heroBannerAlt );
+
   useEffect( () => {
     if (data) {
-      if (data.acfProductCat) {
-        setCategory( data.acfProductCat );
-      }
-
-      if (data.acfProductCat.products) {
+      if (data?.acfProductCat?.products) {
         const products = data.acfProductCat.products.nodes ?? [];
         const pageInfo = data.acfProductCat.products.pageInfo ?? {};
-        // const category = data.acfProductCat.acfProductCategoriesOptions.acfHeroBanner.node ?? '';
 
         setProducts( products );
         setPageInfo( pageInfo );
-      }
-
-      if (data.acfProductCat.acfProductCategoriesOptions.acfHeroBanner) {
-        setHeroBanner( data.acfProductCat.acfProductCategoriesOptions.acfHeroBanner.node );
+        // appliedFilters( Products );
       }
     }
   }, [data] );
 
   useEffect( () => {
     setIsLoadingMore( false );
-    setCategory( null );
-    setHeroBanner( null );
   }, [slug] );
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  const handleFilterChange = (filterKey: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target;
+    setFilters( (prevProducts: any) => {
+      const safePrevProducts = Array.isArray( prevProducts ) ? prevProducts : [];
+      const updatedFilters = checked
+        ? [...safePrevProducts, value]
+        : safePrevProducts.filter( (country: string) => country !== value );
+      appliedFilters( products, updatedFilters );
+      console.log( updatedFilters );
+      return updatedFilters;
+    } );
+  };
+
+  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target;
+    setSelectedColors( (prevColors: any) => {
+      const updatedColors = checked
+        ? [...prevColors, value]
+        : prevColors.filter( (color: string) => color !== value );
+      appliedFilters( products, updatedColors );
+      return updatedColors;
+    } );
+  };
+
+  // Function to filter Products based on selected colors
+  function appliedFilters(products: any[], selectedColors: string[]): void {
+    const filtered = products.filter( product => {
+      const attributes = product.acfProductOptions.acfProductAttribute || [];
+      return Array.isArray( attributes ) && attributes.some( attr => {
+        // return selectedColors.includes(attr.acfProductAttributeValue.trim().toLowerCase());
+        return selectedColors.includes( attr.acfProductAttributeValue );
+      } );
+    } );
+
+    setFilteredProducts( filtered );
+    // setProducts( filtered );
+  }
+
+  // console.log( selectedColors );
+  // console.log( filteredProducts );
+  // console.log( filters );
 
   const loadMoreProducts = async () => {
     if (data?.acfProductCat?.products?.pageInfo?.hasNextPage) {
@@ -183,7 +156,7 @@ const Products: React.FC = () => {
         } );
 
       } catch (erorr) {
-        console.error( 'Error fetching more products:', erorr );
+        console.error( 'Error fetching more Products:', erorr );
       } finally {
         setIsLoadingMore( false );
       }
@@ -195,7 +168,7 @@ const Products: React.FC = () => {
       <PageHeader
         title={category?.name || ''}
         description={category?.description || ''}
-        backgroundImage={heroBanner?.sourceUrl || ''}
+        backgroundImage={heroBannerSrc}
       />
 
       <main className="py-24" role="main">
@@ -203,12 +176,49 @@ const Products: React.FC = () => {
           <aside className="col-span-1">
             <div>
               <h5>Filter By Country</h5>
+              {countriesFilter && countriesFilter.map( (country) => (
+                <div key={country.value} className="flex gap-2">
+                  <input
+                    id={`country-${country.value}`}
+                    type="checkbox"
+                    // checked={filters.country.includes( country )}
+                    value={country.name}
+                    onChange={(e) => handleFilterChange( 'country', e )}
+                    className=""
+                  />
+                  <Label htmlFor={`country-${country.value}`} className="block py-2">
+                    {country.name}
+                  </Label>
+                </div>
+              ) )}
+            </div>
+
+            <div>
+              <h5>Filter By Color</h5>
+              {colorFilter && colorFilter.map( (color) => (
+                <label key={color.value} className="block py-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedColors.includes( color.name )}
+                    value={color.name}
+                    onChange={handleColorChange}
+                  />
+                  {color.name}
+                </label>
+              ) )}
             </div>
 
           </aside>
 
           <div className="col-span-3">
+
             <div className="grid grid-cols-3 gap-4 relative">
+              {filteredProducts && filteredProducts.map( (product: any) => (
+                <div key={product?.slug}>
+                  {product?.title}
+                </div>
+              ) )}
+
               {products ? products.map( (product: any) => (
                 <div key={product.slug} className="relative">
                   <ProductCard data={product} />

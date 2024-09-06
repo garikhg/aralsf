@@ -27,7 +27,7 @@ const productDetailsFragment = gql`
     }
 `;
 
-export const GET_CATEGORY_BY_SLUG = gql`
+export const getCategoryBySlugQuery = gql`
     ${productDetailsFragment}
     query GetCategoryBySlug(
         $idType: AcfProductCatIdType = SLUG,

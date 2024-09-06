@@ -24,11 +24,11 @@ const Categories = () => {
     return <div>Error: {error.message}</div>;
   }
 
+  console.log(data)
+
   return (
     <div>
-      <PageHeader
-        title="Categories"
-      />
+      <PageHeader title="Categories" />
 
       <main role="main">
         <div className="container py-8 lg:py-24">
