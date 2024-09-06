@@ -45,7 +45,7 @@ const Products: React.FC = () => {
 
   const [isLoadingMore, setIsLoadingMore] = useState( false );
 
-  const [products, setProducts] = useState( [] );
+  // const [products, setProducts] = useState( [] );
   const [pageInfo, setPageInfo] = useState<any>( {} );
 
   const [filteredProducts, setFilteredProducts] = useState<any>( [] );
@@ -58,20 +58,20 @@ const Products: React.FC = () => {
     color: []
   } );
 
-  const category = data?.acfProductCat || '';
-  let heroBanner = category?.acfProductCategoriesOptions?.acfHeroBanner?.node ?? '';
-  const heroBannerSrc = heroBanner ? heroBanner.sourceUrl : '';
-  const heroBannerAlt = heroBanner ? heroBanner.altText : '';
 
-  console.log( heroBannerAlt );
+  // Category Details
+  const category = data?.acfProductCat || '';
+  let heroBanner = category?.acfProductCategoriesOptions?.acfHeroBanner?.node || '';
+  const heroBannerSrc = heroBanner ? heroBanner.sourceUrl : '';
+
+  // Products
+  const products = data?.acfProductCat?.products?.nodes || [];
 
   useEffect( () => {
     if (data) {
       if (data?.acfProductCat?.products) {
-        const products = data.acfProductCat.products.nodes ?? [];
         const pageInfo = data.acfProductCat.products.pageInfo ?? {};
 
-        setProducts( products );
         setPageInfo( pageInfo );
         // appliedFilters( Products );
       }
