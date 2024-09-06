@@ -46,9 +46,6 @@ const Products: React.FC = () => {
 
   const [isLoadingMore, setIsLoadingMore] = useState( false );
 
-  // const [products, setProducts] = useState( [] );
-  const [pageInfo, setPageInfo] = useState<any>( {} );
-
   const [filteredProducts, setFilteredProducts] = useState<any>( [] );
   const [selectedColors, setSelectedColors] = useState<any>( [] );
 
@@ -58,18 +55,6 @@ const Products: React.FC = () => {
     bottleType: [],
     color: []
   } );
-
-
-  useEffect( () => {
-    if (data) {
-      if (data?.acfProductCat?.products) {
-        const pageInfo = data.acfProductCat.products.pageInfo ?? {};
-
-        setPageInfo( pageInfo );
-        // appliedFilters( Products );
-      }
-    }
-  }, [data] );
 
   useEffect( () => {
     setIsLoadingMore( false );
@@ -86,7 +71,9 @@ const Products: React.FC = () => {
   const heroBannerSrc = heroBanner ? heroBanner.sourceUrl : '';
 
   // Products
-  const products = data?.acfProductCat?.products?.nodes || [];
+  const productsData = data?.acfProductCat?.products || '';
+  const products = productsData ? productsData.nodes : [];
+  const pageInfo = productsData ? productsData.pageInfo ?? {};
 
 
   const handleFilterChange = (filterKey: string, event: React.ChangeEvent<HTMLInputElement>) => {
