@@ -1,40 +1,17 @@
 import { gql } from '@apollo/client';
-
-const productDetailsFragment = gql`
-    fragment ProductDetails on Product {
-        slug
-        status
-        title
-        featuredImage {
-            node {
-                sourceUrl
-            }
-        }
-        acfProductOptions {
-            brand
-            country
-            manufacturer
-            sku
-            color
-            grapeType
-            type
-            alcoholVolume
-            acfProductAttribute {
-                acfProductAttributeName
-                acfProductAttributeValue
-            }
-        }
-    }
-`;
+import { ProductDetails } from '@/fragments/ProductDetails';
+import { GlobalOptionsFragment } from '@/fragments/GlobalSettings';
 
 export const getCategoryBySlugQuery = gql`
-    ${productDetailsFragment}
+    ${ProductDetails}
+    ${GlobalOptionsFragment}
     query GetCategoryBySlug(
         $idType: AcfProductCatIdType = SLUG,
         $id1: ID!
         $productsFirst: Int = 6
         $productsLast: String,
     ) {
+        acfGlobalSettings {...GlobalOptionsFragment}
         acfProductCat( idType: $idType, id: $id1) {
             id
             name

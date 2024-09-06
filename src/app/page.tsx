@@ -17,7 +17,6 @@ export default function Home() {
 }
 
 const GET_PAGE_DATA = gql`
-
     query PageDataQuery {
         generalSettings { ...BlogInfoFragment }
         menu(id: "menu-1", idType: LOCATION) {

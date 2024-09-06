@@ -6,3 +6,14 @@ export const BlogInfoFragment = gql`
         description
     }
 `
+export const GlobalOptionsFragment = gql`
+    fragment GlobalOptionsFragment on AcfGlobalSettings {
+        acfGlobalOptions {
+            acfPageNotContent
+            acfGoBackButton {
+                goBackButtonLink
+                goBackButtonText
+            }
+        }
+    }
+`
