@@ -1,6 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { TextLink } from '@/components/ui/text-link';
+import Image from 'next/image';
 
 const BlockMediaText = () => {
   return (
@@ -33,9 +34,16 @@ const BlockMediaText = () => {
           </div>
           <div className="w-full lg:w-1/2">
 
-            <figure className="hidden w-full h-full">
-              <img src="/images/demo/home-beers-1.jpg" alt="beer" className="block w-full h-full object-cover max-w-full" />
-            </figure>
+            <div className="hidden w-full h-full">
+              <Image
+                src="/images/demo/home-beers-1.jpg"
+                alt="beer"
+                width={1920}
+                height={1280}
+                priority
+                className="block w-full h-full object-cover max-w-full"
+              />
+            </div>
 
           </div>
         </div>
@@ -44,9 +52,16 @@ const BlockMediaText = () => {
       <div className="relative w-full lg:w-1/2 lg:absolute top-0 right-0 bottom-0">
         <div className="absolute top-0 left-0 w-full h-full">
           <span className="lg:hidden bg-gradient-to-tr from-black/80 to-transparent w-full h-full absolute top-0 left-0"></span>
-          <figure className="w-full h-full">
-            <img src="/images/demo/home-beers-1.jpg" alt="beer" className="block w-full h-full object-cover max-w-full" />
-          </figure>
+          <div className="w-full h-full">
+            <Image
+              src="/images/demo/home-beers-1.jpg"
+              alt="beer"
+              width={1920}
+              height={1280}
+              priority
+              className="block w-full h-full object-cover max-w-full"
+            />
+          </div>
         </div>
 
         <div className="relative w-full bottom-0 left-0 lg:hidden z-20">
