@@ -165,82 +165,78 @@ const Products: React.FC = () => {
       />
 
       <main className="py-16 lg:py-24" role="main">
-        {products.length > 0 ? (
-          <div className="container grid grid-cols-1 xl:grid-cols-4 gap-x-16">
-            <aside className="hidden xl:block col-span-1">
-              <div>
-                <h5>Filter By Country</h5>
-                {countriesFilter && countriesFilter.map( (country) => (
-                  <div key={country.value} className="flex gap-2">
-                    <input
-                      id={`country-${country.value}`}
-                      type="checkbox"
-                      // checked={filters.country.includes( country )}
-                      value={country.name}
-                      onChange={(e) => handleFilterChange( 'country', e )}
-                      className=""
-                    />
-                    <Label htmlFor={`country-${country.value}`} className="block py-2">
-                      {country.name}
-                    </Label>
-                  </div>
-                ) )}
-              </div>
-
-              <div>
-                <h5>Filter By Color</h5>
-                {colorFilter && colorFilter.map( (color) => (
-                  <label key={color.value} className="block py-2">
-                    <input
-                      type="checkbox"
-                      checked={selectedColors.includes( color.name )}
-                      value={color.name}
-                      onChange={handleColorChange}
-                    />
-                    {color.name}
-                  </label>
-                ) )}
-              </div>
-            </aside>
-
-            <div className="col-span-3">
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 relative">
-                {filteredProducts && filteredProducts.map( (product: any) => (
-                  <div key={product?.slug}>
-                    {product?.title}
-                  </div>
-                ) )}
-
-                {products ? products.map( (product: any) => (
-                  <div key={product.slug} className="relative">
-                    <ProductCard data={product} />
-                  </div>
-                ) ) : [...Array( 6 )].map( (_, index) => (
-                  <div key={index}>
-                    <ProductSkeleton />
-                  </div>
-                ) )}
-              </div>
-
-              {pageInfo.hasNextPage && (
-                <div className="flex justify-center items-center mt-6">
-                  <Button
-                    onClick={loadMoreProducts}
-                    disabled={isLoadingMore}
-                    variant="ghost"
-                    className="flex gap-2 tsxt-xs uppercase"
-                  >
-                    {isLoadingMore && <LoaderCircle className="animate-spin w-4 h-4" />}
-                    <span>Load More...</span>
-                  </Button>
+        <div className="container grid grid-cols-1 xl:grid-cols-4 gap-x-16">
+          <aside className="hidden xl:block col-span-1">
+            <div>
+              <h5>Filter By Country</h5>
+              {countriesFilter && countriesFilter.map( (country) => (
+                <div key={country.value} className="flex gap-2">
+                  <input
+                    id={`country-${country.value}`}
+                    type="checkbox"
+                    // checked={filters.country.includes( country )}
+                    value={country.name}
+                    onChange={(e) => handleFilterChange( 'country', e )}
+                    className=""
+                  />
+                  <Label htmlFor={`country-${country.value}`} className="block py-2">
+                    {country.name}
+                  </Label>
                 </div>
-              )}
+              ) )}
             </div>
+
+            <div>
+              <h5>Filter By Color</h5>
+              {colorFilter && colorFilter.map( (color) => (
+                <label key={color.value} className="block py-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedColors.includes( color.name )}
+                    value={color.name}
+                    onChange={handleColorChange}
+                  />
+                  {color.name}
+                </label>
+              ) )}
+            </div>
+          </aside>
+
+          <div className="col-span-3">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 relative">
+              {filteredProducts && filteredProducts.map( (product: any) => (
+                <div key={product?.slug}>
+                  {product?.title}
+                </div>
+              ) )}
+
+              {products ? products.map( (product: any) => (
+                <div key={product.slug} className="relative">
+                  <ProductCard data={product} />
+                </div>
+              ) ) : [...Array( 6 )].map( (_, index) => (
+                <div key={index}>
+                  <ProductSkeleton />
+                </div>
+              ) )}
+            </div>
+
+            {pageInfo.hasNextPage && (
+              <div className="flex justify-center items-center mt-6">
+                <Button
+                  onClick={loadMoreProducts}
+                  disabled={isLoadingMore}
+                  variant="ghost"
+                  className="flex gap-2 tsxt-xs uppercase"
+                >
+                  {isLoadingMore && <LoaderCircle className="animate-spin w-4 h-4" />}
+                  <span>Load More...</span>
+                </Button>
+              </div>
+            )}
           </div>
-        ) : (
-          <ProductsNoContent data={data} />
-        )}
+        </div>
       </main>
     </div>
   );
