@@ -5,4 +5,4 @@ export { SearchForm } from './SearchForm';
 export { BrandLogo } from './BrandLogo';
 export { NavigationMenu } from './NavbarMenu';
 export { SocialLinks } from './SocialLinks';
-export { ProductsNoContent } from "./Products/products-no-content";
+// export { ProductsNoContent } from "./Products/products-no-content";

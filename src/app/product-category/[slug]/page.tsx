@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, Suspense, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { PageHeader } from '@/components/layouts/page-header';
 import { gql, useQuery } from '@apollo/client';
@@ -12,6 +12,7 @@ import ProductCard from '@/components/Products/product-card';
 import { Label } from '@/components/ui/label';
 import { getCategoryBySlugQuery } from '@/queries/getCategoryBySlug';
 import ProductsNoContent from '@/components/Products/products-no-content';
+import ProductsLoading from '@/app/product-category/ProductsLoading';
 
 const countriesFilter = [
   { name: 'Armenia', value: 'armenia' },

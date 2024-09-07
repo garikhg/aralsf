@@ -1,12 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { CategoryCard } from '@/app/categories/category-card';
+import React, { Suspense, useEffect, useState } from 'react';
+import { CategoryCard } from '@/app/categories/CategoryCard';
 import { BrandPartnersCarousel } from '@/components/BrandPartners/BrandPartnersCarousel';
 import { gql, useQuery } from '@apollo/client';
 import { PageHeader } from '@/components/layouts/page-header';
+import Loading from '@/app/categories/loading';
 
 const Categories = () => {
+
+
   const [categories, setCategories] = useState( [] );
   const { data, loading, error } = useQuery( GET_CATEGORIES_QUERY );
 
@@ -17,17 +20,17 @@ const Categories = () => {
   }, [data] );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  
+
+
   return (
     <div>
       <PageHeader title="Categories" />
-
       <main role="main">
         <div className="container py-8 lg:py-24">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -39,7 +42,6 @@ const Categories = () => {
             ) )}
           </div>
         </div>
-
         <BrandPartnersCarousel />
       </main>
     </div>
