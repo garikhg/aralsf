@@ -16,9 +16,12 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ data, ...props }) => {
       {sourceUrl &&
         <div className="w-full h-full absolute top-0 left-0 z-0">
           <span className="absolute w-full h-full top-0 left-0 bg-gradient-to-t from-black/80 to-black/10 z-[5]"></span>
-          <img
+          <Image
             src={sourceUrl ?? ''}
             alt={!altText ? name : altText}
+            width={720}
+            height={776}
+            priority
             className="w-full h-full blank object-cover max-w-full z-0"
           />
         </div>
