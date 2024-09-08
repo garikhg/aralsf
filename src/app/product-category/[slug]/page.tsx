@@ -12,6 +12,7 @@ import ProductCard from '@/components/Products/product-card';
 import {getCategoryBySlugQuery} from '@/queries/getCategoryBySlug';
 import {Label} from '@/components/ui/label';
 import axios from 'axios';
+import {ProductFilter} from "@/components";
 
 const countriesFilter = [
     {name: 'Armenia', value: 'armenia'},
@@ -178,6 +179,9 @@ const Products: React.FC = () => {
             <main className="py-16 lg:py-24" role="main">
                 <div className="container grid grid-cols-1 xl:grid-cols-4 gap-x-16">
                     <aside className="hidden xl:block col-span-1">
+                        <ProductFilter
+
+                        />
                         {/*<div>*/}
                         {/*  <h5>Filter By Country</h5>*/}
                         {/*  {countriesFilter && countriesFilter.map( (country) => (*/}
