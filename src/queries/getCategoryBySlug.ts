@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
-import { ProductDetails } from '@/fragments/ProductDetails';
 import { GlobalOptionsFragment } from '@/fragments/GlobalSettings';
+import { productDetailsFragment } from '@/components/Products/product-card';
 
 export const getCategoryBySlugQuery = gql`
-    ${ProductDetails}
+    ${productDetailsFragment}
     ${GlobalOptionsFragment}
     query GetCategoryBySlug(
         $idType: AcfProductCatIdType = SLUG,
