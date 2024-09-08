@@ -1,18 +1,16 @@
 'use client';
 
-import React, { ChangeEvent, Suspense, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { PageHeader } from '@/components/layouts/page-header';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Button } from '@/components/ui/button';
 import { LoaderCircle } from 'lucide-react';
 
 import ProductSkeleton from '@/components/Products/product-skeleton';
 import ProductCard from '@/components/Products/product-card';
-import { Label } from '@/components/ui/label';
 import { getCategoryBySlugQuery } from '@/queries/getCategoryBySlug';
-import ProductsNoContent from '@/components/Products/products-no-content';
-import ProductsLoading from '@/app/product-category/ProductsLoading';
+import { Label } from '@/components/ui/label';
 
 const countriesFilter = [
   { name: 'Armenia', value: 'armenia' },
@@ -27,16 +25,9 @@ const countriesFilter = [
 
 const colorFilter = [
   { name: 'White', value: 'white' },
-  { name: 'Red', value: 'red' }
+  { name: 'Red', value: 'red' },
+  { name: 'Blue', value: 'blue' }
 ];
-
-interface FiltersProps {
-  country: string[];
-  bottleSize: number[];
-  bottleType: string[];
-  color: string[];
-}
-
 
 const Products: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -45,18 +36,9 @@ const Products: React.FC = () => {
     skip: !slug
   } );
 
-
   const [isLoadingMore, setIsLoadingMore] = useState( false );
+  const [selectedFilter, setSelectedFilter] = useState( '' );
 
-  const [filteredProducts, setFilteredProducts] = useState<any>( [] );
-  const [selectedColors, setSelectedColors] = useState<any>( [] );
-
-  const [filters, setFilters] = useState<any>( {
-    country: [],
-    bottleSize: [],
-    bottleType: [],
-    color: []
-  } );
 
   useEffect( () => {
     setIsLoadingMore( false );
@@ -67,7 +49,9 @@ const Products: React.FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  // console.log( data );
+  const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log( event );
+  };
 
   // Category Details
   let category = data?.acfProductCat || '';
@@ -78,49 +62,6 @@ const Products: React.FC = () => {
   const productsData = data?.acfProductCat?.products || '';
   const products = productsData ? productsData.nodes : [];
   const pageInfo = productsData ? productsData.pageInfo : {};
-
-
-  const handleFilterChange = (filterKey: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-    setFilters( (prevProducts: any) => {
-      const safePrevProducts = Array.isArray( prevProducts ) ? prevProducts : [];
-      const updatedFilters = checked
-        ? [...safePrevProducts, value]
-        : safePrevProducts.filter( (country: string) => country !== value );
-      appliedFilters( products, updatedFilters );
-      console.log( updatedFilters );
-      return updatedFilters;
-    } );
-  };
-
-  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-    setSelectedColors( (prevColors: any) => {
-      const updatedColors = checked
-        ? [...prevColors, value]
-        : prevColors.filter( (color: string) => color !== value );
-      appliedFilters( products, updatedColors );
-      return updatedColors;
-    } );
-  };
-
-  // Function to filter Products based on selected colors
-  function appliedFilters(products: any[], selectedColors: string[]): void {
-    const filtered = products.filter( product => {
-      const attributes = product.acfProductOptions.acfProductAttribute || [];
-      return Array.isArray( attributes ) && attributes.some( attr => {
-        // return selectedColors.includes(attr.acfProductAttributeValue.trim().toLowerCase());
-        return selectedColors.includes( attr.acfProductAttributeValue );
-      } );
-    } );
-
-    setFilteredProducts( filtered );
-    // setProducts( filtered );
-  }
-
-  // console.log( selectedColors );
-  // console.log( filteredProducts );
-  // console.log( filters );
 
   const loadMoreProducts = async () => {
     if (data?.acfProductCat?.products?.pageInfo?.hasNextPage) {
@@ -177,10 +118,11 @@ const Products: React.FC = () => {
                     type="checkbox"
                     // checked={filters.country.includes( country )}
                     value={country.name}
-                    onChange={(e) => handleFilterChange( 'country', e )}
+                    onChange={handleFilterChange}
                     className=""
                   />
-                  <Label htmlFor={`country-${country.value}`} className="block py-2">
+                  <Label htmlFor={`country-${country.value}`}
+                         className="block py-2">
                     {country.name}
                   </Label>
                 </div>
@@ -193,9 +135,9 @@ const Products: React.FC = () => {
                 <label key={color.value} className="block py-2">
                   <input
                     type="checkbox"
-                    checked={selectedColors.includes( color.name )}
+                    // checked={handleFilterChange.includes( color.name )}
                     value={color.name}
-                    onChange={handleColorChange}
+                    onChange={handleFilterChange}
                   />
                   {color.name}
                 </label>
@@ -204,13 +146,7 @@ const Products: React.FC = () => {
           </aside>
 
           <div className="col-span-3">
-
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 relative">
-              {filteredProducts && filteredProducts.map( (product: any) => (
-                <div key={product?.slug}>
-                  {product?.title}
-                </div>
-              ) )}
 
               {products ? products.map( (product: any) => (
                 <div key={product.slug} className="relative">
@@ -231,7 +167,8 @@ const Products: React.FC = () => {
                   variant="ghost"
                   className="flex gap-2 tsxt-xs uppercase"
                 >
-                  {isLoadingMore && <LoaderCircle className="animate-spin w-4 h-4" />}
+                  {isLoadingMore &&
+                    <LoaderCircle className="animate-spin w-4 h-4" />}
                   <span>Load More...</span>
                 </Button>
               </div>
