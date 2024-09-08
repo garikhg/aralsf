@@ -4,7 +4,7 @@ import { gql } from '@apollo/client';
 
 const ProductCard = ({ data }: { data: any }) => {
   const { sourceUrl } = data?.featuredImage?.node || '';
-  const { sku, country, grapeType, manufacturer, brand, color, type, alcoholVolume } = data?.acfProductOptions || '';
+  const { sku, country, grapeType, manufacturer, color, type, alcoholVolume } = data?.acfProductOptions || '';
 
   return (
     <div className="relative w-full overflow-hidden rounded-lg h-full bg-[#F2F2F2]">
@@ -30,7 +30,7 @@ const ProductCard = ({ data }: { data: any }) => {
         <div className="p-4 text-center text-sm leading-7">
           {sku && <p>SKU - {sku}</p>}
           {country && <p>Country - {country}</p>}
-          {brand && <p>Brand - {brand}</p>}
+          {/*{brand && <p>Brand - {brand}</p>}*/}
           {alcoholVolume && <p>Alc. Vol. - {alcoholVolume}</p>}
         </div>
       </div>
@@ -49,14 +49,20 @@ export const productDetailsFragment = gql`
             }
         }
         acfProductOptions {
-            brand
-            country
             manufacturer
             sku
             color
             grapeType
             type
             alcoholVolume
+            brand {
+                nodes {
+                    id
+                    name
+                    slug
+                    count
+                }
+            }
             acfProductAttribute {
                 acfProductAttributeName
                 acfProductAttributeValue

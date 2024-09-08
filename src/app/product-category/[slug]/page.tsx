@@ -11,6 +11,7 @@ import ProductSkeleton from '@/components/Products/product-skeleton';
 import ProductCard from '@/components/Products/product-card';
 import { getCategoryBySlugQuery } from '@/queries/getCategoryBySlug';
 import { Label } from '@/components/ui/label';
+import axios from 'axios';
 
 const countriesFilter = [
   { name: 'Armenia', value: 'armenia' },
@@ -37,21 +38,63 @@ const Products: React.FC = () => {
   } );
 
   const [isLoadingMore, setIsLoadingMore] = useState( false );
-  const [selectedFilter, setSelectedFilter] = useState( '' );
+  const [filteredProducts, setFilteredProducts] = useState<any>( [] );
+  const [selectedFilters, setSelectedFilters] = useState<{
+    [key: string]: string[]
+  }>( {} );
 
 
   useEffect( () => {
     setIsLoadingMore( false );
   }, [slug] );
 
+  const fetchFilteredProducts = async (filters: { [key: string]: string[] }) => {
+    try {
+      // Construct the query string for each filter type
+      const queryParams = new URLSearchParams();
+
+      // Dynamically add each filter type and its values to the query string
+      Object.keys( filters ).forEach( (filterKey) => {
+        if (filters[filterKey].length > 0) {
+          queryParams.append( filterKey, filters[filterKey].join( '_AND_' ) );
+        }
+      } );
+
+      // Make the Axios GET request with the constructed query string
+      const response = await axios.get( `http://aralsf.local/wp-json/wp/v2/product?${queryParams.toString()}` );
+      if (response.status === 200) {
+        setFilteredProducts( response.data );
+      }
+
+    } catch (error) {
+      console.error( 'Error fetching products:', error );
+    }
+
+  };
+
+  useEffect( () => {
+    if (Object.keys( selectedFilters ).length > 0) {
+      fetchFilteredProducts( selectedFilters );
+    }
+  }, [selectedFilters] );
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-  const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log( event );
+  const handleFilterChange = (event: ChangeEvent<HTMLInputElement>, filterType: string) => {
+    const value = event.target.value;
+    setSelectedFilters( (prevFilters) => ({
+      ...prevFilters,
+      [filterType]: prevFilters[filterType]
+        ? prevFilters[filterType].includes( value )
+          ? prevFilters[filterType].filter( (v) => v !== value )
+          : [...prevFilters[filterType], value]
+        : [value]
+    }) );
   };
+
+  console.log( filteredProducts );
 
   // Category Details
   let category = data?.acfProductCat || '';
@@ -109,25 +152,25 @@ const Products: React.FC = () => {
       <main className="py-16 lg:py-24" role="main">
         <div className="container grid grid-cols-1 xl:grid-cols-4 gap-x-16">
           <aside className="hidden xl:block col-span-1">
-            <div>
-              <h5>Filter By Country</h5>
-              {countriesFilter && countriesFilter.map( (country) => (
-                <div key={country.value} className="flex gap-2">
-                  <input
-                    id={`country-${country.value}`}
-                    type="checkbox"
-                    // checked={filters.country.includes( country )}
-                    value={country.name}
-                    onChange={handleFilterChange}
-                    className=""
-                  />
-                  <Label htmlFor={`country-${country.value}`}
-                         className="block py-2">
-                    {country.name}
-                  </Label>
-                </div>
-              ) )}
-            </div>
+            {/*<div>*/}
+            {/*  <h5>Filter By Country</h5>*/}
+            {/*  {countriesFilter && countriesFilter.map( (country) => (*/}
+            {/*    <div key={country.value} className="flex gap-2">*/}
+            {/*      <input*/}
+            {/*        id={`country-${country.value}`}*/}
+            {/*        type="checkbox"*/}
+            {/*        // checked={filters.country.includes( country )}*/}
+            {/*        value={country.name}*/}
+            {/*        onChange={handleFilterChange}*/}
+            {/*        className=""*/}
+            {/*      />*/}
+            {/*      <Label htmlFor={`country-${country.value}`}*/}
+            {/*             className="block py-2">*/}
+            {/*        {country.name}*/}
+            {/*      </Label>*/}
+            {/*    </div>*/}
+            {/*  ) )}*/}
+            {/*</div>*/}
 
             <div>
               <h5>Filter By Color</h5>
@@ -137,7 +180,7 @@ const Products: React.FC = () => {
                     type="checkbox"
                     // checked={handleFilterChange.includes( color.name )}
                     value={color.name}
-                    onChange={handleFilterChange}
+                    onChange={(e) => handleFilterChange( e, 'filter_color' )}
                   />
                   {color.name}
                 </label>
@@ -146,7 +189,8 @@ const Products: React.FC = () => {
           </aside>
 
           <div className="col-span-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 relative">
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 relative">
 
               {products ? products.map( (product: any) => (
                 <div key={product.slug} className="relative">
