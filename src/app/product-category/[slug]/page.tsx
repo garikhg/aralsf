@@ -1,18 +1,22 @@
+/**
+ * Link: https://chatgpt.com/c/66dd5438-6f20-8004-bb0d-b7e0b07be3b4
+ */
 'use client';
 
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'next/navigation';
 import {PageHeader} from '@/components/layouts/page-header';
 import {useQuery} from '@apollo/client';
 import {Button} from '@/components/ui/button';
 import {LoaderCircle} from 'lucide-react';
+import {z} from 'zod';
 
 import ProductSkeleton from '@/components/Products/product-skeleton';
 import ProductCard from '@/components/Products/product-card';
 import {getCategoryBySlugQuery} from '@/queries/getCategoryBySlug';
 import {Label} from '@/components/ui/label';
 import axios from 'axios';
-import {ProductFilter} from "@/components";
+import {Checkbox} from "@/components/ui/checkbox";
 
 const countriesFilter = [
     {name: 'Armenia', value: 'armenia'},
@@ -31,6 +35,15 @@ const colorFilter = [
     {name: 'Blue', value: 'blue'}
 ];
 
+const FiltersSchema = z.object( {
+    filter_country: z.array( z.string() ).optional(),
+    filter_color: z.array( z.string() ).optional(),
+    filter_type: z.array( z.string() ).optional(),
+    filter_size: z.array( z.string() ).optional(),
+} );
+
+type Filters = z.infer<typeof FiltersSchema>;
+
 const Products: React.FC = () => {
     const {slug} = useParams<{ slug: string }>();
     const {data, error, fetchMore} = useQuery( getCategoryBySlugQuery, {
@@ -40,7 +53,7 @@ const Products: React.FC = () => {
 
     const [isLoadingMore, setIsLoadingMore] = useState( false );
     const [filteredProducts, setFilteredProducts] = useState<any>( [] );
-    const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string[] }>( {} );
+    const [selectedFilters, setSelectedFilters] = useState<Filters>( {} );
 
 
     useEffect( () => {
@@ -111,16 +124,16 @@ const Products: React.FC = () => {
         return <div>Error: {error.message}</div>;
     }
 
-    const handleFilterChange = (event: ChangeEvent<HTMLInputElement>, filterType: string) => {
-        const value = event.target.value;
-        setSelectedFilters( (prevFilters) => ({
-            ...prevFilters,
-            [filterType]: prevFilters[filterType]
-                ? prevFilters[filterType].includes( value )
-                    ? prevFilters[filterType].filter( (v) => v !== value )
-                    : [...prevFilters[filterType], value]
-                : [value]
-        }) );
+    const handleFilterChange = (value: string, filterType: keyof Filters) => {
+        setSelectedFilters( (prevFilters) => {
+            const currentValues = prevFilters[filterType] || [];
+            return {
+                ...prevFilters,
+                [filterType]: currentValues.includes( value )
+                    ? currentValues.filter( (v) => v !== value )
+                    : [...currentValues, value],
+            }
+        } );
     };
 
     // Category Details
@@ -168,6 +181,9 @@ const Products: React.FC = () => {
         }
     };
 
+
+    console.log( filteredProducts );
+
     return (
         <div className="relative min-h-screen flex flex-col">
             <PageHeader
@@ -179,42 +195,22 @@ const Products: React.FC = () => {
             <main className="py-16 lg:py-24" role="main">
                 <div className="container grid grid-cols-1 xl:grid-cols-4 gap-x-16">
                     <aside className="hidden xl:block col-span-1">
-                        <ProductFilter
-
-                        />
-                        {/*<div>*/}
-                        {/*  <h5>Filter By Country</h5>*/}
-                        {/*  {countriesFilter && countriesFilter.map( (country) => (*/}
-                        {/*    <div key={country.value} className="flex gap-2">*/}
-                        {/*      <input*/}
-                        {/*        id={`country-${country.value}`}*/}
-                        {/*        type="checkbox"*/}
-                        {/*        // checked={filters.country.includes( country )}*/}
-                        {/*        value={country.name}*/}
-                        {/*        onChange={handleFilterChange}*/}
-                        {/*        className=""*/}
-                        {/*      />*/}
-                        {/*      <Label htmlFor={`country-${country.value}`}*/}
-                        {/*             className="block py-2">*/}
-                        {/*        {country.name}*/}
-                        {/*      </Label>*/}
-                        {/*    </div>*/}
-                        {/*  ) )}*/}
-                        {/*</div>*/}
-
-                        <div>
-                            <h5>Filter By Color</h5>
-                            {colorFilter && colorFilter.map( (color) => (
-                                <label key={color.value} className="block py-2">
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedFilters?.filter_color?.includes( color.name ) || false}
-                                        value={color.name}
-                                        onChange={(e) => handleFilterChange( e, 'filter_color' )}
-                                    />
-                                    {color.name}
-                                </label>
-                            ) )}
+                        <div className="block">
+                            <h5 className="relative text-md font-semibold tracking-tight">Filter By Color</h5>
+                            <div className="space-y-1 py-2">
+                                {colorFilter && colorFilter.map( (color) => (
+                                    <div key={color.value} className="flex gap-2 py-1">
+                                        <Checkbox
+                                            id={`filterColor${color.value}`}
+                                            checked={selectedFilters.filter_color?.includes( color.name ) || false}
+                                            onCheckedChange={() => handleFilterChange( color.name, 'filter_color' )}
+                                        />
+                                        <Label htmlFor={`filterColor${color.value}`} className="block">
+                                            {color.name}
+                                        </Label>
+                                    </div>
+                                ) )}
+                            </div>
                         </div>
                     </aside>
 
