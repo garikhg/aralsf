@@ -199,11 +199,12 @@ const Products: React.FC = () => {
                             <h5 className="relative text-md font-semibold tracking-tight">Filter By Color</h5>
                             <div className="space-y-1 py-2">
                                 {colorFilter && colorFilter.map( (color) => (
-                                    <div key={color.value} className="flex gap-2 py-1">
+                                    <div key={color.value} className="flex items-center gap-2 py-1.5">
                                         <Checkbox
                                             id={`filterColor${color.value}`}
                                             checked={selectedFilters.filter_color?.includes( color.name ) || false}
                                             onCheckedChange={() => handleFilterChange( color.name, 'filter_color' )}
+                                            className="w-6 h-6 data-[state=checked]:bg-transparent data-[state=checked]:text-primary"
                                         />
                                         <Label htmlFor={`filterColor${color.value}`} className="block">
                                             {color.name}
@@ -215,8 +216,7 @@ const Products: React.FC = () => {
                     </aside>
 
                     <div className="col-span-3">
-                        <div
-                            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 relative">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 relative">
 
                             {products ? products.map( (product: any) => (
                                 <div key={product.slug} className="relative">
