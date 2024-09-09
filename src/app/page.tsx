@@ -1,19 +1,19 @@
 'use client';
 
 import React from 'react';
-import { Cover, HeroSlider, PartnersCarousel } from '@/_components';
-import { BlockMediaText } from '@/components/blocks/MediaText';
-import { gql } from '@apollo/client';
+import {Cover, HeroSlider, PartnersCarousel} from '@/_components';
+import {BlockMediaText} from '@/components/blocks/MediaText';
+import {gql} from '@apollo/client';
 
 export default function Home() {
-  return (
-    <main role="main">
-      <HeroSlider />
-      <Cover />
-      <BlockMediaText />
-      <PartnersCarousel />
-    </main>
-  );
+    return (
+        <main role="main">
+            <HeroSlider/>
+            <Cover/>
+            <BlockMediaText/>
+            <PartnersCarousel/>
+        </main>
+    );
 }
 
 const GET_PAGE_DATA = gql`
