@@ -1,11 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: [
-      'aralsf.local',
-      'aralsf-backend.code-craft.am'
-    ]
-  }
+    images: {
+        remotePatterns: [
+            {
+                protocol: "http",
+                hostname: "aralsf.local",
+                port: "",
+                pathname: "/**",
+            },
+        ],
+    }
 };
 
 export default nextConfig;
