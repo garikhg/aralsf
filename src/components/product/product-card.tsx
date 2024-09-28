@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({data}) => {
         {name: 'Bottles per case', value: bottles_per_case},
         {name: 'Alcohol', value: alcohol_volume ? `${alcohol_volume}%` : ''},
         {name: 'Color', value: color},
-        {name: 'Tpe', value: type},
+        {name: 'Type', value: type},
     ] as const;
     return (
         <div className="block rounded-lg bg-white shadow dark:bg-neutral-700">
