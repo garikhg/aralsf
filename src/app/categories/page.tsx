@@ -1,7 +1,7 @@
 import React from 'react';
 import {Metadata} from "next";
 import {getPageCategory, getProductCategories} from "@/lib/wordpress";
-import CategoryCard from "@/app/categories/category-card";
+import CategoryCard from "@/components/category/category-card";
 import Image from "next/image";
 import {settings} from "@/config/settings";
 
