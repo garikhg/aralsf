@@ -33,9 +33,9 @@ export type ProductCategory = {
     parent: number;
     meta: any[];
     acf: any[];
-}
+}[];
 
-export type PageCategory = {
+export type PageCategories = {
     id: string;
     date: string;
     date_gmt: string;

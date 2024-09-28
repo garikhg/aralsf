@@ -2,7 +2,7 @@
 
 import queryString from "query-string";
 
-import {PageCategory, Product, ProductCategory} from "@/lib/wordpress.d";
+import {PageCategories, Product, ProductCategory} from "@/lib/wordpress.d";
 
 const baseUrl = process.env.WORDPRESS_URL || 'http://aralsf.local';
 
@@ -39,7 +39,7 @@ export const getProductCategories = async (): Promise<ProductCategory[]> => {
         : [];
 };
 
-export const getPageCategory = async (): Promise<PageCategory[]> => {
+export const getPageCategory = async (): Promise<PageCategories[]> => {
     const url = getUrl( `/wp-json/wp/v2/pages?_embed&slug=categories` );
     const response = await fetch( url );
     if (!response.ok) {
@@ -49,8 +49,22 @@ export const getPageCategory = async (): Promise<PageCategory[]> => {
     return await response.json();
 }
 
-export const getProductsByCategory = async (categoryId: number): Promise<Product[]> => {
-    const url = getUrl( '/wp-json/wp/v2/product', {product_cat: categoryId} );
+export const getProductCategoryBySlug = async (slug: string): Promise<ProductCategory> => {
+    const url = getUrl( `/wp-json/wp/v2/product_cat`, {slug: slug, acf_format: 'standard'} );
+    const [response] = await Promise.all( [fetch( url )] );
+
+    if (!response.ok) {
+        throw new Error( `Failed to fetch products category by slug: ${response.statusText}` );
+    }
+
+    return await response.json();
+}
+
+/**
+ * Query To: http://aralsf.local/wp-json/wp/v2/product?product_cat=4&acf_format=standard&_embed
+ */
+export const getProductsByCategoryId = async (categoryId: number): Promise<Product[]> => {
+    const url = getUrl( `/wp-json/wp/v2/product?product_cat=${categoryId}&acf_format=standard&_embed`, );
     const response = await fetch( url );
     if (!response.ok) {
         throw new Error( `Failed to fetch products page: ${response.statusText}` );
