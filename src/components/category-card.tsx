@@ -54,4 +54,6 @@ const CategoryCard = ({data}: { data: any }) => {
 };
 
 
-export default CategoryCard;
+CategoryCard.displayName = 'CategoryCard';
+
+export {CategoryCard};
