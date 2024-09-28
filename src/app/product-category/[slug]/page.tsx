@@ -18,7 +18,7 @@ export const generateMetadata = async ({params}: { params: { slug: string } }): 
 const ProductCategory: React.FC<{ params: { slug: string } }> = async ({params}) => {
     const categories = await getProductCategoryBySlug( params.slug );
     const products = await getProductsByCategoryId( categories[0]?.id );
-    console.log( categories )
+
     return (
         <div className="container py-6 sm:py-8 lg:py-12">
             <div className="grid grid-cols-12 gap-4">
