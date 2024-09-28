@@ -59,7 +59,6 @@ const Categories: React.FC = async () => {
     const pageDescription = acf?.description ?? '';
     const featuredMedia = page?._embedded?.['wp:featuredmedia'][0]?.source_url || null;
 
-
     return (
         <div className="min-h-screen">
             <Container>
