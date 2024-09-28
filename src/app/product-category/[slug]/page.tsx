@@ -3,16 +3,14 @@ import {Metadata} from "next";
 import {getProductCategoryBySlug, getProductsByCategoryId} from "@/lib/wordpress";
 import ProductCard from "@/components/product/product-card";
 import {settings} from "@/config/settings";
+import {Container} from "@/components/container";
 
 export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
     const categories = await getProductCategoryBySlug( params.slug );
     const categoryTitle = categories[0]?.name ? `${categories[0]?.name} - ${settings.siteTitle}` : '';
     const categoryDescription = categories[0]?.description ? categories[0]?.description : '';
 
-    return {
-        title: categoryTitle,
-        description: categoryDescription
-    }
+    return {title: categoryTitle, description: categoryDescription}
 }
 
 const ProductCategory: React.FC<{ params: { slug: string } }> = async ({params}) => {
@@ -20,7 +18,7 @@ const ProductCategory: React.FC<{ params: { slug: string } }> = async ({params})
     const products = await getProductsByCategoryId( categories[0]?.id );
 
     return (
-        <div className="container py-6 sm:py-8 lg:py-12">
+        <Container>
             <div className="grid grid-cols-12 gap-4">
 
                 <div className="col-span-12 md:col-span-3">
@@ -39,7 +37,7 @@ const ProductCategory: React.FC<{ params: { slug: string } }> = async ({params})
                 </div>
 
             </div>
-        </div>
+        </Container>
     );
 };
 

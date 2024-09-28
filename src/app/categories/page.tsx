@@ -4,6 +4,8 @@ import {getPageCategory, getProductCategories} from "@/lib/wordpress";
 import CategoryCard from "@/components/category/category-card";
 import Image from "next/image";
 import {settings} from "@/config/settings";
+import {Container} from "@/components/container";
+
 
 interface AcfProps {
     description?: string
@@ -60,7 +62,7 @@ const Categories: React.FC = async () => {
 
     return (
         <div className="min-h-screen">
-            <div className="container py-6 sm:py-8 lg:py-12">
+            <Container>
                 {pageTitle && (
                     <div className="relative mb-6 sm:mb-8 lg:mb-12">
                         <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-20">
@@ -92,8 +94,7 @@ const Categories: React.FC = async () => {
                         </div>
                     ) )}
                 </div>
-            </div>
-
+            </Container>
             {/*<BrandPartnersCarousel/>*/}
         </div>
     );
