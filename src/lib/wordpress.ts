@@ -49,8 +49,17 @@ export const getPageCategory = async (): Promise<PageCategories[]> => {
     return await response.json();
 }
 
+/**
+ * Retrieves a product category by its slug.
+ *
+ * @param {string} slug - The slug of the product category.
+ * @return {Promise<ProductCategory>} - The promise that resolves to the retrieved product category.
+ * @throws {Error} - If there was an error fetching the product category.
+ *
+ * Query: http://aralsf.local/wp-json/wp/v2/product_cat?slug=wines&acf_format=standard&_embed
+ */
 export const getProductCategoryBySlug = async (slug: string): Promise<ProductCategory> => {
-    const url = getUrl( `/wp-json/wp/v2/product_cat`, {slug: slug, acf_format: 'standard'} );
+    const url = getUrl( `/wp-json/wp/v2/product_cat?${slug}&acf_format=standard&_embed` );
     const [response] = await Promise.all( [fetch( url )] );
 
     if (!response.ok) {
@@ -60,8 +69,15 @@ export const getProductCategoryBySlug = async (slug: string): Promise<ProductCat
     return await response.json();
 }
 
+
 /**
- * Query To: http://aralsf.local/wp-json/wp/v2/product?product_cat=4&acf_format=standard&_embed
+ * Returns an array of products based on the provided category ID.
+ *
+ * @param {number} categoryId - The category ID for which products need to be fetched.
+ * @returns {Promise<Product[]>} - A promise that resolves to an array of products.
+ * @throws {Error} - If there was an error fetching the products.
+ *
+ * Query: http://aralsf.local/wp-json/wp/v2/product?product_cat=4&acf_format=standard&_embed
  */
 export const getProductsByCategoryId = async (categoryId: number): Promise<Product[]> => {
     const url = getUrl( `/wp-json/wp/v2/product?product_cat=${categoryId}&acf_format=standard&_embed`, );
