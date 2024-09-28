@@ -3,22 +3,60 @@ import {Metadata} from "next";
 import {getPageCategory, getProductCategories} from "@/lib/wordpress";
 import CategoryCard from "@/app/categories/category-card";
 import Image from "next/image";
+import {settings} from "@/config/settings";
+
+interface AcfProps {
+    description?: string
+}
+
+interface PageProps {
+    title: { rendered: string };
+    acf?: AcfProps;
+}
+
+interface CategoryPageProps extends PageProps {
+    id: string;
+    date: string;
+    slug: string;
+    status: "publish" | "draft" | "pending";
+    title: {
+        rendered: string;
+    };
+    content: {
+        rendered: string;
+    };
+    excerpt: {
+        rendered: string;
+    };
+    parent: number;
+    menu_order: number;
+    acf?: any | undefined;
+    _embedded?: any;
+}
 
 export const generateMetadata = async (): Promise<Metadata> => {
-    const page = await getPageCategory();
+    const pages: CategoryPageProps[] = await getPageCategory();
+    const page = pages[0] || null;
+    const pageTitle = `${page?.title?.rendered} - ${settings.siteTitle}` || `Categories - ${settings.siteTitle}`
+    const pageDescription = page?.acf?.description ? page.acf.description : '';
+
     return {
-        title: page[0]?.title?.rendered || 'Categories',
-        description: "Categories Description",
+        title: pageTitle,
+        description: pageDescription,
     }
 }
 
 const Categories: React.FC = async () => {
     const categories = await getProductCategories();
-    const pageCategory = await getPageCategory();
+    const pages: CategoryPageProps[] = await getPageCategory();
+    const page = pages[0] ?? null;
 
-    const pageTitle = pageCategory[0]?.title?.rendered || 'Categories';
-    // @ts-ignore
-    const featuredMedia = pageCategory[0]?._embedded?.['wp:featuredmedia'][0]?.source_url || null;
+    // Page Data
+    const {title, acf} = page ?? {};
+    const pageTitle = title.rendered ?? 'Categories';
+    const pageDescription = acf?.description ?? '';
+    const featuredMedia = page?._embedded?.['wp:featuredmedia'][0]?.source_url || null;
+
 
     return (
         <div className="min-h-screen">
@@ -27,6 +65,7 @@ const Categories: React.FC = async () => {
                     <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-20">
                         <div className="px-6 lg:px-16 text-primary-foreground text-center">
                             <h1 className="text-5xl font-bold">{pageTitle}</h1>
+                            <p dangerouslySetInnerHTML={{__html: pageDescription}}/>
                         </div>
                     </div>
 
