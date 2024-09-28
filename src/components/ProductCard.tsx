@@ -120,4 +120,5 @@ const ProductCard: React.FC<ProductCardProps> = ({data}) => {
     );
 };
 
-export default ProductCard;
+ProductCard.displayName = 'ProductCard';
+export {ProductCard};

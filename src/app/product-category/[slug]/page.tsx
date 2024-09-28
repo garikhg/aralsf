@@ -1,9 +1,9 @@
 import React from 'react';
 import {Metadata} from "next";
 import {getProductCategoryBySlug, getProductsByCategoryId} from "@/lib/wordpress";
-import ProductCard from "@/components/product/product-card";
 import {settings} from "@/config/settings";
 import {Container} from "@/components/Container";
+import {ProductCard} from "@/components/ProductCard";
 
 export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
     const categories = await getProductCategoryBySlug( params.slug );
