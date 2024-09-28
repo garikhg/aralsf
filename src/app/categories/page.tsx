@@ -3,8 +3,8 @@ import {Metadata} from "next";
 import {getPageCategory, getProductCategories} from "@/lib/wordpress";
 import Image from "next/image";
 import {settings} from "@/config/settings";
-import {Container} from "@/components/container";
-import {CategoryCard} from "@/components/category-card";
+import {Container} from "@/components/Container";
+import {CategoryCard} from "@/components/CategoryCard";
 
 
 interface AcfProps {
