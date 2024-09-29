@@ -2,17 +2,18 @@
 
 import queryString from "query-string";
 
-import {PageCategories, Product, ProductCategory} from "@/lib/wordpress.d";
+import {Country, PageCategories, Product, ProductCategory} from "@/lib/wordpress.d";
 
 const baseUrl = process.env.WORDPRESS_URL || 'http://aralsf.local';
 
 const getUrl = (path: string, query?: Record<string, any>) => {
     const params = query ? queryString.stringify( query ) : null;
-    return `${baseUrl}${path}${params ? `?${params}` : ''}`;
+    const separator = path.includes( '?' ) ? '&' : '?';
+    return `${baseUrl}${path}${params ? `${separator}${params}` : ''}`;
 }
 
 // WordPress Functions
-export const getAllProducts = async (filterParams?: {}): Promise<Product[]> => {
+export const getAllProducts = async (): Promise<Product[]> => {
     const url = getUrl( '/wp-json/wp/v2/product', {} );
     const response = await fetch( url );
 
@@ -20,8 +21,7 @@ export const getAllProducts = async (filterParams?: {}): Promise<Product[]> => {
         throw new Error( `Failed to fetch products: ${response.statusText}` );
     }
 
-    const products: Product[] = await response.json();
-    return products;
+    return await response.json();
 }
 
 // getAllProductCategories function (ensure it returns an array)
@@ -74,18 +74,38 @@ export const getProductCategoryBySlug = async (slug: string): Promise<ProductCat
  * Returns an array of products based on the provided category ID.
  *
  * @param {number} categoryId - The category ID for which products need to be fetched.
+ * @param filterParams
  * @returns {Promise<Product[]>} - A promise that resolves to an array of products.
  * @throws {Error} - If there was an error fetching the products.
  *
  * Query: http://aralsf.local/wp-json/wp/v2/product?product_cat=4&acf_format=standard&_embed
  */
-export const getProductsByCategoryId = async (categoryId: number): Promise<Product[]> => {
-    const url = getUrl( `/wp-json/wp/v2/product?product_cat=${categoryId}&acf_format=standard&_embed`, );
+export const getProductsByCategoryId = async (categoryId: number, filterParams?: { filter_color?: string }): Promise<Product[]> => {
+    const url = getUrl( `/wp-json/wp/v2/product?product_cat=${categoryId}&acf_format=standard&_embed`, {
+        filter_color: filterParams?.filter_color
+    } );
     const response = await fetch( url );
     if (!response.ok) {
         throw new Error( `Failed to fetch products page: ${response.statusText}` );
     }
 
-    const data: Product[] = await response.json();
-    return data;
+    return await response.json();
+}
+
+/**
+ * Retrieves all the countries from the WordPress API.
+ *
+ * @async
+ * @returns {Promise<Country[]>} - A promise that resolves to an array of Country objects.
+ * @throws {Error} - If the request to the API fails.
+ */
+export const getAllCountries = async (): Promise<Country[]> => {
+    const url = getUrl( '/wp-json/wp/v2/country' );
+    const response = await fetch( url );
+
+    if (!response.ok) {
+        throw new Error( `Failed to fetch countries: ${response.statusText}` );
+    }
+
+    return await response.json();
 }

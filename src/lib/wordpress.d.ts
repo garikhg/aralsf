@@ -68,3 +68,13 @@ export type PageCategories = {
     acf?: any[];
     _embedded?: any[];
 }
+
+export type Country = {
+    id: number;
+    count: number;
+    description: string;
+    link: string;
+    name: string;
+    slug: string;
+    taxonomy: string;
+}
