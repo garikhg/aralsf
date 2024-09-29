@@ -1,10 +1,10 @@
 import React from "react";
 import {Metadata} from "next";
-import {getPageCategory, getProductCategories} from "@/lib/wordpress";
 import Image from "next/image";
 import {settings} from "@/config/settings";
 import {Container} from "@/components/Container";
 import {CategoryCard} from "@/components/CategoryCard";
+import {getPageCategory, getProductCategories} from "@/lib/wordpress";
 
 
 interface AcfProps {
@@ -27,11 +27,6 @@ interface CategoryPageProps extends PageProps {
     content: {
         rendered: string;
     };
-    excerpt: {
-        rendered: string;
-    };
-    parent: number;
-    menu_order: number;
     acf?: any | undefined;
     _embedded?: any;
 }
