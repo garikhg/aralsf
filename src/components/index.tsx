@@ -5,4 +5,3 @@ export {SearchForm} from './SearchForm';
 export {BrandLogo} from './BrandLogo';
 export {NavigationMenu} from './NavbarMenu';
 export {SocialLinks} from './SocialLinks';
-export {Loading} from './Loading';
