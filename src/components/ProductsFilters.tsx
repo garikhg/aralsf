@@ -21,15 +21,47 @@ interface ProductsFiltersProps {
 }
 
 const filterTitle = (title: string) => {
-    return <h5 className="text-md mb-3">{title}</h5>
+    return <h5 className="text-md font-medium mb-3">{title}</h5>
+}
+
+interface filterCheckboxItemProps {
+    id: string;
+    label: string;
+    value?: string | undefined;
+    checked?: boolean | undefined;
+    onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+}
+
+const filterCheckboxItem = (id: string, label: string, value?: string, checked?: boolean, onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined) => {
+    return (
+        <>
+            <input
+                id={id}
+                type="checkbox"
+                value={value}
+                checked={checked}
+                onChange={onChange}
+                className="absolute opacity-0"
+            />
+            <label
+                htmlFor={id}
+                className="flex items-center rounded border border-gray-200 py-1 px-2 cursor-pointer hover:border-gray-400 transition-all duration-200"
+            >
+                {label}
+            </label>
+        </>
+    )
 }
 
 const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bottleSizes, bottlesCases}) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const [isLoading, setIsLoading] = React.useState( false );
 
     const handlerFilterChange = (filterType: string, value: string) => {
+        setIsLoading( true );
+
         const params = new URLSearchParams( window.location.search );
         const existingValues = params.get( filterType )?.split( '_AND_' ) || [];
 
@@ -47,7 +79,8 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
         }
 
         // Update URL with new filter params
-        router.push( `${pathname}?${params.toString()}` );
+        router.replace( `${pathname}?${params.toString()}`, {scroll: false} );
+        setIsLoading( false );
     }
 
     const isSelected = (filterType: string, value: string) => {
@@ -57,6 +90,11 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
 
     return (
         <div className="pr-16 space-y-8">
+            {isLoading && (
+                <div className="flex justify-center py-4">
+                    Loading...
+                </div>
+            )}
             {/* Filters Country */}
             {countries?.length > 0 && (
                 <div className="relative">
@@ -99,9 +137,26 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
             {bottleSizes?.length > 0 && (
                 <div className="relative border-t border-gray-200 pt-8">
                     {filterTitle( 'Filter By Bottle Size' )}
-                    <ul className="list-none">
+                    <ul className="list-none flex flex-wrap -mx-1">
                         {bottleSizes.map( (size: string, index: number) => (
-                            <li key={`${size}${index}`}>{size}</li>
+                            <li key={`${size}${index}`}
+                                className="relative w-1/3 p-1"
+                            >
+                                <input
+                                    id={`filter${size}${index}`}
+                                    type="checkbox"
+                                    value={size}
+                                    checked={isSelected( 'filter_bottle_size', size )}
+                                    onChange={() => handlerFilterChange( 'filter_bottle_size', size )}
+                                    className="absolute opacity-0"
+                                />
+                                <label
+                                    htmlFor={`filter${size}${index}`}
+                                    className="w-full text-center flex items-center justify-center rounded border border-gray-200 py-1 px-2 cursor-pointer hover:border-gray-400 transition-all duration-200"
+                                >
+                                    {size}
+                                </label>
+                            </li>
                         ) )}
                     </ul>
                 </div>
@@ -111,9 +166,24 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
             {bottlesCases?.length > 0 && (
                 <div className="relative border-t border-gray-200 pt-8">
                     {filterTitle( 'Filter By Bottles per case' )}
-                    <ul className="list-none">
+                    <ul className="list-none flex flex-wrap -mx-1">
                         {bottlesCases.map( (perCase: string, index: number) => (
-                            <li key={index}>{perCase}</li>
+                            <li key={index} className="w-1/5 p-1">
+                                <input
+                                    id={`filter${perCase}${index}`}
+                                    type="checkbox"
+                                    value={perCase}
+                                    checked={isSelected( 'filter_bottle_size', perCase )}
+                                    onChange={() => handlerFilterChange( 'filter_per_case', perCase )}
+                                    className="absolute opacity-0"
+                                />
+                                <label
+                                    htmlFor={`filter${perCase}${index}`}
+                                    className="text-center flex items-center justify-center rounded border border-gray-200 py-1 px-2 cursor-pointer hover:border-gray-400 transition-all duration-200"
+                                >
+                                    {perCase}
+                                </label>
+                            </li>
                         ) )}
                     </ul>
                 </div>

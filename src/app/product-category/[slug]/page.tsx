@@ -21,18 +21,12 @@ interface ProductCategoryParams {
 }
 
 const ProductCategory: React.FC<ProductCategoryParams> = async ({params, searchParams}) => {
-    const {country, filter_color} = searchParams;
+    const {country, filter_color, filter_bottle_size} = searchParams;
     const categories = await getProductCategoryBySlug( params.slug );
-    const products = await getProductsByCategoryId( categories[0]?.id, {filter_color} );
+    const products = await getProductsByCategoryId( categories[0]?.id, {filter_color, filter_bottle_size} );
 
     // Fetching countries
     const getCountries = await getAllCountries();
-    // const countries = getCountries.map( (country: any) => ({
-    //     id: country.id,
-    //     count: country.count,
-    //     name: country.name,
-    //     slug: country.slug
-    // }) );
 
     // Extracting the unique color values from the products
     const colors = Array.from(
