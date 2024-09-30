@@ -80,10 +80,14 @@ export const getProductCategoryBySlug = async (slug: string): Promise<ProductCat
  *
  * Query: http://aralsf.local/wp-json/wp/v2/product?product_cat=4&acf_format=standard&_embed
  */
-export const getProductsByCategoryId = async (categoryId: number, filterParams?: { filter_color?: string }): Promise<Product[]> => {
-    const url = getUrl( `/wp-json/wp/v2/product?product_cat=${categoryId}&acf_format=standard&_embed`, {
-        filter_color: filterParams?.filter_color
-    } );
+export const getProductsByCategoryId = async (categoryId: number, filterParams?: { filter_color?: string, filter_bottle_size?: string }): Promise<Product[]> => {
+
+    const queries = {
+        filter_color: filterParams?.filter_color,
+        filter_bottle_size: filterParams?.filter_bottle_size,
+    }
+
+    const url = getUrl( `/wp-json/wp/v2/product?product_cat=${categoryId}&acf_format=standard&_embed`, queries );
     const response = await fetch( url );
     if (!response.ok) {
         throw new Error( `Failed to fetch products page: ${response.statusText}` );
