@@ -14,7 +14,6 @@ export const generateMetadata = async ({params}: { params: { slug: string } }): 
     return {title: categoryTitle, description: categoryDescription}
 }
 
-
 interface ProductCategoryParams {
     params: { slug: string };
     searchParams: { [key: string]: string | undefined }
