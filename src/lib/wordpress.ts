@@ -80,9 +80,10 @@ export const getProductCategoryBySlug = async (slug: string): Promise<ProductCat
  *
  * Query: http://aralsf.local/wp-json/wp/v2/product?product_cat=4&acf_format=standard&_embed
  */
-export const getProductsByCategoryId = async (categoryId: number, filterParams?: { filter_color?: string, filter_bottle_size?: string }): Promise<Product[]> => {
+export const getProductsByCategoryId = async (categoryId: number, filterParams?: { filter_country?: string, filter_color?: string, filter_bottle_size?: string }): Promise<Product[]> => {
 
     const queries = {
+        filter_country: filterParams?.filter_country,
         filter_color: filterParams?.filter_color,
         filter_bottle_size: filterParams?.filter_bottle_size,
     }

@@ -1,46 +1,123 @@
-import React from 'react';
-import {Metadata} from "next";
+'use client';
+
+import React, {useEffect, useState} from 'react';
+// import {Metadata} from "next";
 import {getAllCountries, getProductCategoryBySlug, getProductsByCategoryId} from "@/lib/wordpress";
-import {settings} from "@/config/settings";
+// import {settings} from "@/config/settings";
 import {Container} from "@/components/Container";
 import {ProductCard} from "@/components/ProductCard";
 import ProductsFilters from "@/components/ProductsFilters";
+import ProductsFiltersTags from "@/components/ProductsFiltersTags";
+import {usePathname, useRouter} from "next/navigation";
 
-export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
-    const categories = await getProductCategoryBySlug( params.slug );
-    const categoryTitle = categories[0]?.name ? `${categories[0]?.name} - ${settings.siteTitle}` : '';
-    const categoryDescription = categories[0]?.description ? categories[0]?.description : '';
-
-    return {title: categoryTitle, description: categoryDescription}
-}
+// export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
+//     const categories = await getProductCategoryBySlug( params.slug );
+//     const categoryTitle = categories[0]?.name ? `${categories[0]?.name} - ${settings.siteTitle}` : '';
+//     const categoryDescription = categories[0]?.description ? categories[0]?.description : '';
+//
+//     return {title: categoryTitle, description: categoryDescription}
+// }
 
 interface ProductCategoryParams {
     params: { slug: string };
     searchParams: { [key: string]: string | undefined }
 }
 
-const ProductCategory: React.FC<ProductCategoryParams> = async ({params, searchParams}) => {
+interface ActiveFiltersParams {
+    filter_color: string[];
+    filter_bottle_size: string[];
+}
+
+const ProductCategory: React.FC<ProductCategoryParams> = ({params, searchParams}) => {
     const {country, filter_color, filter_bottle_size} = searchParams;
-    const categories = await getProductCategoryBySlug( params.slug );
-    const products = await getProductsByCategoryId( categories[0]?.id, {filter_color, filter_bottle_size} );
 
-    // Fetching countries
-    const getCountries = await getAllCountries();
+    const router = useRouter();
+    const pathname = usePathname();
 
-    // Extracting the unique color values from the products
-    const colors = Array.from(
-        new Set( products.map( (product: any) => product.acf.color ) )
-    );
+    // Set from fetched data
+    const [categories, setCategories] = useState<any[]>( [] );
+    const [products, setProducts] = useState<any[]>( [] );
+    const [countries, setCountries] = useState<any[]>( [] );
 
-    // Extracting the unique bottle_size values from the products
-    const bottleSizes = Array.from(
-        new Set( products.map( (product: any) => product.acf.bottle_size ) )
-    );
+    // Loading state for fetchData and filters
+    const [loading, setLoading] = useState<boolean>( false );
 
-    // Extracting the unique bottles_per_case values from the products
-    const bottlesCases = Array.from(
-        new Set( products.map( (product: any) => product.acf.bottles_per_case ) )
-    );
+    // State for active filters
+    const [activeFilters, setActiveFilters] = useState( {
+        filter_color: filter_color ? filter_color.split( '_' ) : [],
+        filter_bottle_size: filter_bottle_size ? filter_bottle_size.split( '_' ) : [],
+    } );
+
+    // Fetch products and filters based on the active filters
+    const fetchData = async () => {
+        setLoading( true );
+
+        try {
+            const categoriesData = await getProductCategoryBySlug( params.slug );
+            setCategories( categoriesData );
+
+            if (categoriesData.length > 0) {
+                const productsData = await getProductsByCategoryId( categoriesData[0]?.id, {filter_color, filter_bottle_size} );
+                setProducts( productsData );
+            }
+
+            const countriesData = await getAllCountries();
+            setCountries( countriesData );
+
+        } catch (error) {
+            console.error( 'Error fetching data:', error );
+        } finally {
+            const loadingTimer = setTimeout( () => {
+                setLoading( false );
+            }, 1000 )
+
+            return () => clearTimeout( loadingTimer );
+        }
+    }
+
+    useEffect( () => {
+        fetchData().then();
+    }, [params.slug, filter_color, filter_bottle_size] );
+
+
+    // Extracting unique values for filters
+    const colors = Array.from( new Set( products.map( (product: any) => product.acf.color ) ) );
+    const bottleSizes = Array.from( new Set( products.map( (product: any) => product.acf.bottle_size ) ) );
+    const bottlesCases = Array.from( new Set( products.map( (product: any) => product.acf.bottles_per_case ) ) );
+
+
+    const updateSearchParams = (filterType: keyof ActiveFiltersParams, updatedFilters: string[]) => {
+        const params = new URLSearchParams( window.location.search );
+
+        if (updatedFilters.length > 0) {
+            params.set( filterType, updatedFilters.join( '_' ) );
+        } else {
+            params.delete( filterType );
+        }
+
+        router.replace( `${pathname}?${params.toString()}`, {scroll: false} );
+    }
+
+    // Handler to update active filters dynamically
+    const handlerUpdateFilters = (filterType: keyof ActiveFiltersParams, filterValue: string) => {
+        setActiveFilters( (prev) => {
+            const currentFilters = prev[filterType];
+            const updatedFilters = currentFilters.includes( filterValue )
+                ? currentFilters.filter( (v: string) => v !== filterValue )
+                : [...currentFilters, filterValue]
+            updateSearchParams( filterType, updatedFilters );
+            return {...prev, [filterType]: updatedFilters}
+        } );
+    }
+
+    // Handler to remove filters
+    const handlerRemoveFilter = (filterType: keyof ActiveFiltersParams, filterValue: string) => {
+        setActiveFilters( (prev) => {
+            const updatedFilters = prev[filterType].filter( (v: string) => v !== filterValue );
+            updateSearchParams( filterType, updatedFilters );
+            return {...prev, [filterType]: updatedFilters};
+        } );
+    }
 
     return (
         <Container>
@@ -48,22 +125,34 @@ const ProductCategory: React.FC<ProductCategoryParams> = async ({params, searchP
 
                 <div className="col-span-12 md:col-span-3">
                     <ProductsFilters
-                        countries={getCountries}
+                        countries={countries}
                         colors={colors}
                         bottleSizes={bottleSizes}
                         bottlesCases={bottlesCases}
+                        onUpdateFilters={handlerUpdateFilters}
                     />
                 </div>
 
                 <div className="col-span-12 md:col-span-9">
-                    <div className="grid grid-cols-3 gap-4">
-                        {products && products.map( (product: any) => (
-                            <ProductCard
-                                key={product.id}
-                                data={product}
-                            />
-                        ) )}
-                    </div>
+                    <ProductsFiltersTags
+                        activeFilters={activeFilters}
+                        onRemoveFilter={handlerRemoveFilter}
+                    />
+
+                    {loading ? (
+                        <div className="flex justify-center items-center">
+                            <p>Loading products...</p> {/* Replace this with a spinner if needed */}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-3 gap-4">
+                            {products && products.map( (product: any) => (
+                                <ProductCard
+                                    key={product.id}
+                                    data={product}
+                                />
+                            ) )}
+                        </div>
+                    )}
                 </div>
 
             </div>

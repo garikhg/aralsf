@@ -6,6 +6,13 @@ import {Checkbox} from "@/components/ui/checkbox";
 import {Label} from "@/components/ui/label";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
+interface ActiveFiltersParams {
+    filter_color: string[];
+    filter_bottle_size: string[];
+    filter_per_case: string[];
+}
+
+
 interface CountryProps {
     id: number;
     count: number;
@@ -14,53 +21,26 @@ interface CountryProps {
 }
 
 interface ProductsFiltersProps {
-    countries: CountryProps[];
-    colors: string[];
-    bottleSizes: string[];
-    bottlesCases: string[];
+    countries?: CountryProps[];
+    colors?: string[];
+    bottleSizes?: string[];
+    bottlesCases?: string[];
+    // onUpdateFilters: (filterType: keyof ActiveFiltersParams, filterValue: string) => void;
+    onUpdateFilters: (filterType: any, filterValue: string) => void;
 }
+
 
 const filterTitle = (title: string) => {
     return <h5 className="text-md font-medium mb-3">{title}</h5>
 }
 
-interface filterCheckboxItemProps {
-    id: string;
-    label: string;
-    value?: string | undefined;
-    checked?: boolean | undefined;
-    onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
-}
-
-const filterCheckboxItem = (id: string, label: string, value?: string, checked?: boolean, onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined) => {
-    return (
-        <>
-            <input
-                id={id}
-                type="checkbox"
-                value={value}
-                checked={checked}
-                onChange={onChange}
-                className="absolute opacity-0"
-            />
-            <label
-                htmlFor={id}
-                className="flex items-center rounded border border-gray-200 py-1 px-2 cursor-pointer hover:border-gray-400 transition-all duration-200"
-            >
-                {label}
-            </label>
-        </>
-    )
-}
-
-const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bottleSizes, bottlesCases}) => {
+const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bottleSizes, bottlesCases, onUpdateFilters}) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const [isLoading, setIsLoading] = React.useState( false );
 
-    const handlerFilterChange = (filterType: string, value: string) => {
-        setIsLoading( true );
+    const handlerFilterChange = (filterType: keyof ActiveFiltersParams, value: string) => {
+        onUpdateFilters( filterType, value );
 
         const params = new URLSearchParams( window.location.search );
         const existingValues = params.get( filterType )?.split( '_AND_' ) || [];
@@ -80,7 +60,6 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
 
         // Update URL with new filter params
         router.replace( `${pathname}?${params.toString()}`, {scroll: false} );
-        setIsLoading( false );
     }
 
     const isSelected = (filterType: string, value: string) => {
@@ -90,13 +69,8 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
 
     return (
         <div className="pr-16 space-y-8">
-            {isLoading && (
-                <div className="flex justify-center py-4">
-                    Loading...
-                </div>
-            )}
             {/* Filters Country */}
-            {countries?.length > 0 && (
+            {countries && (
                 <div className="relative">
                     {filterTitle( 'Filter By Country' )}
                     <ul className="list-none mt-3">
@@ -113,7 +87,7 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
             )}
 
             {/* Filters Bottle Size */}
-            {colors?.length > 0 && (
+            {colors && (
                 <div className="relative border-t border-gray-200 pt-8">
                     {filterTitle( 'Filter By Color' )}
                     <ul className="list-none space-y-3">
@@ -134,7 +108,7 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
             )}
 
             {/* Filters Bottle Size */}
-            {bottleSizes?.length > 0 && (
+            {bottleSizes && (
                 <div className="relative border-t border-gray-200 pt-8">
                     {filterTitle( 'Filter By Bottle Size' )}
                     <ul className="list-none flex flex-wrap -mx-1">
@@ -163,7 +137,7 @@ const ProductsFilters: React.FC<ProductsFiltersProps> = ({countries, colors, bot
             )}
 
             {/* Filters Bottles per case */}
-            {bottlesCases?.length > 0 && (
+            {bottlesCases && (
                 <div className="relative border-t border-gray-200 pt-8">
                     {filterTitle( 'Filter By Bottles per case' )}
                     <ul className="list-none flex flex-wrap -mx-1">
