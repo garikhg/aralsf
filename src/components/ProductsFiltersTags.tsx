@@ -4,15 +4,8 @@ import React from 'react';
 import {Button} from "@/components/ui/button";
 import {X} from "lucide-react";
 
-// interface ActiveFiltersParams {
-//     filter_color?: string[];
-//     filter_bottle_size?: string[];
-//     filter_per_case?: string[];
-// }
-
 interface ProductsFiltersTagsProps {
     activeFilters: { [key: string]: string[] };
-    // onRemoveFilter: (filterType: keyof ActiveFiltersParams, value: string) => void;
     onRemoveFilter: (filterType: any, value: string) => void;
 }
 
