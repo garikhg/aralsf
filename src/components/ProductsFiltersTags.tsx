@@ -11,7 +11,7 @@ interface ProductsFiltersTagsProps {
 
 const ProductsFiltersTags: React.FC<ProductsFiltersTagsProps> = ({activeFilters, onRemoveFilter}) => {
     return (
-        <div className="flex flex-wrap gap-1 mb-4">
+        <div className="flex flex-wrap gap-1">
             {Object.keys( activeFilters ?? {} ).map( (filterType: any) => (
                 activeFilters![filterType].map( (filterValue: any) => (
                     <div key={`${filterType}-${filterValue}`} className="filter-tag">

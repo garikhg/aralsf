@@ -76,6 +76,10 @@ const ProductCategory: React.FC<ProductCategoryParams> = ({params, searchParams}
     }
 
     useEffect( () => {
+        document.title = `Wine's`;
+    }, [] );
+
+    useEffect( () => {
         fetchData().then();
     }, [params.slug, filter_color, filter_bottle_size] );
 
@@ -121,6 +125,7 @@ const ProductCategory: React.FC<ProductCategoryParams> = ({params, searchParams}
 
     return (
         <Container>
+
             <div className="grid grid-cols-12 gap-4">
 
                 <div className="col-span-12 md:col-span-3">
@@ -134,10 +139,17 @@ const ProductCategory: React.FC<ProductCategoryParams> = ({params, searchParams}
                 </div>
 
                 <div className="col-span-12 md:col-span-9">
-                    <ProductsFiltersTags
-                        activeFilters={activeFilters}
-                        onRemoveFilter={handlerRemoveFilter}
-                    />
+                    <div className="min-h-9 space-y-2 mb-4">
+                        <div>
+                            <span className="text-gray-600">Showing 1–12 of 29 item(s)</span>
+                        </div>
+                        <div className="h-9">
+                            <ProductsFiltersTags
+                                activeFilters={activeFilters}
+                                onRemoveFilter={handlerRemoveFilter}
+                            />
+                        </div>
+                    </div>
 
                     {loading ? (
                         <div className="flex justify-center items-center">
