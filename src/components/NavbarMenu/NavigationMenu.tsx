@@ -41,7 +41,6 @@ const NavigationMenu: React.FC<NavigationMenuProps> & {
     if (!items || items?.childItems?.nodes.length === 0) return false;
     const { childItems } = items;
 
-
     return (
       <ul
         className={cn(
@@ -90,31 +89,6 @@ const NavigationMenu: React.FC<NavigationMenuProps> & {
       </ul>
     </nav>
   );
-};
-
-// Attach the GraphQL fragment to the component
-NavigationMenu.fragments = {
-  entry: gql`
-      fragment NavigationMenuItemFragment on MenuItem {
-          id
-          path
-          label
-          parentId
-          cssClasses
-          childItems {
-              nodes {
-                  id
-                  label
-                  path
-              }
-          }
-          menu {
-              node {
-                  name
-              }
-          }
-      }
-  `
 };
 
 export default NavigationMenu;
