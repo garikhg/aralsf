@@ -2,7 +2,7 @@
 
 import queryString from "query-string";
 
-import {Country, PageCategories, Product, ProductCategory} from "@/lib/wordpress.d";
+import {Country, NavMenu, PageCategories, Product, ProductCategory} from "@/lib/wordpress.d";
 
 const baseUrl = process.env.WORDPRESS_URL || 'http://aralsf.local';
 
@@ -73,22 +73,22 @@ export const getProductCategoryBySlug = async (slug: string): Promise<ProductCat
 /**
  * Returns an array of products based on the provided category ID.
  *
- * @param {number} categoryId - The category ID for which products need to be fetched.
  * @param filterParams
  * @returns {Promise<Product[]>} - A promise that resolves to an array of products.
  * @throws {Error} - If there was an error fetching the products.
  *
  * Query: http://aralsf.local/wp-json/wp/v2/product?product_cat=4&acf_format=standard&_embed
  */
-export const getProductsByCategoryId = async (categoryId: number, filterParams?: { filter_country?: string, filter_color?: string, filter_bottle_size?: string }): Promise<Product[]> => {
+export const getProductsByCategoryId = async (filterParams?: { filter_country?: string, filter_color?: string, filter_bottle_size?: string, category: any }): Promise<Product[]> => {
 
     const queries = {
         filter_country: filterParams?.filter_country,
         filter_color: filterParams?.filter_color,
         filter_bottle_size: filterParams?.filter_bottle_size,
+        product_cat: filterParams?.category
     }
 
-    const url = getUrl( `/wp-json/wp/v2/product?product_cat=${categoryId}&acf_format=standard&_embed`, queries );
+    const url = getUrl( `/wp-json/wp/v2/product?acf_format=standard&_embed`, queries );
     const response = await fetch( url );
     if (!response.ok) {
         throw new Error( `Failed to fetch products page: ${response.statusText}` );
@@ -106,6 +106,17 @@ export const getProductsByCategoryId = async (categoryId: number, filterParams?:
  */
 export const getAllCountries = async (): Promise<Country[]> => {
     const url = getUrl( '/wp-json/wp/v2/country' );
+    const response = await fetch( url );
+
+    if (!response.ok) {
+        throw new Error( `Failed to fetch countries: ${response.statusText}` );
+    }
+
+    return await response.json();
+}
+
+export const getNavMenu = async (location: string): Promise<NavMenu> => {
+    const url = getUrl( `/wp-json/menus/v1/menus/${location}` );
     const response = await fetch( url );
 
     if (!response.ok) {
