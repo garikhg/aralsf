@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import {Cover, HeroSlider, PartnersCarousel} from '@/_components';
 import {BlockMediaText} from '@/components/blocks/MediaText';
