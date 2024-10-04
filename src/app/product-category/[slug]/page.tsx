@@ -57,7 +57,8 @@ const ProductCategory: React.FC<ProductCategoryParams> = ({params, searchParams}
             setCategories( categoriesData );
 
             if (categoriesData.length > 0) {
-                const productsData = await getProductsByCategoryId( categoriesData[0]?.id, {filter_color, filter_bottle_size} );
+                const category = categoriesData[0]?.id || 0;
+                const productsData = await getProductsByCategoryId( {filter_color, filter_bottle_size, category} );
                 setProducts( productsData );
             }
 
