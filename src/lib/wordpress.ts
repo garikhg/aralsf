@@ -13,8 +13,19 @@ const getUrl = (path: string, query?: Record<string, any>) => {
 }
 
 // WordPress Functions
+export const getPageBySlug = async (pageSlug: string) => {
+    const url = getUrl( `/wp-json/wp/v2/pages/?slug=${pageSlug}&_embed&acf_format=standard` );
+    const response = await fetch( url );
+
+    if (!response.ok) {
+        throw new Error( `Failed to fetch page by slug: ${response.statusText}` );
+    }
+
+    return await response.json();
+}
+
 export const getAllProducts = async (): Promise<Product[]> => {
-    const url = getUrl( '/wp-json/wp/v2/product', {} );
+    const url = getUrl( '/wp-json/wp/v2/product' );
     const response = await fetch( url );
 
     if (!response.ok) {
