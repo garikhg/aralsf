@@ -33,7 +33,7 @@ const PageHeader = ({data}: { data?: any }) => {
 
             <div className="h-full flex items-center text-center absolute top-0 left-0 right-0">
                 <div className="container">
-                    <Heading1 className="text-white">{title}</Heading1>
+                    <Heading1 className="text-primary-foreground">{title}</Heading1>
                 </div>
             </div>
         </header>

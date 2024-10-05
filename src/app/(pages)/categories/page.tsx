@@ -5,6 +5,7 @@ import {settings} from "@/config/settings";
 import {Container} from "@/components/Container";
 import {CategoryCard} from "@/components/CategoryCard";
 import {getPageCategory, getProductCategories} from "@/lib/wordpress";
+import {Heading1} from "@/components/ui/heading";
 
 
 interface AcfProps {
@@ -60,8 +61,9 @@ const Categories: React.FC = async () => {
                 {pageTitle && (
                     <div className="relative mb-6 sm:mb-8 lg:mb-12">
                         <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-20">
-                            <div className="px-6 lg:px-16 text-primary-foreground text-center">
+                            <div className="px-6 lg:px-16 text-center">
                                 <h1 className="text-5xl font-bold">{pageTitle}</h1>
+                                <Heading1 className="text-primary-foreground">{pageTitle}</Heading1>
                                 <p dangerouslySetInnerHTML={{__html: pageDescription}}/>
                             </div>
                         </div>
