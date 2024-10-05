@@ -1,4 +1,4 @@
-export {Header} from './Header';
+export {Header} from './header';
 export {SEOHead} from './SEOHead';
 export {Footer} from './Footer';
 export {SearchForm} from './SearchForm';

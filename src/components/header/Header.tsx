@@ -9,7 +9,7 @@ const Header: React.FC = () => {
         <header className="h-16 lg:h-20 flex items-center bg-primary sticky top-0 z-50 duration-200">
             <div className="container flex justify-between items-center">
                 <div className="flex items-center mr-auto">
-                    <Link href="/"><BrandLogo className="w-20 lg:h-24 h-auto"/></Link>
+                    <Link href="/"><BrandLogo className="w-20 lg:h-20 h-auto"/></Link>
                 </div>
                 <div className="flex items-center space-x-4">
                     <NavMenu location="primary"/>
