@@ -35,7 +35,7 @@ const NavigationBar: React.FC<NavMenuItemsProps> = ({menuItems = []}) => {
         const hasChildren = item?.child_items?.length > 0;
 
         return (
-            <li key={item.id} className="relative flex items-center group">
+            <li key={`${item.slug}${item.id}`} className="relative flex items-center group">
                 <Link href={item.url} className="text-sm relative flex items-center space-x-2 px-8 lg:py-4 lg:h-20">
                     <span className={cn(
                         isActive && !hasChildren ? 'after:w-full' : 'after:w-0',
@@ -51,7 +51,7 @@ const NavigationBar: React.FC<NavMenuItemsProps> = ({menuItems = []}) => {
                     <div className="h-0 absolute top-full left-1/2 -translate-x-1/2 transition-all duration-200 overflow-hidden origin-top scale-y-0 z-0 group-hover:h-auto group-hover:scale-y-100 group-hover:overflow-visible">
                         <ul className="bg-background shadow-lg text-gray-950 min-w-56 py-2 rounded-b-md">
                             {item.child_items?.map( (childItem) => (
-                                <li key={childItem.id}>
+                                <li key={`${childItem.slug}${childItem.id}`}>{/* Ensure `childItem.id` is unique */}
                                     <Link href={childItem.url} className="block px-6 py-1 hover:bg-gray-100">
                                         {childItem.title}
                                     </Link>
@@ -68,7 +68,7 @@ const NavigationBar: React.FC<NavMenuItemsProps> = ({menuItems = []}) => {
         <>
             {/* Desktop Navigation */}
             <ul className="hidden list-none text-primary-foreground lg:flex">
-                {menuItems.length > 0 && menuItems.map( (item) => <MenuItem key={item.id} item={item}/> )}
+                {menuItems.length > 0 && menuItems.map( (item) => <MenuItem key={`${item.slug}${item.id}`} item={item}/> )}
             </ul>
 
             {/* Mobile Navigation */}
@@ -97,7 +97,7 @@ const NavigationBar: React.FC<NavMenuItemsProps> = ({menuItems = []}) => {
                                 const hasChildren = item?.child_items?.length > 0;
 
                                 return (
-                                    <li key={item.id} className="group">
+                                    <li key={`${item.slug}${item.id}`} className="group">
                                         <Link
                                             href={item.url}
                                             onClick={(e) => {
@@ -120,7 +120,7 @@ const NavigationBar: React.FC<NavMenuItemsProps> = ({menuItems = []}) => {
                                                 mobileSubmenuOpen === item.slug ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'
                                             )}>
                                                 {item.child_items.map( (childItem) => (
-                                                    <li key={childItem.id}>
+                                                    <li key={`${childItem.slug}${childItem.id}`}>
                                                         <Link href={childItem.url} className="block px-4 py-2" onClick={() => setIsOpen( false )}>
                                                             {childItem.title}
                                                         </Link>
