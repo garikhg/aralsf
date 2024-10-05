@@ -10,7 +10,7 @@ interface NavMenuItemsProps {
     menuItems?: any[] | undefined;
 }
 
-const NavigationBarMenu: React.FC<NavMenuItemsProps> = ({menuItems}) => {
+const NavigationBar: React.FC<NavMenuItemsProps> = ({menuItems}) => {
     const pathname = usePathname();
 
     return (
@@ -54,4 +54,4 @@ const NavigationBarMenu: React.FC<NavMenuItemsProps> = ({menuItems}) => {
     );
 };
 
-export default NavigationBarMenu;
+export default NavigationBar;
