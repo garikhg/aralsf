@@ -20,7 +20,6 @@ const NavigationBarMenu: React.FC<NavMenuItemsProps> = ({menuItems}) => {
                     const itemPath = `/${item.slug}`;
                     const isActive = (pathname === itemPath) as boolean;
                     const hasChilds = (item?.child_items?.length > 0) as boolean;
-                    console.log( hasChilds )
 
                     return (
                         <li key={`${item.slug}_${item.id}`} className="relative flex items-center group after:w-px after:bg-primary-foreground after:h-3">
