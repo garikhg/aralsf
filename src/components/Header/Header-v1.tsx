@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
 import {BrandLogo, SearchForm} from '@/components';
 import {motion, AnimatePresence, useAnimation} from 'framer-motion';
-import NavMenu from "@/components/NavMenu";
+import NavMenu from "@/components/navigation-menu/NavMenu";
 
 const Header: React.FC = () => {
     const controls = useAnimation();
