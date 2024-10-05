@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import {BrandLogo, SearchForm} from '@/components';
-import NavMenu from "@/components/navigation-menu/NavMenu";
+import NavMenu from "@/components/nav-menu/NavMenu";
 
 const Header: React.FC = () => {
 
