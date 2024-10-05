@@ -4,7 +4,6 @@ import {BrandLogo, SearchForm} from '@/components';
 import NavMenu from "@/components/nav-menu/NavMenu";
 
 const Header: React.FC = () => {
-
     return (
         <header className="h-16 lg:h-20 flex items-center bg-primary sticky top-0 z-50 duration-200">
             <div className="container flex justify-between items-center">
