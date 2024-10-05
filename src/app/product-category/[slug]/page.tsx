@@ -5,9 +5,9 @@ import React, {useEffect, useState} from 'react';
 import {getAllCountries, getProductCategoryBySlug, getProductsByCategoryId} from "@/lib/wordpress";
 // import {settings} from "@/config/settings";
 import {Container} from "@/components/Container";
-import {ProductCard} from "@/components/ProductCard";
-import ProductsFilters from "@/components/ProductsFilters";
-import ProductsFiltersTags from "@/components/ProductsFiltersTags";
+import {ProductCard} from "@/components/products/ProductCard";
+import ProductsFilters from "@/components/products/ProductsFilters";
+import ProductsFiltersTags from "@/components/products/ProductsFiltersTags";
 import {usePathname, useRouter} from "next/navigation";
 
 // export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
