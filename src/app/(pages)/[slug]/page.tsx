@@ -2,7 +2,7 @@ import {Metadata} from "next";
 import {getPageBySlug} from "@/lib/wordpress";
 import React from "react";
 import Image from "next/image";
-import {cn} from "@/lib/utils";
+import {Heading1} from "@/components/ui/heading";
 
 export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
     const pageData = await getPageBySlug( params.slug );
@@ -33,12 +33,7 @@ const PageHeader = ({data}: { data?: any }) => {
 
             <div className="h-full flex items-center text-center absolute top-0 left-0 right-0">
                 <div className="container">
-                    <h1 className={cn(
-                        'text-6xl font-semibold',
-                        hasFeaturedMedia ? ' text-white' : ''
-                    )}>
-                        {title}
-                    </h1>
+                    <Heading1 className="text-white">{title}</Heading1>
                 </div>
             </div>
         </header>
@@ -52,9 +47,9 @@ export default async function Pages({params}: { params: { slug: string } }) {
     const content = pageData?.content?.rendered || '';
 
     return (
-        <div>
+        <>
             <PageHeader data={pageData}/>
             <div dangerouslySetInnerHTML={{__html: content}}/>
-        </div>
+        </>
     );
 }
