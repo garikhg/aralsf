@@ -32,7 +32,7 @@ const NavigationBar: React.FC<NavMenuItemsProps> = ({menuItems}) => {
                                 {hasChilds && <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-all duration-150"/>}
                             </Link>
                             {hasChilds && (
-                                <div className="absolute top-full left-1/2 -translate-x-1/2 ">
+                                <div className="h-0 absolute top-full left-1/2 -translate-x-1/2 transition-all duration-200 overflow-hidden origin-top scale-y-0 z-0 group-hover:h-auto group-hover:scale-y-100 group-hover:overflow-visible">
                                     <ul className="bg-background shadow-lg text-gray-950 min-w-56 py-2 rounded-b-md">
                                         {item?.child_items.map( (childItem: any) => (
                                             <li key={`${childItem.slug}_${childItem.id}`}>
