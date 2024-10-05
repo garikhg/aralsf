@@ -45,9 +45,7 @@ export const getProductCategories = async (): Promise<ProductCategory[]> => {
 
     const data = await response.json();
     // Ensure it's an array before returning
-    return Array.isArray( data )
-        ? data.filter( category => category.slug !== 'uncategory' )
-        : [];
+    return Array.isArray( data ) ? data.filter( category => category.slug !== 'uncategory' ) : [];
 };
 
 export const getPageCategory = async (): Promise<PageCategories[]> => {
