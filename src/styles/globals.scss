@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "blocks";
 
 @layer base {
   :root {
@@ -37,7 +36,6 @@
 
     --font-family--inter: "Inter Variable";
     --font-family--source-serif-pro: "Source Serif Pro";
-    --font-family--instrument-sans-variable: "Instrument Sans Variable";
 
     // WP CSS Variables
     --wp--preset--spacing--20: 1.25rem; /* 20/16 */
@@ -83,7 +81,7 @@
   }
 
   body {
-    @apply font-inter min-h-screen leading-7 flex flex-col bg-background antialiased;
+    @apply font-inter;
   }
 }
 
@@ -176,3 +174,5 @@
     opacity: 1;
   }
 }
+
+@import "blocks";

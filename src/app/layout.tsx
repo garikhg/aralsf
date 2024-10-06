@@ -7,7 +7,7 @@ import {ThemeProvider} from "@/components/theme/theme-provider";
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-        <body>
+        <body className="leading-7 antialiased bg-background">
         <ThemeProvider
             attribute="class"
             defaultTheme="light"
