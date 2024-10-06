@@ -80,7 +80,7 @@ const NavigationBar: React.FC<NavMenuItemsProps> = ({menuItems = []}) => {
                             <X strokeWidth={1} className={cn( isOpen ? '' : 'opacity-0', 'absolute transition-all duration-200 w-9 h-9' )}/>
                         </Button>
                     </DrawerTrigger>
-                    <DrawerContent>
+                    <DrawerContent className="overflow-hidden">
                         <DrawerHeader className="flex justify-between items-center border-b border-gray-100 py-2">
                             <DrawerTitle>Menu</DrawerTitle>
                             <DrawerDescription className="sr-only">Menu</DrawerDescription>
