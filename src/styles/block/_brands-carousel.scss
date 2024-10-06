@@ -1,5 +1,5 @@
 .block-brand-carousel .swiper:not(.swiper-initialized) {
   .swiper-slide {
-    @apply lg:max-w-[296.5px] mr-[50px];
+    @apply lg:max-w-[293.33px] lg:mr-[40px] xl:max-w-[296.5px] xl:mr-[50px];
   }
 }
