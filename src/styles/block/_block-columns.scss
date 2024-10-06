@@ -1,4 +1,46 @@
-.wp-block-columns {}
+.wp-block-columns {
+}
+
 .wp-block-column {
   @apply px-4;
+}
+
+.block-columns {
+  @apply flex flex-wrap -mx-4 lg:-mx-6;
+
+  > * {
+    @apply px-4 lg:px-6
+  }
+}
+
+.block-columns {
+  &-1 {
+    > * {
+      @apply w-full;
+    }
+  }
+
+  &-2 {
+    > * {
+      @apply w-1/2;
+    }
+  }
+
+  &-lg-2 {
+    > * {
+      @apply lg:w-1/2;
+    }
+  }
+
+  &-md-2 {
+    > * {
+      @apply md:w-1/2;
+    }
+  }
+}
+
+.block-columns-md-1 {
+  > * {
+    @apply md:w-full;
+  }
 }

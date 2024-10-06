@@ -1,9 +1,26 @@
-.wp-block-heading {
-  @apply font-source-serif-pro font-semibold;
+h1.wp-block-heading {
+  @apply scroll-m-20 text-5xl font-bold tracking-tight lg:text-6xl;
 }
 
-.has-large-font-size {
-  @apply text-6xl;
+h2.wp-block-heading,
+h2.block-heading {
+  @apply scroll-m-20 pb-3 text-4xl font-semibold tracking-tight first:mt-0 lg:text-5xl;
+}
+
+h3.wp-block-heading,
+h3.block-heading {
+  @apply scroll-m-20 pb-2 text-4xl font-semibold tracking-tight first:mt-0 lg:text-5xl;
+}
+
+
+h4.wp-block-heading,
+h4.block-heading {
+  @apply scroll-m-20 text-2xl font-semibold tracking-tight lg:text-3xl;
+}
+
+h5.wp-block-heading,
+h5.block-heading {
+  @apply scroll-m-20 text-xl font-semibold tracking-tight;
 }
 
 .has-x-large-font-size {
