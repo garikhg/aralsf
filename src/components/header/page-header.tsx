@@ -18,7 +18,7 @@ const PageHeader = ({ data }: { data?: any }) => {
           alt={altText}
           width={featuredMedia?.media_details?.width || 1728}
           height={featuredMedia?.media_details?.height || 440}
-          className="block w-full min-h-[22.5rem  /* 360/16 */] h-full max-w-full border-none outline-none object-cover"
+          className="block w-full min-h-[22.5rem] h-full max-w-full border-none outline-none object-cover"
         />
       )}
 
