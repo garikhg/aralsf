@@ -5,7 +5,7 @@ import NavMenu from "@/components/nav-menu/NavMenu";
 
 const Header: React.FC = () => {
     return (
-        <header className="h-16 lg:h-20 flex items-center bg-primary sticky top-0 z-50 duration-200">
+        <header className="h-16 md:h-20 flex items-center bg-primary sticky top-0 z-50 duration-200">
             <div className="container flex justify-between items-center">
                 <div className="flex items-center mr-auto">
                     <Link href="/"><BrandLogo className="w-20 lg:h-20 h-auto"/></Link>
