@@ -1,8 +1,7 @@
 import React from 'react';
 import {cn} from "@/lib/utils";
 
-
-const Heading1 = ({children, className}: { children: React.ReactNode, className?: string }) => {
+const Heading1 = ({children, className}: { children?: React.ReactNode, className?: string }) => {
     return (
         <h1 className={cn(
             'scroll-m-20 text-5xl font-bold tracking-tight lg:text-6xl',
@@ -14,7 +13,7 @@ const Heading1 = ({children, className}: { children: React.ReactNode, className?
 };
 Heading1.displayName = "Heading1";
 
-const Heading2 = ({children, className}: { children: React.ReactNode, className?: string }) => {
+const Heading2 = ({children, className}: { children?: React.ReactNode, className?: string }) => {
     return (
         <h2 className={cn(
             'scroll-m-20 pb-2 text-4xl font-semibold tracking-tight first:mt-0 lg:text-5xl',
@@ -26,7 +25,7 @@ const Heading2 = ({children, className}: { children: React.ReactNode, className?
 };
 Heading2.displayName = "Heading2";
 
-const Heading3 = ({children, className}: { children: React.ReactNode, className?: string }) => {
+const Heading3 = ({children, className}: { children?: React.ReactNode, className?: string }) => {
     return (
         <h3 className={cn(
             'scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl',
@@ -38,7 +37,7 @@ const Heading3 = ({children, className}: { children: React.ReactNode, className?
 };
 Heading3.displayName = "Heading3";
 
-const Heading4 = ({children, className}: { children: React.ReactNode, className?: string }) => {
+const Heading4 = ({children, className}: { children?: React.ReactNode, className?: string }) => {
     return (
         <h4 className={cn(
             'scroll-m-20 text-2xl font-semibold tracking-tight lg:text-3xl',
@@ -50,7 +49,7 @@ const Heading4 = ({children, className}: { children: React.ReactNode, className?
 };
 Heading4.displayName = "Heading4";
 
-const Heading5 = ({children, className}: { children: React.ReactNode, className?: string }) => {
+const Heading5 = ({children, className}: { children?: React.ReactNode, className?: string }) => {
     return (
         <h5 className={cn(
             'scroll-m-20 text-xl font-semibold tracking-tight',
