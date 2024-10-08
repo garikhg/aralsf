@@ -1,146 +1,225 @@
 import React from 'react';
 import Link from 'next/link';
 import DeveloperLogo from '@/components/DeveloperLogo';
-import { BrandLogo, SocialLinks } from '@/components';
-import { settings } from '@/config/settings';
+import {BrandLogo, SocialLinks} from '@/components';
+import {settings} from '@/config/settings';
+import {Heading5} from "@/components/ui/heading";
+import {Container} from "@/components/Container";
 
-const Footer = () => {
-  return (
-    <footer className="relative bg-primary text-primary-foreground overflow-hidden py-8 lg:py-16 mt-auto">
-      <div className="container">
+const productsLinks = [
+    {
+        id: 'wines',
+        label: 'Wine’s',
+        path: '/product-category/wines',
+        slug: 'wines'
+    },
+    {
+        id: 'beers',
+        label: 'Beer’s',
+        path: '/product-category/beers',
+        slug: 'beers'
+    },
+    {
+        id: 'brandy',
+        label: 'Brandy',
+        path: '/product-category/brandy',
+        slug: 'brandy'
+    },
+    {
+        id: 'gin',
+        label: 'Gin',
+        path: '/product-category/gin',
+        slug: 'gin'
+    },
+    {
+        id: 'liquor',
+        label: 'Liquor',
+        path: '/product-category/liquor',
+        slug: 'liquor'
+    },
+    {
+        id: 'rum',
+        label: 'Rum',
+        path: '/product-category/rum',
+        slug: 'rum'
+    },
+    {
+        id: 'vodka',
+        label: 'Vodka',
+        path: '/product-category/vodka',
+        slug: 'vodka'
+    },
+    {
+        id: 'whiskey',
+        label: 'Whiskey',
+        path: '/product-category/whiskey',
+        slug: 'whiskey'
+    }
+]
 
-        <div className="flex flex-wrap -mx-4">
+const infoLinks = [
+    {
+        id: 'categories',
+        label: 'Categories',
+        path: '/categories',
+        slug: 'categories'
+    },
+    {
+        id: 'products',
+        label: 'Products',
+        path: '/product-category/wines',
+        slug: 'product-category'
+    },
+    {
+        id: 'about_us',
+        label: 'About Us',
+        path: '/about-us',
+        slug: 'about-us'
+    },
+    {
+        id: 'contacts',
+        label: 'Contacts',
+        path: '/contact-us',
+        slug: 'contact-us'
+    }
+]
 
-          <div className="hidden lg:block w-full md:w-1/4 px-4">
-            <div className="space-y-4 lg:space-y-6">
-              <Link href="/" className="flex items-center">
-                <BrandLogo label={settings.siteTitle} />
+const FooterHeading = () => {
+    return (
+        <div className="space-y-4 lg:space-y-6">
+            <Link href="/" className="flex items-center">
+                <BrandLogo label={settings.siteTitle}/>
                 <span className="sr-only">{settings.siteTitle}</span>
-              </Link>
+            </Link>
 
-              <div className="w-full max-w-60 space-y-4">
+            <div className="w-full max-w-60 space-y-4">
                 <p className="text-sm text-primary-foreground/85 leading-6">{settings.siteDescription}</p>
-                <SocialLinks />
-              </div>
+                <SocialLinks/>
             </div>
-          </div>
-
-          <div className="w-full lg:w-3/4 px-4">
-            <div className="flex flex-wrap lg:justify-end -mx-4 lg:-mx-8 xl:-mx-12">
-              <div className="w-full md:w-1/3 lg:w-auto px-4 lg:px-8 xl:px-12 mb-4 md:mb-0">
-                <div className="h-full border-b md:border-b-0 border-primary-foreground/20 pb-4 md:pb-0 lg:pl-8 xl:pl-12">
-                  <h5 className="font-semibold text-md mb-1">
-                    Information
-                  </h5>
-                  <ul className="list-none flex flex-col gap-y-2 mt-4">
-                    <li>
-                      <Link
-                        href="/categories"
-                        className="font-medium text-primary-foreground/80 hover:text-primary-foreground transition-all duration-150"
-                      >
-                        Categories
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/product-category/wines"
-                        className="font-medium text-primary-foreground/80 hover:text-primary-foreground transition-all duration-150"
-                      >
-                        Products
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/about-us"
-                        className="font-medium text-primary-foreground/80 hover:text-primary-foreground transition-all duration-150"
-                      >
-                        About Us
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/contact-us"
-                        className="font-medium text-primary-foreground/80 hover:text-primary-foreground transition-all duration-150"
-                      >
-                        Contacts
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="w-full md:w-1/3 lg:w-auto px-4 lg:px-8 xl:px-12 mb-4 md:mb-0">
-                <div className="h-full border-b md:border-b-0 lg:border-l border-primary-foreground/20 pb-4 md:pb-0 lg:pl-8 xl:pl-12">
-                  <h5 className="font-semibold text-md mb-1">
-                    Head Office
-                  </h5>
-                  <div className="mt-4">
-                    <p>
-                      Valentin, Street Road 24,<br />
-                      New York, USA – 67452
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-1/3 lg:w-auto px-4 lg:px-8 xl:px-12 mb-4 md:mb-0">
-                <div className="h-full border-b md:border-b-0 lg:border-l border-primary-foreground/20 pb-4 md:pb-0 lg:pl-8 xl:pl-12">
-                  <h5 className="font-semibold text-md mb-1">
-                    Contact Us
-                  </h5>
-                  <div className="mt-4">
-                    <p><span className="font-semibold">Tel:</span> +1-212-456-7890</p>
-                    <p><span className="font-semibold">Email:</span> Info@aralsf.com</p>
-                  </div>
-                </div>
-              </div>
-              <div className="block md:hidden w-full md:border-l md:border-primary-foreground/20 px-4 lg:px-8 xl:px-12 mb-4 md:mb-0">
-                <div className="space-y-5">
-                  <h5 className="font-semibold text-md mb-1">
-                    Follow us
-                  </h5>
-                  <div className="mt-4">
-                    <SocialLinks />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+    )
+}
 
-        <hr className="my-4 border-primary-foreground/20 sm:mx-auto dark:border-primary-foreground/20 lg:my-10" />
+const FooterAddress = () => {
+    return (
+        <div className="space-y-2">
+            <Heading5 className="text-md">
+                Head Office
+            </Heading5>
+            <p>
+                Valentin, Street Road 24,<br/>
+                New York, USA – 67452
+            </p>
+        </div>
+    )
+}
 
-        <div className="flex flex-wrap -mx-4">
+const FooterContact = () => {
+    return (
+        <div className="space-y-2">
+            <Heading5 className="text-md">
+                Contact Us
+            </Heading5>
+            <div>
+                <p><span className="font-semibold">Tel:</span> +1-212-456-7890</p>
+                <p><span className="font-semibold">Email:</span> Info@aralsf.com</p>
+            </div>
+        </div>
+    )
+}
 
-          <div className="w-full md:w-1/2 px-4">
-            <div className="flex flex-col items-center md:items-start space-y-1 text-center mb-3 md:mb-0">
-              <p className="text-sm text-center md:text-left flex items-center gap-2">
-                ©2001 – 2024
-                <span className="block h-3 border-r border-primary-foreground"></span>
-                ARAL Inc. All rights reserved.
-              </p>
-              <a
+const FooterLinks = () => {
+    return (
+        <div className="space-y-2">
+            <Heading5 className="text-md">
+                Information
+            </Heading5>
+            <ul className="list-none flex flex-col gap-y-2">
+                {infoLinks && infoLinks.map( (link) => (
+                    <li key={link.id}>
+                        <Link href={link.path}
+                              className="font-medium text-primary-foreground/80 hover:text-primary-foreground transition-all duration-150"
+                        >
+                            <span>{link.label}</span>
+                        </Link>
+                    </li>
+                ) )}
+            </ul>
+        </div>
+    )
+}
+
+const FooterProductsLinks = () => {
+    return (
+        <div className="space-y-2">
+            <Heading5 className="text-md">
+                Products
+            </Heading5>
+            <ul className="list-none flex flex-col gap-y-2">
+                {productsLinks && productsLinks.map( (link) => (
+                    <li key={link.id}>
+                        <Link href={link.path}
+                              className="font-medium text-primary-foreground/80 hover:text-primary-foreground transition-all duration-150"
+                        >
+                            <span>{link.label}</span>
+                        </Link>
+                    </li>
+                ) )}
+            </ul>
+        </div>
+    )
+}
+
+const FooterCopyright = () => {
+    return (
+        <div
+            className="flex flex-col items-center md:items-start space-y-1 text-center border-t border-primary-foreground/20 pt-8 mt-10 lg:mt-16 mb-3 md:mb-0">
+            <p className="text-sm text-center md:text-left flex items-center gap-2">
+                ©2001 – 2024 <span className="text-[11px]">|</span> ARAL Inc. All rights reserved.
+            </p>
+            <a
                 href="https://code-craft.am/"
                 target="_blank"
                 className="text-sm font-semibold flex items-center gap-x-1 w-fit"
-              >
-                <DeveloperLogo width={16} height={16} className="text-[#a8cf45]" />
+            >
+                <DeveloperLogo width={16} height={16} className="text-[#a8cf45]"/>
                 <span>by CodeCraft</span>
-              </a>
-            </div>
-          </div>
-
-          <div className="w-full md:w-1/2 flex px-4">
-            <div className="mx-auto md:ml-auto md:mr-0">
-              <Link href="/privacy-policy" className="text-sm">Privacy Policy</Link>
-            </div>
-          </div>
-
+            </a>
         </div>
+    )
+}
 
-      </div>
+const Footer = () => {
+    return (
+        <footer className="relative bg-primary text-primary-foreground overflow-hidden mt-auto">
+            <Container>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 xl:gap-24">
 
-    </footer>
+                    <div className="hidden lg:block col-span-12 lg:col-span-4 xl:col-span-3">
+                        <FooterHeading/>
+                    </div>
 
-  );
+                    <div className="col-span-1 lg:col-span-8 xl:col-span-9">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-6 xl:gap-8">
+                            <div className="hidden col-span-1 xl:block"></div>
+                            <div className="col-span-1 space-y-6">
+                                <FooterLinks/>
+                            </div>
+                            <div className="col-span-1 space-y-6">
+                                <FooterProductsLinks/>
+                            </div>
+                            <div className="col-span-1 space-y-6">
+                                <FooterAddress/>
+                                <FooterContact/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <FooterCopyright/>
+            </Container>
+        </footer>
+
+    );
 };
 
 export default Footer;
