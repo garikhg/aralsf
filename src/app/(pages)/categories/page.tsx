@@ -47,9 +47,6 @@ const Categories: React.FC = async () => {
   const pages: CategoryPageProps[] = await getPageCategory();
   const pageData = pages[0] ?? null;
 
-
-  console.log( pageData );
-
   return (
     <>
       <PageHeader data={pageData} />
