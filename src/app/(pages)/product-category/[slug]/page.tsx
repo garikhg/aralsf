@@ -9,6 +9,14 @@ import {ProductCard} from "@/components/products/ProductCard";
 import ProductsFilters from "@/components/products/ProductsFilters";
 import ProductsFiltersTags from "@/components/products/ProductsFiltersTags";
 import {usePathname, useRouter} from "next/navigation";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList, BreadcrumbPage,
+    BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
+import {Slash} from "lucide-react";
 
 // export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
 //     const categories = await getProductCategoryBySlug( params.slug );
@@ -125,51 +133,66 @@ const ProductCategory: React.FC<ProductCategoryParams> = ({params, searchParams}
     }
 
     return (
-        <Container>
+        <>
+            <Container className="hidden sm:block py-6 pb-0 md:py-6 md:pb-0 xl:py-6 xl:pb-0">
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator><Slash/></BreadcrumbSeparator>
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Products</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </Container>
+            <Container>
 
-            <div className="grid grid-cols-12 gap-4">
+                <div className="grid grid-cols-12 gap-4">
 
-                <div className="col-span-12 md:col-span-3">
-                    <ProductsFilters
-                        countries={countries}
-                        colors={colors}
-                        bottleSizes={bottleSizes}
-                        bottlesCases={bottlesCases}
-                        onUpdateFilters={handlerUpdateFilters}
-                    />
-                </div>
-
-                <div className="col-span-12 md:col-span-9">
-                    <div className="min-h-9 space-y-2 mb-4">
-                        <div>
-                            <span className="text-gray-600">Showing 1–12 of 29 item(s)</span>
-                        </div>
-                        <div className="h-9">
-                            <ProductsFiltersTags
-                                activeFilters={activeFilters}
-                                onRemoveFilter={handlerRemoveFilter}
-                            />
-                        </div>
+                    <div className="col-span-12 md:col-span-3">
+                        <ProductsFilters
+                            countries={countries}
+                            colors={colors}
+                            bottleSizes={bottleSizes}
+                            bottlesCases={bottlesCases}
+                            onUpdateFilters={handlerUpdateFilters}
+                        />
                     </div>
 
-                    {loading ? (
-                        <div className="flex justify-center items-center">
-                            <p>Loading products...</p> {/* Replace this with a spinner if needed */}
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-3 gap-4">
-                            {products && products.map( (product: any) => (
-                                <ProductCard
-                                    key={product.id}
-                                    data={product}
+                    <div className="col-span-12 md:col-span-9">
+                        <div className="min-h-9 space-y-2 mb-4">
+                            <div>
+                                <span className="text-gray-600">Showing 1–12 of 29 item(s)</span>
+                            </div>
+                            <div className="h-9">
+                                <ProductsFiltersTags
+                                    activeFilters={activeFilters}
+                                    onRemoveFilter={handlerRemoveFilter}
                                 />
-                            ) )}
+                            </div>
                         </div>
-                    )}
-                </div>
 
-            </div>
-        </Container>
+                        {loading ? (
+                            <div className="flex justify-center items-center">
+                                <p>Loading products...</p> {/* Replace this with a spinner if needed */}
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-3 gap-4">
+                                {products && products.map( (product: any) => (
+                                    <ProductCard
+                                        key={product.id}
+                                        data={product}
+                                    />
+                                ) )}
+                            </div>
+                        )}
+                    </div>
+
+                </div>
+            </Container>
+        </>
     );
 };
 
