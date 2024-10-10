@@ -51,10 +51,25 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const Categories: React.FC = async () => {
-    const categories = await getProductCategories();
-    const pages: CategoryPageProps[] = await getPageCategory();
-    const pageData = pages[0] ?? null;
-    const pageTitle = pageData?.title?.rendered || '';
+    let categories: any[] = [];
+    let pages: any[] = [];
+    // const pageData = pages[0] ?? null;
+    // const pageTitle = pageData?.title?.rendered || '';
+
+    try {
+        categories = await getProductCategories();
+    } catch (error) {
+        console.error( 'Failed to fetch categories:', error );
+    }
+
+    try {
+        pages = await getPageCategory();
+    } catch (error) {
+
+    }
+
+    const pageData: any = pages[0] ?? null;
+    const pageTitle: any = pageData?.title?.rendered || '';
 
     return (
         <div>
