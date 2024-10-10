@@ -57,39 +57,39 @@ const ProductCategory: React.FC<ProductCategoryParams> = ({params, searchParams}
     } );
 
     // Fetch products and filters based on the active filters
-    const fetchData = async () => {
-        setLoading( true );
 
-        try {
-            const categoriesData = await getProductCategoryBySlug( params.slug );
-            setCategories( categoriesData );
-
-            if (categoriesData.length > 0) {
-                const category = categoriesData[0]?.id || 0;
-                const productsData = await getProductsByCategoryId( {filter_color, filter_bottle_size, category} );
-                setProducts( productsData );
-            }
-
-            const countriesData = await getAllCountries();
-            setCountries( countriesData );
-
-        } catch (error) {
-            console.error( 'Error fetching data:', error );
-        } finally {
-            const loadingTimer = setTimeout( () => {
-                setLoading( false );
-            }, 1000 )
-
-            return () => clearTimeout( loadingTimer );
-        }
-    }
 
     useEffect( () => {
         document.title = `Wine's`;
     }, [] );
 
     useEffect( () => {
-        fetchData().then();
+        const fetchData = async () => {
+            setLoading( true );
+
+            try {
+                const categoriesData = await getProductCategoryBySlug( params.slug );
+                setCategories( categoriesData );
+
+                if (categoriesData.length > 0) {
+                    const category = categoriesData[0]?.id || 0;
+                    const productsData = await getProductsByCategoryId( {filter_color, filter_bottle_size, category} );
+                    setProducts( productsData );
+                }
+
+                const countriesData = await getAllCountries();
+                setCountries( countriesData );
+
+            } catch (error) {
+                console.error( 'Error fetching data:', error );
+            } finally {
+                const loadingTimer = setTimeout( () => {
+                    setLoading( false );
+                }, 1000 )
+
+                return () => clearTimeout( loadingTimer );
+            }
+        }
     }, [params.slug, filter_color, filter_bottle_size] );
 
 
