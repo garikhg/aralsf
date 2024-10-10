@@ -7,9 +7,9 @@ import { Brand, Country, NavMenu, PageCategories, Product, ProductCategory } fro
 const baseUrl = process.env.WORDPRESS_URL || 'https://aralsf-backend.code-craft.am';
 
 const getUrl = (path: string, query?: Record<string, any>) => {
-  const params = query ? queryString.stringify( query ) : null;
-  const separator = path.includes( '?' ) ? '&' : '?';
-  return `${baseUrl}${path}${params ? `${separator}${params}` : ''}`;
+    const params = query ? queryString.stringify(query) : null;
+    const separator = path.includes('?') ? '&' : '?';
+    return `${baseUrl}${path}${params ? `${separator}${params}` : ''}`;
 };
 
 // WordPress Functions
