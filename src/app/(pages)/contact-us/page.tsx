@@ -1,1 +1,0 @@
-import React from 'react';const ContactUs = async () => {    return (        <div>Contact Us</div>    );};export default ContactUs;
