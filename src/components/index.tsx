@@ -1,5 +1,5 @@
-export { Header } from './Header';
-export { SEOHead } from './SEOHead';
-export { SearchForm } from './SearchForm';
-export { BrandLogo } from './BrandLogo';
-export { NavigationMenu } from './NavbarMenu';
+export {Header} from './header';
+export {Footer} from './footer';
+export {SearchForm} from './SearchForm';
+export {BrandLogo} from './BrandLogo';
+export {SocialLinks} from './SocialLinks';

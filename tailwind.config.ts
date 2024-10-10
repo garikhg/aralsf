@@ -22,7 +22,6 @@ const config: Config = {
       fontFamily: {
         inter: ['var(--font-family--inter)', 'sans-serif'],
         'source-serif-pro': ['var(--font-family--source-serif-pro)', 'serif'],
-        'instrument-sans-variable': ['var(--font-family--instrument-sans-variable)', 'sans-serif']
       },
       colors: {
         border: 'hsl(var(--border))',

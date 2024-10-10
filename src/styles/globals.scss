@@ -1,11 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "blocks";
 
 @layer base {
   :root {
-    --background: 0 0% 96%;
+    --background: 0 0% 98%;
     --foreground: 0 0% 10.98%; /* #1C1C1C */
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -37,7 +36,6 @@
 
     --font-family--inter: "Inter Variable";
     --font-family--source-serif-pro: "Source Serif Pro";
-    --font-family--instrument-sans-variable: "Instrument Sans Variable";
 
     // WP CSS Variables
     --wp--preset--spacing--20: 1.25rem; /* 20/16 */
@@ -83,6 +81,98 @@
   }
 
   body {
-    @apply font-inter min-h-screen leading-7 flex flex-col bg-background antialiased;
+    @apply font-inter;
   }
 }
+
+@keyframes dot-blink {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dot-animation::after {
+  content: '.';
+  animation: dot-blink 1s steps(5, end) infinite;
+}
+
+.dot-animation::before {
+  content: '..';
+  animation: dot-blink 1s steps(5, end) infinite;
+  animation-delay: 0.2s;
+}
+
+.dot-animation {
+  display: inline-block;
+  position: relative;
+}
+
+@keyframes fill-background {
+  0% {
+    fill: #fff; /* Start with white */
+  }
+  50% {
+    fill: #ffcc00; /* Transition to yellow */
+  }
+  100% {
+    fill: #4caf50; /* End with green */
+  }
+}
+
+.logo-animation .logo-path {
+  animation: fill-background 3s ease-in-out infinite alternate;
+}
+
+.dot-animation::after {
+  content: '.';
+  animation: dot-blink 1s steps(5, end) infinite;
+}
+
+.dot-animation::before {
+  content: '..';
+  animation: dot-blink 1s steps(5, end) infinite;
+  animation-delay: 0.2s;
+}
+
+.dot-animation {
+  display: inline-block;
+  position: relative;
+}
+
+@keyframes dot-blink {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@import "blocks";
