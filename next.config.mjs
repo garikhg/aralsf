@@ -3,7 +3,7 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: "http",
+                protocol: "https",
                 hostname: 'aralsf-backend.code-craft.am',
                 port: "",
                 pathname: "/**",
