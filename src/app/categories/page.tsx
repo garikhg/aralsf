@@ -63,7 +63,7 @@ const Categories: React.FC = async () => {
     try {
         pages = await getPageCategory();
     } catch (error) {
-
+        console.error( 'Failed to fetch pages:', error );
     }
 
     const pageData: any = pages[0] ?? null;
