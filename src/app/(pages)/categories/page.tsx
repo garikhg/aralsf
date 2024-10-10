@@ -57,7 +57,7 @@ const Categories: React.FC = async () => {
     const pageTitle = pageData?.title?.rendered || '';
 
     return (
-        <>
+        <div>
             <PageHeader data={pageData}/>
             {pageTitle && (
                 <Container className="hidden sm:block py-6 pb-0 md:py-6 md:pb-0 xl:py-6 xl:pb-0">
@@ -84,10 +84,7 @@ const Categories: React.FC = async () => {
                     ) )}
                 </div>
             </Container>
-        </>
-        /*<div className="min-h-screen">
-            {/!*<BrandPartnersCarousel/>*!/}
-        </div>*/
+        </div>
     );
 };
 
