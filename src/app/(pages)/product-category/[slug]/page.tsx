@@ -90,6 +90,7 @@ const ProductCategory: React.FC<ProductCategoryParams> = ({params, searchParams}
                 return () => clearTimeout( loadingTimer );
             }
         }
+        fetchData()
     }, [params.slug, filter_color, filter_bottle_size] );
 
 

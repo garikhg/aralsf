@@ -4,7 +4,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "http",
-                hostname: "aralsf.local",
+                hostname: "aralsf-backend.code-craft.am",
                 port: "",
                 pathname: "/**",
             },
