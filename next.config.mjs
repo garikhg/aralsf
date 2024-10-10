@@ -4,7 +4,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "http",
-                hostname: process.env.WORDPRESS_HOSTNAME || 'aralsf-backend.code-craft.am',
+                hostname: 'aralsf-backend.code-craft.am',
                 port: "",
                 pathname: "/**",
             },
