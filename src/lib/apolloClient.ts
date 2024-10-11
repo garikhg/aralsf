@@ -5,7 +5,7 @@ import { setContext } from '@apollo/client/link/context';
 export const useApollo = () => {
   return useMemo(() => {
     const httpLink = new HttpLink({
-      uri: process.env.NEXT_PUBLIC_WORDPRESS_URL,
+      uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`,
     });
 
     const authLink = setContext((_, { headers }) => {
