@@ -1,0 +1,29 @@
+.block-contact {
+  @apply space-y-8 lg:space-y-10 border-b border-gray-200 pb-10 lg:pb-0 lg:border-none;
+
+  &__heading {
+    @apply scroll-m-20 text-3xl tracking-tight lg:text-4xl font-bold after:block after:w-1/5 after:mt-2 after:h-px after:bg-gray-950 mb-4;
+
+    &:after {
+      max-width: 6.875rem; /* 110/16 */
+    }
+  }
+
+  &__description {
+    @apply text-lg space-y-4;
+  }
+
+  &__content {
+    @apply space-y-4 lg:space-y-6;
+  }
+
+  &__item-title {
+    @apply scroll-m-20 text-xl font-semibold tracking-tight;
+  }
+
+  &__addresses {
+    p {
+      @apply text-lg;
+    }
+  }
+}

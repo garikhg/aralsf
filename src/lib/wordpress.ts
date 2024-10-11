@@ -4,7 +4,7 @@ import queryString from 'query-string';
 
 import { Brand, Country, NavMenu, PageCategories, Product, ProductCategory } from '@/lib/wordpress.d';
 
-const baseUrl = process.env.WORDPRESS_URL || 'https://aralsf-backend.code-craft.am';
+const baseUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL;
 
 const getUrl = (path: string, query?: Record<string, any>) => {
     const params = query ? queryString.stringify(query) : null;
