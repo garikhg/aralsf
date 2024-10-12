@@ -16,6 +16,7 @@ export async function fetchApi(endpoint: string): Promise<any> {
     return json;
 }
 
+// Fetcher function for Page
 export async function fetchPageApi(slug: string): Promise<any> {
     const pages = await fetch( `${API_URL}/wp-json/wp/v2/pages?slug=${slug}&acf_format=standard` );
     const jsonData = await pages.json();
