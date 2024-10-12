@@ -3,8 +3,8 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: "https",
-                hostname: "aralsf-backend.code-craft.am",
+                protocol: "http",
+                hostname: process.env.NEXT_PUBLIC_WORDPRESS_HOSTNAME,
                 port: "",
                 pathname: "/**",
             },

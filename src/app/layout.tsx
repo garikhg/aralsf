@@ -1,9 +1,16 @@
 import React from 'react';
+import {Metadata} from "next";
 import '../styles/globals.scss';
 import '../constants/fonts';
 import {Footer, Header} from "@/components";
 import {ThemeProvider} from "@/components/theme/theme-provider";
-import {SWRProvider} from "@/components/theme/swr-provider";
+import {SWRProvider} from "@/app/providers/swr-provider";
+import {settings} from "@/config/settings";
+
+export const metadata: Metadata = {
+    title: settings.siteTitle,
+    description: settings.siteDescription,
+};
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (

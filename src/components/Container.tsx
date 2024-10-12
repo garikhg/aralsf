@@ -9,7 +9,7 @@ interface ContainerProps {
 const Container: React.FC<ContainerProps> = ({children, className}) => {
     return (
         <div className={cn(
-            'container py-10 md:py-16',
+            'container py-8 xl:py-16',
             className
         )}>
             {children}
