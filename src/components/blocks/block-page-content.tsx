@@ -6,10 +6,10 @@ interface PageContentProps {
   pageData?: any;
 }
 
-const PageContent: React.FC<PageContentProps> = ({ pageData }) => {
+const BlockPageContent: React.FC<PageContentProps> = ({ pageData }) => {
   const content = pageData?.content?.rendered || '';
 
   return <div dangerouslySetInnerHTML={{ __html: content }} />;
 };
 
-export default PageContent;
+export default BlockPageContent;

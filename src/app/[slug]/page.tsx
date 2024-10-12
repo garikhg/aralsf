@@ -1,7 +1,7 @@
 import {Metadata} from 'next';
 import {getAllBrands, getPageBySlug} from '@/lib/wordpress';
 import React from 'react';
-import PageContent from '@/components/blocks/page-content';
+import BlockPageContent from '@/components/blocks/block-page-content';
 import BlockBrandsCarousel from '@/components/blocks/block-brands-carousel';
 import PageHeader from '@/components/header/page-header';
 import {
@@ -49,7 +49,7 @@ export default async function Pages({params}: { params: { slug: string } }) {
                 </Container>
             )}
 
-            <PageContent pageData={pageData}/>
+            <BlockPageContent pageData={pageData}/>
             <BlockBrandsCarousel blockData={brands}/>
         </>
     );
