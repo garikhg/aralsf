@@ -22,8 +22,6 @@ export async function fetchPageApi(slug: string): Promise<any> {
     const jsonData = await pages.json();
     const page = jsonData.length > 0 ? jsonData[0] : null;
 
-    console.log( page )
-
     if (jsonData.error) {
         console.error( jsonData.error );
         throw new Error( 'Failed to page fetch' );
