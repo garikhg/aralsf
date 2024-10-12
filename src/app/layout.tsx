@@ -16,20 +16,20 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
     return (
         <html lang="en" suppressHydrationWarning>
         <body className="leading-7 antialiased bg-background">
-        <SWRProvider>
-            <ThemeProvider
-                attribute="class"
-                defaultTheme="light"
-                enableSystem
-                disableTransitionOnChange
-            >
-                <div className="min-h-screen flex flex-col">
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <div className="min-h-screen flex flex-col">
+                <SWRProvider>
                     <Header/>
                     <main>{children}</main>
                     <Footer/>
-                </div>
-            </ThemeProvider>
-        </SWRProvider>
+                </SWRProvider>
+            </div>
+        </ThemeProvider>
         </body>
         </html>
     );
