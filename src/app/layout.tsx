@@ -3,7 +3,7 @@ import '../styles/globals.scss';
 import '../constants/fonts';
 import {Footer, Header} from "@/components";
 import {ThemeProvider} from "@/components/theme/theme-provider";
-import {SWRProvider} from "@/components/theme/swr-provider";
+import {SWRProvider} from "@/app/providers/swr-provider";
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
