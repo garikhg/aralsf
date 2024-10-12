@@ -1,6 +1,4 @@
 // API URL
-import {date} from "zod";
-
 const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 
 // Fetcher function for SWR
