@@ -82,7 +82,7 @@ const ProductCard: React.FC<ProductCardProps> = ({data}) => {
                     width={featuredMedia?.media_details?.width}
                     height={featuredMedia?.media_details?.height}
                     priority
-                    className="block w-[322px] h-[483px] object-contain rounded-t-lg"
+                    className="block w-full max-w-full h-auto object-contain rounded-t-lg"
                 />
             )}
 
