@@ -28,9 +28,9 @@ const PageClient = () => {
                 ></iframe>
             </section>
 
-            <Breadcrumbs title={page?.title?.rendered}/>
-
             <Container>
+                <Breadcrumbs loading={isLoading}/>
+
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-24">
                     <div className="col-span-1">
                         <div className="relative pr-0 lg:pr-16">

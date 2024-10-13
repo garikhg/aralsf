@@ -27,3 +27,18 @@ export async function fetchPageApi(slug: string): Promise<any> {
 
     return page;
 }
+
+// Fetcher function for CategoryBySlug
+export async function fetchCategoryBySlugApi(slug: string): Promise<any> {
+    const categories = await fetch( `${apiURL}/wp-json/wp/v2/product_cat?slug=${slug}&acf_format=standard&_embed` );
+    const jsonData = await categories.json();
+    const category = jsonData.length > 0 ? jsonData[0] : null;
+
+    if (jsonData.error) {
+        console.error( jsonData.error );
+        throw new Error( 'Failed to category by slug fetch' );
+    }
+
+    return category;
+}
+

@@ -34,7 +34,7 @@ export default async function Pages({params}: { params: { slug: string } }) {
             <PageHeader data={pageData}/>
 
             {pageTitle && (
-                <Container className="hidden sm:block py-6 pb-0 md:py-6 md:pb-0 xl:py-6 xl:pb-0">
+                <Container>
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
