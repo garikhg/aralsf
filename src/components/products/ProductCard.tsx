@@ -79,8 +79,8 @@ const ProductCard: React.FC<ProductCardProps> = ({data}) => {
                 <Image
                     src={featuredMedia.source_url}
                     alt={featuredMedia.title.rendered}
-                    width={featuredMedia?.media_details?.width || 720}
-                    height={featuredMedia?.media_details?.height || 1080}
+                    width={featuredMedia?.media_details?.width}
+                    height={featuredMedia?.media_details?.height}
                     priority
                     className="block w-[322px] h-[483px] object-contain rounded-t-lg"
                 />
