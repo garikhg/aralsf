@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 // import {Metadata} from "next";
 import {getAllCountries, getProductCategoryBySlug, getProductsByCategoryId} from "@/lib/wordpress";
 // import {settings} from "@/config/settings";
-import {Container} from "@/components/Container";
+import {Container} from "@/components/container";
 import {ProductCard} from "@/components/products/ProductCard";
 import ProductsFilters from "@/components/products/ProductsFilters";
 import ProductsFiltersTags from "@/components/products/ProductsFiltersTags";

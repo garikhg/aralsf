@@ -7,7 +7,7 @@ import {
     BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import {Slash} from "lucide-react";
-import {Container} from "@/components/Container";
+import {Container} from "@/components/container";
 
 const Breadcrumbs = ({title}: { title?: string }) => {
     if (!title) return false;

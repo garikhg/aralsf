@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Breadcrumbs from "@/components/breadcrumbs";
-import {Container} from "@/components/Container";
+import {Container} from "@/components/container";
 import BlockPageContent from "@/components/blocks/block-page-content";
 import ContactForms from "@/components/contact-forms";
 import {usePage} from "@/hooks/use-pages";

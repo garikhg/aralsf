@@ -12,7 +12,7 @@ import {
     BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import {Slash} from "lucide-react";
-import {Container} from "@/components/Container";
+import {Container} from "@/components/container";
 
 export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
     const pageData = await getPageBySlug( params.slug );

@@ -4,7 +4,7 @@ import DeveloperLogo from '@/components/DeveloperLogo';
 import {BrandLogo, SocialLinks} from '@/components';
 import {settings} from '@/config/settings';
 import {Heading5} from "@/components/ui/heading";
-import {Container} from "@/components/Container";
+import {Container} from "@/components/container";
 
 const productsLinks = [
     {
