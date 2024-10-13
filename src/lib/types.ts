@@ -1,4 +1,4 @@
-export interface WordPressPage {
+export interface Page {
     id: number;
     date: string;
     date_gmt: string;
