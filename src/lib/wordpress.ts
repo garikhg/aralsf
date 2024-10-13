@@ -71,7 +71,7 @@ export const getPageCategory = async (): Promise<PageCategories[]> => {
  * Query: http://aralsf.local/wp-json/wp/v2/product_cat?slug=wines&acf_format=standard&_embed
  */
 export const getProductCategoryBySlug = async (slug: string): Promise<ProductCategory> => {
-  const url = getUrl( `/wp-json/wp/v2/product_cat?${slug}&acf_format=standard&_embed` );
+  const url = getUrl( `/wp-json/wp/v2/product_cat?slug=${slug}&acf_format=standard&_embed` );
   const [response] = await Promise.all( [fetch( url )] );
 
   if (!response.ok) {
