@@ -18,7 +18,7 @@ const Breadcrumbs = ({loading = true}: { loading?: boolean }) => {
     const paths = pathname.split( '/' ).filter( Boolean );
 
     return (
-        <div className="h-5 min-w-64 hidden sm:flex justify-start items-center mb-8 xl:mb-16">
+        <div className="h-5 min-w-64 hidden sm:flex justify-start items-center mb-8 xl:mb-10">
             <div className="w-fit">
                 {loading ? (
                     <Skeleton className="h-3 w-full min-w-64 bg-gray-200 rounded-full"/>
