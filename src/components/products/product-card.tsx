@@ -36,12 +36,12 @@ const getAttribute = (label: string, value: string) => {
     )
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({data}) => {
+const ProductCard: React.FC<ProductCardProps> = ({data}: { data: any }) => {
     const title = data?.title?.rendered ?? '';
-    const featuredMedia = data?._embedded?.['wp:featuredmedia']?.[0] ?? '';
+    const featuredMedia = data?._embedded?.['wp:featuredmedia']?.[0] ?? null;
     const {sku, bottle_size, bottles_per_case, alcohol_volume, color, type, short_description} = data?.acf || {};
 
-    const addAttributes = data?.acf?.attribute || null;
+    const addAttributes: any = data?.acf?.attribute ?? '';
 
     const baseAttributes = [
         {name: 'Bottle Size', value: bottle_size},
@@ -57,10 +57,10 @@ const ProductCard: React.FC<ProductCardProps> = ({data}) => {
                 <Image
                     src={featuredMedia.source_url}
                     alt={featuredMedia.title.rendered}
-                    width={featuredMedia?.media_details?.width}
-                    height={featuredMedia?.media_details?.height}
+                    width={290}
+                    height={384}
                     priority
-                    className="block w-full max-w-full h-auto object-contain rounded-t-lg"
+                    className="block w-full max-w-full h-96 object-contain rounded-t-lg"
                 />
             ) : (
                 <ProductPlaceholder/>
