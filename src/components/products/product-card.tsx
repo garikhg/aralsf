@@ -73,7 +73,7 @@ const ProductCard: React.FC<ProductCardProps> = ({data}: { data: any }) => {
 
             {/* Card body */}
             <div className="pt-6">
-                <Heading5 className="leading-tight text-green-950 dark:text-gray-300 font-bold text-base">
+                <Heading5 className="leading-tight font-bold text-base">
                     <span dangerouslySetInnerHTML={{__html: title}}></span>
                 </Heading5>
 
