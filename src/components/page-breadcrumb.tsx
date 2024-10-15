@@ -13,7 +13,7 @@ import {Slash} from "lucide-react";
 import {Skeleton} from "@/components/ui/skeleton";
 import {usePathname} from "next/navigation";
 
-const Breadcrumbs = ({loading = true}: { loading?: boolean }) => {
+const PageBreadcrumb = ({loading = true}: { loading?: boolean }) => {
     const pathname = usePathname();
     const paths = pathname.split( '/' ).filter( Boolean );
 
@@ -69,4 +69,4 @@ const Breadcrumbs = ({loading = true}: { loading?: boolean }) => {
     );
 };
 
-export default Breadcrumbs;
+export default PageBreadcrumb;

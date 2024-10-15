@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Breadcrumbs from "@/components/breadcrumbs";
+import PageBreadcrumb from "@/components/page-breadcrumb";
 import {useCategories, useProducts} from "@/hooks/use-pages";
 import {Heading2} from "@/components/ui/heading";
 import {Skeleton} from "@/components/ui/skeleton";
@@ -53,7 +53,7 @@ const PageClient = ({params, searchParams}: {
 
     return (
         <div className="container py-8 xl:py-16 xl:pt-6 min-h-screen">
-            <Breadcrumbs loading={isLoading}/>
+            <PageBreadcrumb loading={isLoading}/>
 
             {!isLoading ? (
                 <div className="h-14 flex items-center mb-6">

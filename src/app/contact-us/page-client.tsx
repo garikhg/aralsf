@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import Breadcrumbs from "@/components/breadcrumbs";
+import PageBreadcrumb from "@/components/page-breadcrumb";
 import {Container} from "@/components/container";
 import BlockPageContent from "@/components/blocks/block-page-content";
 import ContactForms from "@/components/contact-forms";
@@ -29,7 +29,7 @@ const PageClient = () => {
             </section>
 
             <Container>
-                <Breadcrumbs loading={isLoading}/>
+                <PageBreadcrumb loading={isLoading}/>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-24">
                     <div className="col-span-1">
