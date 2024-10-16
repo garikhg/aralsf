@@ -30,7 +30,7 @@ const PageBreadcrumb = ({loading = true}: { loading?: boolean }) => {
                             </BreadcrumbItem>
                             {paths && paths.map( (path: string, index: number) => {
                                 const isListItem = index === paths.length - 1;
-                                const pageURL = `/${paths.slice( 0, index + 1 ).join( '/' )}`;
+                                let pageURL = `/${paths.slice( 0, index + 1 ).join( '/' )}`;
                                 const pageName = `${path.charAt( 0 ).toUpperCase()}${path.slice( 1 )}`;
                                 const pageTitle = pageName.replace( '-', ' ' );
 
@@ -51,7 +51,9 @@ const PageBreadcrumb = ({loading = true}: { loading?: boolean }) => {
                                                     <Slash/>
                                                 </BreadcrumbSeparator>
                                                 <BreadcrumbItem>
-                                                    <BreadcrumbLink href={pageURL}>
+                                                    <BreadcrumbLink
+                                                        href={pageURL.replace( 'product-category', 'categories' )}
+                                                    >
                                                         <span>{pageTitle}</span>
                                                     </BreadcrumbLink>
                                                 </BreadcrumbItem>
