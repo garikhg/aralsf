@@ -55,9 +55,12 @@ const PagePagination: React.FC<PagePaginationProps> = ({currentPage, totalPages,
             <PaginationContent>
                 <PaginationItem>
                     <PaginationPrevious
-                        href="javascript:void(0)"
+                        href="#"
                         className={cn( 'h-10 pr-3', currentPage <= 1 ? 'opacity-60 pointer-events-none' : '', )}
-                        onClick={() => onPageChange( currentPage - 1 )}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onPageChange( currentPage - 1 )
+                        }}
                     />
                 </PaginationItem>
                 {getPageNumbers().length > 1 && getPageNumbers().map( (pageNumber, index) => (
@@ -66,8 +69,11 @@ const PagePagination: React.FC<PagePaginationProps> = ({currentPage, totalPages,
                             <PaginationEllipsis/>
                         ) : (
                             <PaginationLink
-                                href="javascript:void(0)"
-                                onClick={() => onPageChange( pageNumber as number )}
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onPageChange( pageNumber as number )
+                                }}
                                 className={cn( currentPage === pageNumber ? 'pointer-events-none bg-accent' : '' )}
                                 isActive={currentPage === pageNumber}
                             >
@@ -78,12 +84,15 @@ const PagePagination: React.FC<PagePaginationProps> = ({currentPage, totalPages,
                 ) )}
                 <PaginationItem>
                     <PaginationNext
-                        href="javascript:void(0)"
+                        href="#"
                         className={cn(
                             'h-10 pl-3',
                             totalPages === currentPage ? 'opacity-60 pointer-events-none' : '',
                         )}
-                        onClick={() => onPageChange( currentPage + 1 )}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onPageChange( currentPage + 1 )
+                        }}
                     />
                 </PaginationItem>
             </PaginationContent>
