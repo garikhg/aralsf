@@ -46,9 +46,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const Categories: React.FC = async () => {
     let categories = await getProductCategories();
     categories = categories.filter( (category: any) => category?.slug !== 'all-products' );
-
     const pages = await getPageCategory();
-
     const pageData: any = pages[0] ?? null;
 
     return (
