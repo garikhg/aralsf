@@ -51,19 +51,13 @@ const PagePagination: React.FC<PagePaginationProps> = ({currentPage, totalPages,
         return pageNumbers;
     }
     return (
-        <Pagination className="mt-8 items-center justify-between">
+        <Pagination className="mt-8 flex-col md:flex-row items-center justify-between">
             <PaginationContent>
                 <PaginationItem>
                     <PaginationPrevious
-                        href="#"
-                        className={cn(
-                            'h-10 pr-3',
-                            currentPage <= 1 ? 'opacity-60 pointer-events-none' : '',
-                        )}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            onPageChange( currentPage - 1 )
-                        }}
+                        href="javascript:void(0)"
+                        className={cn( 'h-10 pr-3', currentPage <= 1 ? 'opacity-60 pointer-events-none' : '', )}
+                        onClick={() => onPageChange( currentPage - 1 )}
                     />
                 </PaginationItem>
                 {getPageNumbers().length > 1 && getPageNumbers().map( (pageNumber, index) => (
@@ -72,11 +66,8 @@ const PagePagination: React.FC<PagePaginationProps> = ({currentPage, totalPages,
                             <PaginationEllipsis/>
                         ) : (
                             <PaginationLink
-                                href="#"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    onPageChange( pageNumber as number );
-                                }}
+                                href="javascript:void(0)"
+                                onClick={() => onPageChange( pageNumber as number )}
                                 className={cn( currentPage === pageNumber ? 'pointer-events-none bg-accent' : '' )}
                                 isActive={currentPage === pageNumber}
                             >
@@ -87,20 +78,17 @@ const PagePagination: React.FC<PagePaginationProps> = ({currentPage, totalPages,
                 ) )}
                 <PaginationItem>
                     <PaginationNext
-                        href="#"
+                        href="javascript:void(0)"
                         className={cn(
                             'h-10 pl-3',
                             totalPages === currentPage ? 'opacity-60 pointer-events-none' : '',
                         )}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            onPageChange( currentPage + 1 )
-                        }}
+                        onClick={() => onPageChange( currentPage + 1 )}
                     />
                 </PaginationItem>
             </PaginationContent>
 
-            <div className="h-7 flex items-center">
+            <div className="hidden h-7 md:flex items-center">
                 {!isLoading ? totalPages > 1 && (
                     <span className="text-sm text-gray-500">Page {currentPage} of {totalPages}</span>
                 ) : (
