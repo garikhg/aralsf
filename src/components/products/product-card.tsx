@@ -1,29 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
-
-interface ProductData {
-    title?: { rendered: string };
-    acf?: {
-        sku?: string;
-        bottle_size?: string;
-        bottles_per_case?: string;
-        alcohol_volume?: string;
-        color?: string;
-        type?: string;
-        attribute: any;
-        short_description?: string;
-    };
-    _embedded?: {
-        'wp:featuredmedia': {
-            source_url: string;
-            title: { rendered: string };
-            media_details: { width: number; height: number };
-        }[];
-    };
-}
+import {Product} from "@/lib/types";
+import {Heading5} from "@/components/ui/heading";
+import ProductPlaceholder from "@/components/products/product-placeholder";
 
 interface ProductCardProps {
-    data: ProductData;
+    data: Product;
 }
 
 const getProductTitle = (title: string) => {
@@ -42,10 +24,6 @@ const getProductSubtitle = (title: string) => {
     )
 }
 
-const getShortDescription = (text: string) => {
-    return <p dangerouslySetInnerHTML={{__html: text}} className="mb-2 text-base text-neutral-500 dark:text-neutral-300"/>
-}
-
 const getAttribute = (label: string, value: string) => {
     if (!value) return false;
 
@@ -58,12 +36,12 @@ const getAttribute = (label: string, value: string) => {
     )
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({data}) => {
-    const titleText = data?.title?.rendered || '';
-    const featuredMedia = data?._embedded ? data?._embedded['wp:featuredmedia'][0] : null;
+const ProductCard: React.FC<ProductCardProps> = ({data}: { data: any }) => {
+    const title = data?.title?.rendered ?? '';
+    const featuredMedia = data?._embedded?.['wp:featuredmedia']?.[0] ?? null;
     const {sku, bottle_size, bottles_per_case, alcohol_volume, color, type, short_description} = data?.acf || {};
 
-    const addAttributes = data?.acf?.attribute || null;
+    const addAttributes: any = data?.acf?.attribute ?? '';
 
     const baseAttributes = [
         {name: 'Bottle Size', value: bottle_size},
@@ -73,17 +51,19 @@ const ProductCard: React.FC<ProductCardProps> = ({data}) => {
         {name: 'Type', value: type},
     ] as const;
     return (
-        <div className="block rounded-lg bg-white shadow dark:bg-neutral-700">
-            {featuredMedia && (
+        <div className="block rounded-lg bg-white dark:bg-neutral-700 p-4">
+            {featuredMedia ? (
                 /* Card image */
                 <Image
                     src={featuredMedia.source_url}
                     alt={featuredMedia.title.rendered}
-                    width={featuredMedia?.media_details?.width}
-                    height={featuredMedia?.media_details?.height}
+                    width={290}
+                    height={384}
                     priority
-                    className="block w-[322px] h-[483px] object-contain rounded-t-lg"
+                    className="block w-full max-w-full h-96 object-contain rounded-t-lg"
                 />
+            ) : (
+                <ProductPlaceholder/>
             )}
 
             {/* Card header */}
@@ -92,8 +72,12 @@ const ProductCard: React.FC<ProductCardProps> = ({data}) => {
             </div>
 
             {/* Card body */}
-            <div className="p-6">
-                {titleText && getProductTitle( titleText )}
+            <div className="pt-6">
+                <Heading5 className="leading-tight font-bold text-base">
+                    <span dangerouslySetInnerHTML={{__html: title}}></span>
+                </Heading5>
+
+
                 <div className="text-start pt-4">
                     {sku && (
                         <p className="flex flex-1 items-baseline justify-between gap-3 py-0.5">

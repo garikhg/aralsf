@@ -5,14 +5,7 @@ import {Container} from '@/components/container';
 import {CategoryCard} from '@/components/category-card';
 import {getPageCategory, getProductCategories} from '@/lib/wordpress';
 import PageHeader from '@/components/header/page-header';
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList, BreadcrumbPage,
-    BreadcrumbSeparator
-} from "@/components/ui/breadcrumb";
-import {Slash} from "lucide-react";
+import PageBreadcrumb from "@/components/page-breadcrumb";
 
 interface AcfProps {
     description?: string;
@@ -39,56 +32,29 @@ interface CategoryPageProps extends PageProps {
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
-    const pages: CategoryPageProps[] = await getPageCategory();
-    const page = pages[0] || null;
-    const pageTitle = `${page?.title?.rendered} - ${settings.siteTitle}` || `Categories - ${settings.siteTitle}`;
-    const pageDescription = page?.acf?.description ? page.acf.description : '';
+    const categories: CategoryPageProps[] = await getPageCategory();
+    const category = categories[0] || null;
+    const title = `${category?.title?.rendered} - ${settings.siteTitle}` || `Categories - ${settings.siteTitle}`;
+    const description = category?.acf?.description ? category.acf.description : '';
 
     return {
-        title: pageTitle,
-        description: pageDescription
+        title: title,
+        description: description
     };
 };
 
 const Categories: React.FC = async () => {
-    let categories: any[] = [];
-    let pages: any[] = [];
-
-    try {
-        categories = await getProductCategories();
-    } catch (error) {
-        console.error( 'Failed to fetch categories:', error );
-    }
-
-    try {
-        pages = await getPageCategory();
-    } catch (error) {
-        console.error( 'Failed to fetch pages:', error );
-    }
-
+    let categories = await getProductCategories();
+    categories = categories.filter( (category: any) => category?.slug !== 'all-products' );
+    const pages = await getPageCategory();
     const pageData: any = pages[0] ?? null;
-    const pageTitle: any = pageData?.title?.rendered || '';
 
     return (
         <div>
             <PageHeader data={pageData}/>
-            {pageTitle && (
-                <Container className="hidden sm:block py-6 pb-0 md:py-6 md:pb-0 xl:py-6 xl:pb-0">
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator><Slash/></BreadcrumbSeparator>
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                </Container>
-            )}
 
-            <Container>
+            <div className="container py-8 xl:py-16 xl:pt-6 min-h-screen">
+                <PageBreadcrumb loading={false}/>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {categories && categories.map( (category: any) => (
                         <div key={category.slug} className="relative">
@@ -96,7 +62,7 @@ const Categories: React.FC = async () => {
                         </div>
                     ) )}
                 </div>
-            </Container>
+            </div>
         </div>
     );
 };
