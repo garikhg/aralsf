@@ -66,21 +66,21 @@ const PagePagination: React.FC<PagePaginationProps> = ({currentPage, totalPages,
                         }}
                     />
                 </PaginationItem>
-                {getPageNumbers().length > 1 && getPageNumbers().map( (pageNuber, index) => (
+                {getPageNumbers().length > 1 && getPageNumbers().map( (pageNumber, index) => (
                     <PaginationItem key={index}>
-                        {pageNuber === 'ellipsis' ? (
+                        {pageNumber === 'ellipsis' ? (
                             <PaginationEllipsis/>
                         ) : (
                             <PaginationLink
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    onPageChange( pageNuber as number );
+                                    onPageChange( pageNumber as number );
                                 }}
-                                className={cn( currentPage === pageNuber ? 'pointer-events-none bg-accent' : '' )}
-                                isActive={currentPage === pageNuber}
+                                className={cn( currentPage === pageNumber ? 'pointer-events-none bg-accent' : '' )}
+                                isActive={currentPage === pageNumber}
                             >
-                                {pageNuber}
+                                {pageNumber}
                             </PaginationLink>
                         )}
                     </PaginationItem>
