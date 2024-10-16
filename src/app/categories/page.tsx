@@ -32,14 +32,14 @@ interface CategoryPageProps extends PageProps {
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
-    const pages: CategoryPageProps[] = await getPageCategory();
-    const page = pages[0] || null;
-    const pageTitle = `${page?.title?.rendered} - ${settings.siteTitle}` || `Categories - ${settings.siteTitle}`;
-    const pageDescription = page?.acf?.description ? page.acf.description : '';
+    const categories: CategoryPageProps[] = await getPageCategory();
+    const category = categories[0] || null;
+    const title = `${category?.title?.rendered} - ${settings.siteTitle}` || `Categories - ${settings.siteTitle}`;
+    const description = category?.acf?.description ? category.acf.description : '';
 
     return {
-        title: pageTitle,
-        description: pageDescription
+        title: title,
+        description: description
     };
 };
 
