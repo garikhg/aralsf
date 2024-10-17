@@ -10,6 +10,7 @@ import {ProductCard} from "@/components/products/product-card";
 import {Product} from "@/lib/types";
 import PagePagination from "@/components/page-pagination";
 import {usePathname, useRouter} from "next/navigation";
+import ProductGrid from "@/components/products/product-grid";
 
 const PageClient = ({params, searchParams}: {
     params: { slug: string },
@@ -76,19 +77,20 @@ const PageClient = ({params, searchParams}: {
             )}
 
             {productsLoading ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4">
+                <ProductGrid>
                     {Array( itemsPerPage ).fill( 0 ).map( (_, index) => (
                         <ProductSkeleton key={index}/>
                     ) )}
-                </div>
+                </ProductGrid>
             ) : (
                 <>
                     {products && products.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                        <ProductGrid>
                             {products.map( (product: Product) => (
                                 <ProductCard data={product} key={product.id}/>
                             ) )}
-                        </div>
+                        </ProductGrid>
+
                     ) : (
                         <p>Products not found</p>
                     )}
