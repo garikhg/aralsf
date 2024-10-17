@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import {Category, Page, Product} from "@/lib/types";
-import {apiURL, fetchApi} from "@/lib/api";
+import {Page} from "@/lib/types";
+import {fetchApi} from "@/lib/api";
 
 export function usePages() {
     const {data, error} = useSWR<Page[]>( '/wp-json/wp/v2/pages?acf_format=standard&_embed', fetchApi );
