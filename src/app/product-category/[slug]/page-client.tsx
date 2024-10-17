@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PageBreadcrumb from "@/components/page-breadcrumb";
-import {useCategories, useProducts} from "@/hooks/use-pages";
+import {useCategories, useProducts} from "@/hooks/use-products";
 import {Heading2} from "@/components/ui/heading";
 import {Skeleton} from "@/components/ui/skeleton";
 import ProductSkeleton from "@/components/products/product-skeleton";
