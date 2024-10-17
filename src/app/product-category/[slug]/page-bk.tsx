@@ -6,8 +6,8 @@ import {getAllCountries, getProductCategoryBySlug, getProductsByCategoryId} from
 // import {settings} from "@/config/settings";
 import {Container} from "@/components/container";
 import {ProductCard} from "@/components/products/product-card";
-import ProductsFilters from "@/components/products/ProductsFilters";
-import ProductsFiltersTags from "@/components/products/ProductsFiltersTags";
+import ProductsFilters from "@/components/products/products-filters";
+import ProductsFiltersTags from "@/components/products/products-filters-tags";
 import {usePathname, useRouter} from "next/navigation";
 import {
     Breadcrumb,
