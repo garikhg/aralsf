@@ -87,7 +87,7 @@ const infoLinks = [
 const FooterHeading = () => {
     return (
         <div className="space-y-4 lg:space-y-6">
-            <Link href="/aralsf/public" className="flex items-center">
+            <Link href="/" className="flex items-center">
                 <BrandLogo label={settings.siteTitle}/>
                 <span className="sr-only">{settings.siteTitle}</span>
             </Link>
@@ -199,17 +199,24 @@ const Footer = () => {
                         <FooterHeading/>
                     </div>
 
-                    <div className="col-span-1 lg:col-span-8 xl:col-span-9">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-6 xl:gap-8">
+                    <div className="col-span-1 relative lg:col-span-8 xl:col-span-9">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
                             <div className="hidden col-span-1 xl:block"></div>
-                            <div className="col-span-1 space-y-6">
-                                <FooterLinks/>
+                            <div className="col-span-1 relative lg:pl-6 xl:pl-8">
+                                <div className="space-y-6">
+                                    <FooterLinks/>
+                                </div>
+                                <hr className="lg:hidden border-t border-primary-foreground/20 my-6"/>
                             </div>
-                            <div className="col-span-1 space-y-6">
-                                <FooterProductsLinks/>
+                            <div className="col-span-1 relative lg:border-l lg:border-primary-foreground/20 lg:pl-6 xl:pl-8">
+                                <div className="space-y-6">
+                                    <FooterProductsLinks/>
+                                </div>
+                                <hr className="lg:hidden border-t border-primary-foreground/20 my-6"/>
                             </div>
-                            <div className="col-span-1 space-y-6">
+                            <div className="col-span-1 relative lg:border-l lg:border-primary-foreground/20 lg:pl-6 xl:pl-8">
                                 <FooterAddress/>
+                                <hr className="border-t border-primary-foreground/20 lg:border-none my-6 lg:my-3"/>
                                 <FooterContact/>
                             </div>
                         </div>
