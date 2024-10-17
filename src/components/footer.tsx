@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import DeveloperLogo from '@/components/DeveloperLogo';
-import {BrandLogo, SocialLinks} from '@/components';
+import {BrandLogo, SocialLinks} from '@/components/index';
 import {settings} from '@/config/settings';
 import {Heading5} from "@/components/ui/heading";
 import {Container} from "@/components/container";
@@ -87,7 +87,7 @@ const infoLinks = [
 const FooterHeading = () => {
     return (
         <div className="space-y-4 lg:space-y-6">
-            <Link href="/" className="flex items-center">
+            <Link href="/aralsf/public" className="flex items-center">
                 <BrandLogo label={settings.siteTitle}/>
                 <span className="sr-only">{settings.siteTitle}</span>
             </Link>

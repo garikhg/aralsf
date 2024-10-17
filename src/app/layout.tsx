@@ -2,10 +2,11 @@ import React from 'react';
 import {Metadata} from "next";
 import '../styles/globals.scss';
 import '../constants/fonts';
-import {Footer, Header} from "@/components";
+import {Header} from "@/components";
 import {ThemeProvider} from "@/components/theme/theme-provider";
 import {SWRProvider} from "@/app/providers/swr-provider";
 import {settings} from "@/config/settings";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
     title: settings.siteTitle,
