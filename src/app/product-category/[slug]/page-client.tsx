@@ -54,9 +54,9 @@ const PageClient = ({params, searchParams}: {
 
     return (
         <div className="container py-8 xl:py-16 xl:pt-6 min-h-screen">
-            <PageBreadcrumb loading={isLoading}/>
+            <PageBreadcrumb loading={productsLoading}/>
 
-            {!isLoading ? (
+            {!productsLoading ? (
                 <div className="h-14 flex items-center mb-6">
                     <Heading2 className="text-2xl tracking-tight lg:text-3xl font-bold">{categoryName}</Heading2>
                 </div>
