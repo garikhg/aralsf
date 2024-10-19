@@ -13,10 +13,7 @@ export function usePages() {
 }
 
 export function usePage(slug: string) {
-    const {
-        data,
-        error
-    } = useSWR<Page[]>( `/wp-json/wp/v2/pages?slug=${slug}&acf_format=standard&_embed`, fetchApi );
+    const {data, error} = useSWR<Page[]>( `/wp-json/wp/v2/pages?slug=${slug}&acf_format=standard&_embed`, fetchApi );
 
     return {
         page: data && data.length > 0 ? data[0] : null,
