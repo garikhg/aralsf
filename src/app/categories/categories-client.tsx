@@ -9,7 +9,6 @@ import {Heading1} from "@/components/ui/heading";
 import {usePage} from "@/hooks/use-pages";
 
 const CategoriesClient: React.FC = () => {
-
     const {data, isLoading, isError} = useCategories();
     const {page, isLoading: isPageLoading, isError: isPageError} = usePage( 'categories' );
 
