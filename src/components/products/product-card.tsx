@@ -8,14 +8,6 @@ interface ProductCardProps {
     data: Product;
 }
 
-const getProductTitle = (title: string) => {
-    return (
-        <h5 className="block leading-tight text-green-950 dark:text-gray-300 font-medium mb-2">
-            <span dangerouslySetInnerHTML={{__html: title}}/>
-        </h5>
-    )
-}
-
 const getProductSubtitle = (title: string) => {
     return (
         <h5 className="flex items-center justify-center text-sm text-neutral-500 dark:text-neutral-300">
@@ -76,7 +68,6 @@ const ProductCard: React.FC<ProductCardProps> = ({data}: { data: any }) => {
                 <Heading5 className="leading-tight font-bold text-base">
                     <span dangerouslySetInnerHTML={{__html: title}}></span>
                 </Heading5>
-
 
                 <div className="text-start pt-4">
                     {sku && (
