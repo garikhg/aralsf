@@ -29,9 +29,6 @@ const CategoriesClient: React.FC = () => {
     let categories = data || [];
     categories = categories?.filter( (cat: any) => cat.slug !== 'uncategory' && cat.slug !== 'all-products' );
 
-    console.log( page )
-    console.log( featuredMediaSRC )
-
     return (
         <div className="container py-8 xl:py-16 xl:pt-6 min-h-screen">
             {featuredMediaSRC ? (
