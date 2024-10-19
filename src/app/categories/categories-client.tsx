@@ -15,7 +15,7 @@ const CategoriesClient: React.FC = () => {
     // Error and Loading
     if (isError || isPageError) return <div className="container mx-auto px-4 py-8">Error loading page</div>;
 
-    if (isLoading && isPageLoading) return (
+    if (isLoading) return (
         <CategoriesLoading/>
     );
 
