@@ -1,10 +1,10 @@
 import React from 'react';
 import {Metadata} from 'next';
 import {settings} from '@/config/settings';
-import CategoriesClient from "@/app/categories/categories-client";
-import {apiURL, fetchPageApi} from "@/lib/api";
-
-export const revalidate = 10;
+import {fetchCategoriesApi, fetchPageApi} from "@/lib/api";
+import CategoriesHeader from "@/app/categories/categories-header";
+import PageBreadcrumb from "@/components/page-breadcrumb";
+import CategoriesList from "@/app/categories/categories-list";
 
 export const generateMetadata = async (): Promise<Metadata> => {
     const page = await fetchPageApi( 'categories' );
@@ -14,27 +14,22 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
     return {
         title: `${title} - ${settings.siteTitle}`,
-        description: description
+        description: description,
     };
 };
 
 
 const Categories = async () => {
-    const page = await fetch( `${apiURL}/wp-json/wp/v2/pages?slug=categories&acf_format=standard`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        next: {revalidate: 10}
-    } );
-    const pageData = await page.json();
-    const title = pageData[0]?.title?.rendered
+    const page = await fetchPageApi( 'categories' );
+    const fetchCategories = await fetchCategoriesApi();
+    const categories = fetchCategories.filter( (cat: any) => cat?.slug !== 'uncategory' && cat?.slug !== 'all-products' );
 
     return (
-        <>
-            <div className="hidden">{title}</div>
-            <CategoriesClient/>
-        </>
+        <div className="container py-8 xl:py-16 xl:pt-6 min-h-screen">
+            <CategoriesHeader data={page}/>
+            <PageBreadcrumb loading={false}/>
+            <CategoriesList data={categories}/>
+        </div>
     );
 };
 
