@@ -2,7 +2,9 @@ import React from 'react';
 import {Metadata} from 'next';
 import {settings} from '@/config/settings';
 import CategoriesClient from "@/app/categories/categories-client";
-import {fetchPageApi} from "@/lib/api";
+import {apiURL, fetchPageApi} from "@/lib/api";
+
+export const revalidate = 60;
 
 export const generateMetadata = async (): Promise<Metadata> => {
     const page = await fetchPageApi( 'categories' );
@@ -16,8 +18,21 @@ export const generateMetadata = async (): Promise<Metadata> => {
     };
 };
 
+
 const Categories = async () => {
-    return <CategoriesClient/>;
+    const page = await fetch( `${apiURL}/wp-json/wp/v2/pages?slug=categories&acf_format=standard`, {
+        method: 'GET',
+        cache: 'force-cache',
+    } );
+    const pageData = await page.json();
+    const title = pageData[0]?.title?.rendered
+
+    return (
+        <>
+            <div className="hidden">{title}</div>
+            <CategoriesClient/>
+        </>
+    );
 };
 
 export default Categories;
