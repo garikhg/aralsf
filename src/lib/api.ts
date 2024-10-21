@@ -16,7 +16,13 @@ export async function fetchApi(endpoint: string): Promise<any> {
 
 // Fetcher function for Page
 export async function fetchPageApi(slug: string): Promise<any> {
-    const pages = await fetch( `${apiURL}/wp-json/wp/v2/pages?slug=${slug}&acf_format=standard` );
+    const pages = await fetch( `${apiURL}/wp-json/wp/v2/pages?slug=${slug}&acf_format=standard`, {
+        method: 'GET',
+        cache: 'force-cache',
+        next: {
+            revalidate: 60
+        }
+    } );
     const jsonData = await pages.json();
     const page = jsonData.length > 0 ? jsonData[0] : null;
 
