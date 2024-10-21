@@ -16,12 +16,16 @@ export async function fetchApi(endpoint: string): Promise<any> {
 
 // Fetcher function for Page
 export async function fetchPageApi(slug: string): Promise<any> {
+    if (!apiURL) {
+        throw new Error( 'WORDPRESS_API_URL is not defined' )
+    }
+
     const pages = await fetch( `${apiURL}/wp-json/wp/v2/pages?slug=${slug}&acf_format=standard`, {
         method: 'GET',
-        cache: 'force-cache',
-        next: {
-            revalidate: 60
-        }
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        next: {revalidate: 10}
     } );
     const jsonData = await pages.json();
     const page = jsonData.length > 0 ? jsonData[0] : null;

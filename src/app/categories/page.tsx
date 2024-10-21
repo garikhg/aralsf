@@ -22,10 +22,10 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const Categories = async () => {
     const page = await fetch( `${apiURL}/wp-json/wp/v2/pages?slug=categories&acf_format=standard`, {
         method: 'GET',
-        cache: 'default',
-        next: {
-            revalidate: 10
-        }
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        next: {revalidate: 10}
     } );
     const pageData = await page.json();
     const title = pageData[0]?.title?.rendered
