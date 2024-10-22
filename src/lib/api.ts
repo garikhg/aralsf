@@ -3,23 +3,23 @@ import {Category, Page} from "@/lib/types";
 
 export const apiURL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
 
-// Fetcher function for SWR
+// Fetcher function
 export async function fetchApi(endpoint: string): Promise<any> {
     const res = await fetch( `${apiURL}${endpoint}` );
-    const json = await res.json();
+    const data = await res.json();
 
-    if (json.error) {
-        console.error( json.error );
+    if (data.error) {
+        console.error( data.error );
         throw new Error( 'Failed to fetch' );
     }
 
-    return json;
+    return data;
 }
 
-// Fetcher function for Page
+// Fetch function for Pages
 export async function fetchPageApi(slug: string): Promise<Page | null> {
     if (!apiURL) {
-        throw new Error( 'API_URL is not defined' )
+        throw new Error( 'API URL is not defined' )
     }
 
     const res = await fetch( `${apiURL}/wp-json/wp/v2/pages?slug=${slug}&_embed&acf_format=standard`, {
@@ -47,7 +47,7 @@ export async function fetchPageApi(slug: string): Promise<Page | null> {
 // Fetcher function for Categories
 export async function fetchCategoriesApi(): Promise<Category[]> {
     if (!apiURL) {
-        throw new Error( 'API_URL is not defined' );
+        throw new Error( 'API URL is not defined' );
     }
 
     const res = await fetch( `${apiURL}/wp-json/wp/v2/product_cat?_embed&acf_format=standard`, {
@@ -62,9 +62,7 @@ export async function fetchCategoriesApi(): Promise<Category[]> {
         throw new Error( `Failed to fetch categories data: ${res.status} ${res.statusText}` );
     }
 
-    const data = await res.json();
-
-    return data as Category[]
+    return await res.json();
 }
 
 export async function fetchCategoryBySlugApi(slug: string): Promise<any> {
