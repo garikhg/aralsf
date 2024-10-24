@@ -1,5 +1,7 @@
 // API URL
 import {Category, Page} from "@/lib/types";
+import parse from "node-html-parser";
+import {mergeACFData, parseBlocks} from "@/lib/parseBlocks";
 
 export const apiURL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
 
@@ -27,21 +29,35 @@ export async function fetchPageApi(slug: string): Promise<Page | null> {
         headers: {
             'Content-Type': 'application/json',
         },
-        next: {revalidate: 5}
+        next: {revalidate: 0}
     } );
 
     if (!res.ok) {
-        throw new Error( `Failed to fetch page data: ${res.status} ${res.statusText}` );
+        throw new Error( 'Failed to fetch page data' );
     }
 
     const data = await res.json();
-    // const page = jsonData.length > 0 ? jsonData[0] : null;
 
-    if (Array.isArray( data ) && data.length > 0) {
-        return data[0] as Page;
+    if (data.length === 0) {
+        throw new Error( 'Page not found' );
     }
 
-    return null;
+    const page = data[0];
+
+    // Parse the content HTML to create a blocks structure
+    const root = parse( page.content.rendered );
+    const blocks = parseBlocks( root );
+    parseBlocks( root );
+    // Merge ACF data into corresponding blocks
+    const mergedBlocks = mergeACFData( blocks, page.acf );
+
+    return {
+        ...page,
+        content: {
+            ...page.content,
+            blocks: mergedBlocks
+        }
+    };
 }
 
 // Fetcher function for Categories
