@@ -1,3 +1,10 @@
+export interface Block {
+    blockName: string;
+    attrs: Record<string, any>;
+    innerBlocks: Block[];
+    innerHTML: string;
+}
+
 export interface Page {
     id: number;
     date: string;
@@ -17,6 +24,7 @@ export interface Page {
     content: {
         rendered: string;
         protected: boolean;
+        blocks: Block[];
     };
     excerpt: {
         rendered: string;
@@ -110,7 +118,7 @@ export interface Page {
             };
             author: number;
             featured_media: number;
-            acf: any[];
+            acf: Record<string, any>;
             caption: {
                 rendered: string;
             };
@@ -253,21 +261,32 @@ interface LinkHref {
     href: string;
 }
 
-interface LinkSelf extends LinkHref {}
-interface LinkCollection extends LinkHref {}
-interface LinkAbout extends LinkHref {}
+interface LinkSelf extends LinkHref {
+}
+
+interface LinkCollection extends LinkHref {
+}
+
+interface LinkAbout extends LinkHref {
+}
+
 interface LinkAcfTerm extends LinkHref {
     embeddable: boolean;
     taxonomy: string;
 }
+
 interface LinkWpFeaturedMedia extends LinkHref {
     embeddable: boolean;
 }
-interface LinkWpAttachment extends LinkHref {}
+
+interface LinkWpAttachment extends LinkHref {
+}
+
 interface LinkWpTerm extends LinkHref {
     taxonomy: string;
     embeddable: boolean;
 }
+
 interface LinkCuries {
     name: string;
     href: string;
