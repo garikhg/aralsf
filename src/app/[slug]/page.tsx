@@ -1,56 +1,17 @@
 import {Metadata} from 'next';
-import {getAllBrands, getPageBySlug} from '@/lib/wordpress';
 import React from 'react';
-import BlockPageContent from '@/components/blocks/block-page-content';
-import BlockBrandsCarousel from '@/components/blocks/block-brands-carousel';
-import PageHeader from '@/components/header/page-header';
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList, BreadcrumbPage,
-    BreadcrumbSeparator
-} from "@/components/ui/breadcrumb";
-import {Slash} from "lucide-react";
-import {Container} from "@/components/container";
+import {fetchPageApi} from "@/lib/api";
+import PageClient from "@/app/[slug]/page-client";
 
 export const generateMetadata = async ({params}: { params: { slug: string } }): Promise<Metadata> => {
-    const pageData = await getPageBySlug( params.slug );
-    const pageTitle = pageData[0]?.title?.rendered;
+    const data = await fetchPageApi( params.slug );
+    const title = data?.title?.rendered;
 
     return {
-        title: pageTitle
+        title: title,
     };
 };
 
 export default async function Pages({params}: { params: { slug: string } }) {
-    const getPageData = await getPageBySlug( params.slug );
-    const pageData = getPageData ? getPageData?.[0] : {};
-    const brands = await getAllBrands();
-    const pageTitle = pageData?.title?.rendered || '';
-
-    return (
-        <>
-            <PageHeader data={pageData}/>
-
-            {pageTitle && (
-                <Container>
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator><Slash/></BreadcrumbSeparator>
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                </Container>
-            )}
-
-            <BlockPageContent pageData={pageData}/>
-            <BlockBrandsCarousel blockData={brands}/>
-        </>
-    );
+    return <PageClient slug={params.slug}/>;
 }
